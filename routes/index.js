@@ -8,9 +8,6 @@ const { Login, Logout } = require('../Login')
 const path = require('path')
 const uploadPath = path.join('public', Article.fileBasePath)
 
-const { registerValidation } = require('../validation')
-
-
 
 router.get('/login',(req,res)=>{
     res.render('login')
@@ -22,12 +19,12 @@ router.get('/register', (req, res) => {
 })
 
 router.post('/register', async (req, res) => {
-    //Register Validation
-    const { error } = registerValidation(req.body)
-    if (error) return res.status(400).send(error.details[0].message)
     //checking if username is already used
     const ExistedUser = await User.findOne({ username: req.body.username })
-    if (ExistedUser) return res.status(400).send('Username already exists')
+    if (ExistedUser) {
+        req.flash('errorMessage','Username has been used')
+        res.redirect('back')
+    }
     //hash password
     const hashedPassword = await bcrypt.hash(req.body.password, 10)
 
@@ -72,7 +69,7 @@ router.get('/', async (req, res) => {
     let article
     try {
        article = await Article.find({
-           status: 'accepted', 
+           status: 'accepted' 
         })
         .limit(6)
         .exec()

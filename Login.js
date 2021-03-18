@@ -1,12 +1,8 @@
 const User = require('./models/User')
 const bcrypt = require('bcrypt')
-const { loginValidation } = require('./validation')
 
 const Login = async (req,res,next) => {
     const {username, password} = req.body
-    //Login Validation
-    const{error} = loginValidation(req.body)
-    if(error) return res.status(400).send(error.details[0].message)
     // find user in database
     const user = await User.findOne({username: username}).select(['+password']).exec()
     //if no username is founded

@@ -5,7 +5,6 @@ const User = require('../models/User')
 const Faculty = require('../models/Faculty')
 const Topic = require('../models/Topic')
 const { Logout } = require('../Login')
-const { registerValidation } = require('../validation')
 
 router.get('/', isAdmin, async (req, res) => {
     const user = await User.findById(req.session.userId)

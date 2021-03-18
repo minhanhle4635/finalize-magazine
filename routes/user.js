@@ -11,7 +11,6 @@ const uploadPath = path.join('public', Article.fileBasePath)
 const fileMimeTypes = require('../helper/mime-file')
 const imageMimeTypes = ['image/jpeg', 'image/png', 'images/gif']
 const fs = require('fs');
-// const { newArticleValidation } = require('../validation')
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
