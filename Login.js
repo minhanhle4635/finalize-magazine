@@ -6,10 +6,16 @@ const Login = async (req,res,next) => {
     // find user in database
     const user = await User.findOne({username: username}).select(['+password']).exec()
     //if no username is founded
-    if(!user) return res.status(400).send('Username is wrong')
+    if(!user) {
+        req.flash('errorMessage', 'username is not founded')
+        return res.redirect('back')
+    }
     //if the password is wrong
     const validPass = await bcrypt.compare(password, user.password)
-    if(!validPass) return res.status(400).send('Invalid Password')
+    if(!validPass) {
+        req.flash('errorMessage','password is incorrect')
+        return res.redirect('back')
+    }
     // khi them "select" trong schema thi can than thieu field password (vi no bi exclude khoi model tra ve luon). de them vao model
     // trong tra ve thi them `select([<ten field>]) vao. su dung `+` (de them) hoac `-` de khong select.
     if(!user){
