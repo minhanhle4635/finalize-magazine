@@ -51,9 +51,8 @@ router.post('/topic/new', isCoordinator, async (req, res) => {
             await newTopic.save()
             res.redirect('/coordinator/topic')
         } else {
-            res.render('coordinator/newTopic', {
-                errorMessage: 'Topic is existed'
-            })
+            req.flash('errorMessage', 'Topic is existed')
+            res.redirect('back')
         }
     } catch (error) {
         console.log(error)
@@ -98,9 +97,8 @@ router.put('/topic/:id/edit', isCoordinator, async (req, res) => {
     } catch (error) {
         console.log(error)
         if (topic != null) {
-            res.render('coordinator/editTopic', {
-                errorMessage: 'Cannot edit this topic'
-            })
+            req.flash( 'errorMessage', 'Cannot edit this topic' )
+            res.redirect('back')
         } else {
             res.redirect('/coordinator/topic')
         }
@@ -116,9 +114,9 @@ router.delete('/topic/:id', isCoordinator, async (req, res) => {
     } catch (error) {
         console.log(error)
         if (topic != null) {
+            req.flash('errorMessage', 'Could not delete this topic')
             res.render('coordinator/showTopic', {
-                topic: topic,
-                errorMessage: 'Could not delete this topic'
+                topic: topic
             })
         } else {
             res.redirect(`/topic/${topic._id}`)

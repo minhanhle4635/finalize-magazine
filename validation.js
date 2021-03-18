@@ -21,5 +21,18 @@ const loginValidation = (data) =>{
     return loginSchema.validate(data)
 }
 
+//Add new article validation
+// const newArticleValidation = (data) =>{
+//     const newArticleSchema = Joi.object({
+//         name: Joi.string().required(),
+//         description: Joi.string(),
+//         author: Joi.string().required(),
+
+//     })
+//     return newArticleSchema.validate(data)
+// }
+
+
 module.exports.registerValidation = registerValidation
 module.exports.loginValidation = loginValidation
+// module.exports.newArticleValidation = newArticleValidation

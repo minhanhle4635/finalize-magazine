@@ -11,6 +11,7 @@ const uploadPath = path.join('public', Article.fileBasePath)
 const fileMimeTypes = require('../helper/mime-file')
 const imageMimeTypes = ['image/jpeg', 'image/png', 'images/gif']
 const fs = require('fs');
+// const { newArticleValidation } = require('../validation')
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -107,7 +108,7 @@ router.get('/topic/:id', isUser, async (req, res) => {
 
 //get page accepted article index
 router.get('/article', isUser, async (req, res) => {
-    let query = Article.find({status: 'accepted'})
+    let query = Article.find({ status: 'accepted' })
     if (req.query.name != null && req.query.name != '') {
         query = query.regex('name', new RegExp(req.query.name, 'i'))
     }
@@ -124,8 +125,8 @@ router.get('/article', isUser, async (req, res) => {
 })
 
 //get page rejected article
-router.get('/rejectedarticle', isUser, async(req,res)=>{
-    let query = Article.find({ status: 'refused'})
+router.get('/rejectedarticle', isUser, async (req, res) => {
+    let query = Article.find({ status: 'refused' })
     if (req.query.name != null && req.query.name != '') {
         query = query.regex('name', new RegExp(req.query.name, 'i'))
     }
@@ -151,12 +152,23 @@ router.get('/newarticle', isUser, async (req, res) => {
 
 //create new Article
 router.post('/newarticle', isUser, upload.single('file'), async (req, res) => {
-    const topic = await Topic.find({ _id: req.body.topic })
-    const faculty = topic[0].faculty
+    // const{error} = newArticleValidation(req.body)
+    // if(error) return res.status(400).send(error.details[0].message)
+    const topic = await Topic.findOne({ _id: req.body.topic })
+    const deadline = new Date(topic.expiredDate);
+    const faculty = topic.faculty
+    //validation
+    const newName = req.body.name
+    const description = req.body.description
+    const newAuthor = req.body.author
+    if(!newName) return res.status(400).send('No name')
+    if(!newAuthor) return res.status(400).send('No author')
+    if(!description) return description = 'Description will be updated later'
+    //new article
     const article = new Article({
-        name: req.body.name,
-        description: req.body.description,
-        author: req.body.author,
+        name: newName,
+        description: description,
+        author: newAuthor,
         poster: req.session.userId,
         topic: req.body.topic,
         faculty: faculty,
@@ -164,12 +176,21 @@ router.post('/newarticle', isUser, upload.single('file'), async (req, res) => {
     })
     saveCover(article, req.body.cover)
     try {
-        await article.save();
-        req.flash({ errorMessage: 'Wait for permision' })
-        res.redirect('/user/article')      
+        //compare deadline
+        const dateNow = new Date();
+        // const deadline = topic.expiredDate
+        if (dateNow.getTime() <= deadline.getTime()) {
+            await article.save();
+            req.flash( 'errorMessage', 'Wait for permision' )
+            res.redirect('/user/article')
+        } else {
+            if (article.fileName != null) { removefile(article.fileName) }
+            req.flash('errorMessage', 'This topic has met its deadline')
+            res.redirect('back')
+        }
     } catch (error) {
         if (article.fileName != null) { removefile(article.fileName) }
-        req.flash({ errorMessage: 'Cant create this article' });
+        req.flash('errorMessage', 'Cant create this article' );
         res.redirect('back');
     }
 })
@@ -241,7 +262,7 @@ router.put('/article/:id/edit', isUser, upload.single('file'), async (req, res) 
     } catch (error) {
         console.log(error)
         if (article != null) {
-            req.flash({errorMessage: 'Cannot edit this topic'})
+            req.flash( 'errorMessage', 'Cannot edit this topic' )
             res.redirect('back')
         } else {
             res.redirect('/user/article')
@@ -270,10 +291,10 @@ router.delete('/article/:id', isUser, async (req, res) => {
 })
 
 //get article from user
-router.get('/poster', async(req,res)=>{
+router.get('/poster', async (req, res) => {
     try {
-        const article = await Article.find({poster: req.session.userId})
-        res.render('user/poster',{
+        const article = await Article.find({ poster: req.session.userId })
+        res.render('user/poster', {
             articles: article
         })
     } catch (error) {

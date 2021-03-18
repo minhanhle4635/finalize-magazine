@@ -7,10 +7,10 @@ const Topic = require('../models/Topic')
 const { Logout } = require('../Login')
 const { registerValidation } = require('../validation')
 
-router.get('/', isAdmin, async(req, res) => {
+router.get('/', isAdmin, async (req, res) => {
     const user = await User.findById(req.session.userId)
-    res.render('admin/index',{
-        user : user
+    res.render('admin/index', {
+        user: user
     })
 })
 
@@ -42,7 +42,6 @@ router.get('/user/new', isAdmin, async (req, res) => {
 
 router.post('/user/new', isAdmin, async (req, res) => {
     const ExistedUser = await User.findOne({ username: req.body.username })
-    if(ExistedUser) return res.status(400).send('Username already exists')
     const hashedPassword = await bcrypt.hash(req.body.password, 10)
     const newUser = new User({
         name: req.body.name,
@@ -52,8 +51,13 @@ router.post('/user/new', isAdmin, async (req, res) => {
         faculty: req.body.faculty
     })
     try {
+        if (!ExistedUser){
         await newUser.save()
         res.redirect('/admin')
+        } else {
+            req.flash('errorMessage','Username already used')
+            req.redirect('back')
+        }
     } catch (err) {
         console.log(err)
         res.redirect('/admin/user/new')
@@ -106,7 +110,7 @@ router.put('/user/:id/edit', isAdmin, async (req, res) => {
         if (!!newRole) {
             user.role = newRole;
         }
-        if(!!newFaculty){
+        if (!!newFaculty) {
             user.faculty = newFaculty;
         }
         if (!!newPassword) {
@@ -118,9 +122,8 @@ router.put('/user/:id/edit', isAdmin, async (req, res) => {
     } catch (err) {
         console.log(err)
         if (faculty != null) {
-            res.render('admin/editUser', {
-                errorMessage: 'Cannot edit this faculty'
-            })
+            req.flash('errorMessage', 'Cannot edit this faculty')
+            res.redirect('back')
         } else {
             res.redirect('/admin/user/' + req.params.id)
         }
@@ -135,10 +138,8 @@ router.delete('/user/:id', isAdmin, async (req, res) => {
         res.redirect('/admin/user')
     } catch {
         if (faculty != null) {
-            res.render('admin/showUser', {
-                faculty: faculty,
-                errorMessage: 'Could not delete the user'
-            })
+            req.flash('errorMessage', 'Could not delete the user')
+            res.redirect('back')
         } else {
             res.redirect(`/user/${user._id}`)
         }
@@ -179,10 +180,9 @@ router.post('/faculty/new', async (req, res) => {
         if (existedFaculty == null) {
             await newFaculty.save()
             res.redirect('/admin/faculty')
-        } else {
-            res.render('admin/newFaculty', {
-                errorMessage: 'Faculty Existed'
-            })
+        } else { 
+            req.flash('errorMessage', 'Faculty Existed')
+            res.redirect('back')
         }
     } catch (err) {
         console.log(err)
@@ -230,9 +230,8 @@ router.put('/faculty/:id/edit', isAdmin, async (req, res) => {
     } catch (err) {
         console.log(err)
         if (faculty != null) {
-            res.render('admin/editFaculty', {
-                errorMessage: 'Cannot edit this faculty'
-            })
+            req.flash('errorMessage', 'Cannot edit this faculty')
+            res.redirect('back')
         } else {
             res.redirect(`/admin/faculty/${faculty._id}`)
         }
@@ -247,10 +246,8 @@ router.delete('/faculty/:id', isAdmin, async (req, res) => {
         res.redirect('/admin/faculty')
     } catch {
         if (faculty != null) {
-            res.render('admin/showFaculty', {
-                faculty: faculty,
-                errorMessage: 'Could not delete the faculty'
-            })
+            req.flash('errorMessage', 'Could not delete the faculty')
+            res.redirect('back')
         } else {
             res.redirect(`/faculty/${faculty._id}`)
         }
