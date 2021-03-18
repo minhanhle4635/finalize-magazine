@@ -1,0 +1,17 @@
+<h1>Add New Topic</h1>
+<form action="/coordinator/topic/new" method="POST">
+<div>
+    <label for="name">Name</label>
+    <input type="text" id="name" name="name" required>
+</div>
+<div>
+    <label for="expiredDate">Expired Date</label>
+    <input type="date" id="expiredDate" name="expiredDate">
+</div>
+<div>
+    <label for="description">Description</label>
+    <textarea name="description"></textarea>
+</div>
+<button type="submit">Add</button>
+</form>
+<a href="/admin/faculty">Cancel</a>

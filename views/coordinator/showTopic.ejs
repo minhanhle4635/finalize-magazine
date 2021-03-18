@@ -1,0 +1,8 @@
+<h2><%= topic.name %></h2>
+
+<div>Expired Date: <%= topic.expiredDate %></div>
+<div> Description: <%= topic.description %> </div>
+
+<a href="/coordinator/topic/<%= topic._id %>/edit">Edit</a>
+<%- include('../partials/deleteForm', {url: `/coordinator/topic/${topic.id}`})%>
+<a href="/coordinator">Home</a>

@@ -1,0 +1,18 @@
+<h1>Topic</h1>
+
+<% Object.keys(faculties).forEach(facultyId=>{ %>
+    <h2><%= faculties[facultyId].name %></h2>
+    <table>
+        <tr>
+            <td>
+                <% faculties[facultyId].topics.forEach(topic => { %>
+                 <p><a href="/user/topic/<%= topic.id %>"><%= topic.name %></a></p>
+                <% }) %>
+            </td>
+        </tr>
+    </table>
+    <hr>
+<% }) %>
+
+
+<a href="/user">Home</a>

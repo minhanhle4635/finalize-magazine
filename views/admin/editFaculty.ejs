@@ -1,0 +1,13 @@
+<h2>Edit Faculty</h2>
+<form action="/admin/faculty/<%= faculty._id %>/edit?_method=PUT" method="POST">
+    <div>
+        <label>Name</label>
+        <input type="next" name="name" value="<%= faculty.name %>">
+    </div>
+    <div>
+        <label>Description</label>
+        <textarea name="description"><%= faculty.description %></textarea>
+    </div>
+    <a href="/admin/faculty/:id">Cancel</a>
+    <button type="submit">Update</button>
+</form>

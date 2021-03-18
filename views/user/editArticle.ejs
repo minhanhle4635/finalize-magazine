@@ -1,0 +1,33 @@
+<h1>Edit Article</h1>
+<form action="/user/article/<%= article.id %>/edit?_method=PUT" method="POST" enctype="multipart/form-data">
+    <div>
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" value="<%= article.name %>" required>
+    </div>
+    <div>
+        <label for="author">Author</label>
+        <input type="text" name="author" value="<%= article.author %>">
+    </div>
+    <div>
+        <label for="description">Description</label>
+        <textarea name="description"><%= article.description %></textarea>
+    </div>
+    <div>
+        <label for="topic">Topic</label>
+        <select name="topic">
+            <% topics.forEach(topic=> { %>
+                <option label="<%= topic.name %>" value="<%= topic._id %>">
+                    <% }) %>
+        </select>
+    </div>
+    <div>
+        <label>Cover</label>
+        <input type="file" name="cover" class="filepond">
+    </div>
+    <div>
+        <label for="file">File</label>
+        <input type="file" name="file">
+    </div>
+    <button type="submit">Add</button>
+</form>
+<a href="/user">Cancel</a>

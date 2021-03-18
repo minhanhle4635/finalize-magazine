@@ -1,0 +1,13 @@
+<h2><%= faculty.name %></h2>
+
+<div> Description: <%= faculty.description %> </div>
+
+<div> Topic belong to this Faculty: 
+    <% topic.forEach(topic => { %>
+        <%= topic.name %>
+    <% }) %>
+</div>
+
+<a href="/admin/faculty/<%= faculty._id %>/edit">Edit</a>
+<%- include('../partials/deleteForm', {url: `/admin/faculty/${faculty._id}`})%>
+<a href="/admin">Home</a>

@@ -1,0 +1,18 @@
+<h2>Edit Topic</h2>
+<form action="/coordinator/topic/<%= topic.id %>/edit?_method=PUT" method="POST">
+    <div>
+        <label>Name</label>
+        <input type="next" name="name" value="<%= topic.name %>">
+    </div>
+    <div>
+        <label>Expired Date</label>
+        <input type="date" name="expiredDate">
+    </div>
+    <div>
+        <label>Description</label>
+        <textarea name="description"><%= topic.description %></textarea>
+    </div>
+    
+    <button type="submit">Update</button>
+    <a href="/coordinator/topic/:id">Cancel</a>
+</form>

@@ -1,0 +1,18 @@
+<h2>Your article</h2>
+
+<div>
+    <% articles.forEach(article=>{ %>
+        <table>
+            <tr>
+                <td><img height="150" width="100" src="<%= article.coverImagePath %>">
+                    <a href="/user/poster/<%= article._id %>">
+                        <%= article.name %>
+                    </a>
+                </td>
+                <td>
+                    Created At: <%= article.createdAt %>
+                </td>
+            </tr>
+        </table>
+        <% }) %>
+</div>

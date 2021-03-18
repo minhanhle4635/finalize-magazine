@@ -1,0 +1,31 @@
+<a href="/coordinator/topic/new">New Topic</a>
+
+<h1>Topic</h1>
+
+<form action="/coordinator/topic" method="GET">
+    <div>
+        <label>Name</label>
+        <input type="text" name="name" value="<%= searchOptions.name %>">
+    </div>
+    <button type="submit">Search</button>
+</form>
+<div>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>expired Date</th>
+        </tr>
+        <% topic.forEach(topic=>{ %>
+            <tr>
+                <td><a href="/coordinator/topic/<%= topic.id %>">
+                        <%= topic.name %>
+                    </a></td>
+                <td>
+                    <%= topic.expiredDate==null ? '' : topic.expiredDate.toISOString().split('T')[0] %>
+                </td>
+            </tr>
+            <% }) %>
+    </table>
+</div>
+
+<div><a href="/coordinator">Home</a></div>
