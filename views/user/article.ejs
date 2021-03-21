@@ -4,7 +4,7 @@
 
 <a href="/user/newarticle">New Article</a>
 
-<h1>Search Article</h1>
+<h1>Search Your Article</h1>
 <form action="/user/article" method="GET">
     <div>
         <label>Name</label>
@@ -13,16 +13,35 @@
     <button type="submit">Search</button>
 </form>
 
-<h2>Recently Added</h2>
+<div>
+    <form action="/user/article" method="POST">
+        <h2>Your Article</h2>
+        <select name="status">
+            <option value="all">All</option>
+            <option value="pending">Pending</option>
+            <option value="accepted">Accepted</option>
+            <option value="rejected">Rejected</option>
+        </select>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
 <div>
     <% articles.forEach(article=>{ %>
         <table>
             <tr>
-                <td><img height="150" width="100" src="<%= article.coverImagePath %>">
-                    <a href="/user/article/<%= article._id %>">
+                <td>Cover</td>
+                <td>Name</td>
+                <td>Status</td>
+                <td>Link download</td>
+            </tr>
+            <tr>
+                <td><img height="150" width="100" src="<%= article.coverImagePath %>"></td>
+                <td><a href="/user/article/<%= article._id %>">
                         <%= article.name %>
                     </a>
                 </td>
+                <td><%= article.status %> </td>
                 <td>
                     <form action="/user/article/download/<%= article._id %>" method="GET">
                         <input type="submit" value="Download">

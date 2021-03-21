@@ -69,7 +69,7 @@ router.get('/', async (req, res) => {
     let article
     try {
        article = await Article.find({
-           status: 'accepted' 
+           status: 'accepted'
         })
         .limit(6)
         .exec()
