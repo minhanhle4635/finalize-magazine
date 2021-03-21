@@ -71,6 +71,7 @@ router.get('/', async (req, res) => {
        article = await Article.find({
            status: 'accepted'
         })
+        .sort({createdAt: 'desc'})
         .limit(6)
         .exec()
        res.render('index',{

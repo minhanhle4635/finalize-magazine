@@ -17,10 +17,29 @@
     <form action="/user/article" method="POST">
         <h2>Your Article</h2>
         <select name="status">
-            <option value="all">All</option>
-            <option value="pending">Pending</option>
-            <option value="accepted">Accepted</option>
-            <option value="rejected">Rejected</option>
+            <% if (!status || status === 'all') { %>
+                <option selected value="all">All</option>
+            <% } else { %>
+                <option value="all">All</option>
+            <% } %>
+            
+            <% if (status && status === 'pending') { %>
+                <option selected value="pending">Pending</option>
+            <% } else { %>
+                <option value="pending">Pending</option>
+            <% } %>
+
+            <% if (status && status === 'accepted') { %>
+                <option selected value="accepted">Accepted</option>
+            <% } else { %>
+                <option value="accepted">Accepted</option>
+            <% } %>
+
+            <% if (status && status === 'rejected') { %>
+                <option selected value="rejected">Rejected</option>
+            <% } else { %>
+                <option value="rejected">Rejected</option>
+            <% } %>
         </select>
         <button type="submit">Submit</button>
     </form>

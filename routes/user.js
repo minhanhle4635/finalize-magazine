@@ -108,15 +108,17 @@ router.get('/topic/:id', isUser, async (req, res) => {
 
 //get page article index
 router.get('/article', isUser, async (req, res) => {
-    let query = Article.find({})
+    let query = Article.find({poster: req.session.userId})
     if (req.query.name != null && req.query.name != '') {
         query = query.regex('name', new RegExp(req.query.name, 'i'))
     }
     try {
+        const status = req.body.status
         const article = await query.exec()
         res.render('user/article', {
             articles: article,
-            searchOptions: req.query
+            searchOptions: req.query,
+            status: status
         })
     } catch (err) {
         console.log(err)
@@ -128,44 +130,48 @@ router.post('/article', isUser, async (req, res) => {
     const status = req.body.status
     try {
         if(status === 'all'){
-            let query = Article.find({}).limit(10)
+            let query = Article.find({ poster: req.session.userId }).limit(10)
             if (req.query.name != null && req.query.name != '') {
                 query = query.regex('name', new RegExp(req.query.name, 'i'))
             }
             const article = await query.exec()
-            res.render('user/article', {
+            return res.render('user/article', {
                 articles: article,
-                searchOptions: req.query
+                searchOptions: req.query,
+                status: status
             })
         } else if (status === 'pending') {
-            let query = Article.find({ status: 'pending' })
+            let query = Article.find({ status: 'pending', poster: req.session.userId})
             if (req.query.name != null && req.query.name != '') {
                 query = query.regex('name', new RegExp(req.query.name, 'i'))
             }
             const article = await query.exec()
             res.render('user/article', {
                 articles: article,
-                searchOptions: req.query
+                searchOptions: req.query,
+                status: status
             })
         } else if (status === 'accepted') {
-            let query = Article.find({ status: 'accepted' })
+            let query = Article.find({ status: 'accepted' , poster: req.session.userId})
             if (req.query.name != null && req.query.name != '') {
                 query = query.regex('name', new RegExp(req.query.name, 'i'))
             }
             const article = await query.exec()
             res.render('user/article', {
                 articles: article,
-                searchOptions: req.query
+                searchOptions: req.query,
+                status: status
             })
-        } else {
-            let query = Article.find({ status: 'refused' })
+        } else if (status === 'rejected'){
+            let query = Article.find({ status: 'refused', poster: req.session.userId })
             if (req.query.name != null && req.query.name != '') {
                 query = query.regex('name', new RegExp(req.query.name, 'i'))
             }
             const article = await query.exec()
             res.render('user/article', {
                 articles: article,
-                searchOptions: req.query
+                searchOptions: req.query,
+                status: status
             })
         }
     } catch (err) {
