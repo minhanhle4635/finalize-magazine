@@ -39,7 +39,9 @@
     text-decoration: none;
     font-size: 17px;
   }
-  
+  .fw-bold{
+    font-weight: bolder;
+  }
   /* Change the color of links on hover */
   .topnav a:hover {
     background-color: #ddd;
