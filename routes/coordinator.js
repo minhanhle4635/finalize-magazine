@@ -8,8 +8,18 @@ const Article = require('../models/Article')
 
 router.get('/', isCoordinator, async (req, res) => {
     const user = await User.findById(req.session.userId).populate("faculty").exec()
+    const article = await Article.find({ faculty: user.faculty, status: 'pending' }).limit(5)
+    const allArticle = await Article.find({}).countDocuments()
+    const totalPendingArticle = await Article.find({ status: 'pending' }).countDocuments()
+    const totalRejectedArticle = await Article.find({ status: 'refused' }).countDocuments()
+    const totalAcceptedArticle = await Article.find({ status: 'accepted' }).countDocuments()
     res.render('coordinator/index', {
-        user: user
+        user: user,
+        articles: article,
+        totalArticle: allArticle,
+        allPendingArticle: totalPendingArticle,
+        allAcceptedArticle: totalAcceptedArticle,
+        allRejectedArticle: totalRejectedArticle
     })
 })
 

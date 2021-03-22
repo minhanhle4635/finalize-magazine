@@ -41,8 +41,11 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage })
 
-router.get('/', isUser, (req, res) => {
-    res.render('user/index')
+router.get('/', isUser, async (req, res) => {
+    const article = await Article.find({status: 'accepted'})
+    res.render('user/index',{
+        articles: article
+    })
 })
 
 

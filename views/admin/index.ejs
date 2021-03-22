@@ -1,6 +1,23 @@
-<h1>Hello Admin <%= user.name %></h1>
+<h1>Hello Admin <%= user.name %>
+</h1>
 
 <a href="/admin/user">User</a>
 <a href="/admin/faculty">Faculty</a>
+
+<div>
+    Total Faculty: <%= countTotalFaculty %>
+    Total Topic: <%= countTotalTopic %>
+    Total Article: <%= countTotalArticle %>
+</div>
+<div>
+    Total Requests: <%= totalRequests %> ||
+    Requests In Day: <%= day %> : <%= requestsInDay %> requests
+</div>
+<div>
+    Total Account: <%= totalAccount %>
+    Total User: <%= totalUser %>
+    Total Coordinator: <%= totalCoordinator %>
+    Total Admin: <%= totalAdmin %>
+</div>
 
 <a href="/admin/logout">Logout</a>

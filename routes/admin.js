@@ -4,12 +4,32 @@ const bcrypt = require('bcrypt')
 const User = require('../models/User')
 const Faculty = require('../models/Faculty')
 const Topic = require('../models/Topic')
+const Article = require('../models/Article')
+const RequestLog = require('../analytics_service')
 const { Logout } = require('../Login')
 
 router.get('/', isAdmin, async (req, res) => {
     const user = await User.findById(req.session.userId)
+    const analytics = await RequestLog.getAnalytics()
+    const countTotalArticle = await Article.find().estimatedDocumentCount()
+    const countTotalTopic = await Topic.find().estimatedDocumentCount()
+    const countTotalFaculty = await Faculty.find().estimatedDocumentCount()
+    const countTotalAccount = await User.find().estimatedDocumentCount()
+    const countTotalUser = await User.find({role:'user'}).countDocuments()
+    const countTotalCoordinator = await User.find({role:'coordinator'}).countDocuments()
+    const countTotalAdmin = await User.find({role:'admin'}).countDocuments()
     res.render('admin/index', {
-        user: user
+        user: user,
+        countTotalFaculty : countTotalFaculty,
+        countTotalTopic: countTotalTopic,
+        countTotalArticle : countTotalArticle,
+        totalRequests: analytics.totalRequests,
+        day: analytics.requestsPerDay[0]._id,
+        requestsInDay: analytics.requestsPerDay[0].numberOfRequests,
+        totalAccount: countTotalAccount,
+        totalUser : countTotalUser,
+        totalCoordinator: countTotalCoordinator,
+        totalAdmin: countTotalAdmin
     })
 })
 

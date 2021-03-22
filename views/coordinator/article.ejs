@@ -1,5 +1,4 @@
-<h1>Recently Submission Article</h1>
-
+<a href="/coordinator">Home</a>
 <h1>Article</h1>
 
 <h1>Search Article</h1>
@@ -11,7 +10,7 @@
     <button type="submit">Search</button>
 </form>
 
-<h2>Recently Added</h2>
+<h2>All Article</h2>
 <div>
     <% articles.forEach(article=>{ %>
         <form action="/coordinator/article" method="POST">
@@ -39,4 +38,3 @@
         </form>
         <% }) %>
 </div>
-<a href="/coordinator">Home</a>

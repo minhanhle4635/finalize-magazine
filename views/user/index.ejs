@@ -3,3 +3,27 @@
 <a href="/user/topic">Topic</a>
 <a href="/user/article">Your Article</a>
 <a href="/user/logout">Logout</a>
+
+
+
+<div>
+    <h2>Recently Added</h2>
+    <div>
+        <% articles.forEach(article=>{ %>
+            <table>
+                <tr>
+                    <td><img height="150" width="100" src="<%= article.coverImagePath %>">
+                        <a href="/<%= article._id %>">
+                            <%= article.name %>
+                        </a>
+                    </td>
+                    <td>
+                        <form action="/download/<%= article._id %>" method="GET">
+                            <input type="submit" value="Download">
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        <% }) %>
+    </div>
+</div>

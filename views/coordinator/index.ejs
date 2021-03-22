@@ -4,3 +4,40 @@
 <a href="/coordinator/topic">Topic</a>
 <a href="/coordinator/article">Article</a>
 <a href="/coordinator/logout">Logout</a>
+
+<div>
+    Total Article: <%= totalArticle %>
+    Pending Article: <%= allPendingArticle %> 
+    Rejected Article: <%= allRejectedArticle %> 
+    Accepted Article: <%= allAcceptedArticle %> 
+</div>
+
+
+<div>
+    <h2>Recently Added</h2>
+    <% articles.forEach(article=>{ %>
+        <form action="/coordinator/article" method="POST">
+            <input type="text" hidden name="articleId" value="<%= article._id %>">
+            <table>
+                <tr>
+                    <td><img height="150" width="100" src="<%= article.coverImagePath %>"></td>
+                    <td><a href="/coordinator/article/<%= article._id %>">
+                            <%= article.name %>
+                        </a>
+                    </td>
+                    <td>
+                        <form action="/coordinator/article" method="POST">
+                            <label>Comment</label>
+                            <textarea name="comment"><%= article.comment %></textarea>
+                            <p>
+                                <button type="submit" name="permission" value="accept">Accept</button>
+                                <button type="submit" name="permission" value="refuse">Refuse</button>
+                            </p>
+
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <% }) %>
+</div>
