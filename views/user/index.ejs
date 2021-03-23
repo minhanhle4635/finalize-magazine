@@ -1,7 +1,8 @@
 <h1>Hello User</h1>
 
 <a href="/user/topic">Topic</a>
-<a href="/user/article">Your Article</a>
+<a href="/user/article">All Article</a>
+<a href="/user/poster">Your Article</a>
 <a href="/user/logout">Logout</a>
 
 
@@ -12,11 +13,10 @@
         <% articles.forEach(article=>{ %>
             <table>
                 <tr>
-                    <td><img height="150" width="100" src="<%= article.coverImagePath %>">
-                        <a href="/user/<%= article._id %>">
-                            <%= article.name %>
-                        </a>
+                    <td>
+                        <img height="150" width="100" src="<%= article.coverImagePath %>">   
                     </td>
+                    <td> <%= article.name %> </td>
                     <td>
                         <form action="/download/<%= article._id %>" method="GET">
                             <input type="submit" value="Download">

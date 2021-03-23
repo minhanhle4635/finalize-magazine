@@ -34,17 +34,17 @@ const storage = multer.diskStorage({
                 extension = '.pdf';
                 break;
         }
-        const fileSave = `${file.fieldname}-${Date.now()}${extension}`    
+        const fileSave = `${file.fieldname}-${Date.now()}${extension}`
         callback(null, fileSave)
-            
+
     }
 })
 
 const upload = multer({ storage: storage })
 
 router.get('/', isUser, async (req, res) => {
-    const article = await Article.find({status: 'accepted'})
-    res.render('user/index',{
+    const article = await Article.find({ status: 'accepted' })
+    res.render('user/index', {
         articles: article
     })
 })
@@ -123,15 +123,15 @@ router.get('/topic/:id', isUser, async (req, res) => {
 })
 
 //get page article index
-router.get('/article', isUser, async (req, res) => {
-    let query = Article.find({poster: req.session.userId})
+router.get('/poster', isUser, async (req, res) => {
+    let query = Article.find({ poster: req.session.userId })
     if (req.query.name != null && req.query.name != '') {
         query = query.regex('name', new RegExp(req.query.name, 'i'))
     }
     try {
         const status = req.body.status
         const article = await query.exec()
-        res.render('user/article', {
+        res.render('user/poster', {
             articles: article,
             searchOptions: req.query,
             status: status
@@ -142,49 +142,49 @@ router.get('/article', isUser, async (req, res) => {
     }
 })
 
-router.post('/article', isUser, async (req, res) => {
+router.post('/poster', isUser, async (req, res) => {
     const status = req.body.status
     try {
-        if(status === 'all'){
+        if (status === 'all') {
             let query = Article.find({ poster: req.session.userId }).limit(10)
             if (req.query.name != null && req.query.name != '') {
                 query = query.regex('name', new RegExp(req.query.name, 'i'))
             }
             const article = await query.exec()
-            return res.render('user/article', {
+            return res.render('user/poster', {
                 articles: article,
                 searchOptions: req.query,
                 status: status
             })
         } else if (status === 'pending') {
-            let query = Article.find({ status: 'pending', poster: req.session.userId})
+            let query = Article.find({ status: 'pending', poster: req.session.userId })
             if (req.query.name != null && req.query.name != '') {
                 query = query.regex('name', new RegExp(req.query.name, 'i'))
             }
             const article = await query.exec()
-            res.render('user/article', {
+            res.render('user/poster', {
                 articles: article,
                 searchOptions: req.query,
                 status: status
             })
         } else if (status === 'accepted') {
-            let query = Article.find({ status: 'accepted' , poster: req.session.userId})
+            let query = Article.find({ status: 'accepted', poster: req.session.userId })
             if (req.query.name != null && req.query.name != '') {
                 query = query.regex('name', new RegExp(req.query.name, 'i'))
             }
             const article = await query.exec()
-            res.render('user/article', {
+            res.render('user/poster', {
                 articles: article,
                 searchOptions: req.query,
                 status: status
             })
-        } else if (status === 'rejected'){
+        } else if (status === 'rejected') {
             let query = Article.find({ status: 'refused', poster: req.session.userId })
             if (req.query.name != null && req.query.name != '') {
                 query = query.regex('name', new RegExp(req.query.name, 'i'))
             }
             const article = await query.exec()
-            res.render('user/article', {
+            res.render('user/poster', {
                 articles: article,
                 searchOptions: req.query,
                 status: status
@@ -216,8 +216,8 @@ router.post('/newarticle', isUser, upload.single('file'), async (req, res) => {
     const description = req.body.description
     const newAuthor = req.body.author
     const file = req.file.filename
-    if (!newName) return req.flash('errorMessage','Name must be added')
-    if (!newAuthor) return req.flash('errorMessage','Author must be added')
+    if (!newName) return req.flash('errorMessage', 'Name must be added')
+    if (!newAuthor) return req.flash('errorMessage', 'Author must be added')
     if (!description) return req.flash('errorMessage', 'Description must be added')
     if (!file) {
         file = 'null'
@@ -350,12 +350,17 @@ router.delete('/article/:id', isUser, async (req, res) => {
     }
 })
 
-//get article from user
-router.get('/poster', async (req, res) => {
+//get all article
+router.get('/article', async (req, res) => {
     try {
-        const article = await Article.find({ poster: req.session.userId })
-        res.render('user/poster', {
-            articles: article
+        let query = Article.find()
+        if (req.query.name != null && req.query.name != '') {
+            query = query.regex('name', new RegExp(req.query.name, 'i'))
+        }
+        const article = await query.exec()
+        res.render('user/article', {
+            articles: article,
+            searchOptions: req.query
         })
     } catch (error) {
         res.redirect('/user')
