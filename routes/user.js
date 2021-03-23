@@ -34,8 +34,9 @@ const storage = multer.diskStorage({
                 extension = '.pdf';
                 break;
         }
-        const fileSave = `${file.fieldname}-${Date.now()}${extension}`
+        const fileSave = `${file.fieldname}-${Date.now()}${extension}`    
         callback(null, fileSave)
+            
     }
 })
 
@@ -106,6 +107,17 @@ router.get('/topic/:id', isUser, async (req, res) => {
     } catch (error) {
         console.log(error)
         res.redirect('/user/topic')
+    }
+})
+
+//get article page from index
+router.get('/:id', isUser, async  (req,res)=>{
+    try {
+        const article = await Article.findById(req.params.id).populate("topic").exec()
+        res.render('user/showArticleIndex', { article: article })
+    } catch (error) {
+        console.log(error)
+        res.redirect('/user')
     }
 })
 
@@ -183,24 +195,6 @@ router.post('/article', isUser, async (req, res) => {
     }
 })
 
-// //get page rejected article
-// router.get('/rejectedarticle', isUser, async (req, res) => {
-//     let query = Article.find({ status: 'refused' })
-//     if (req.query.name != null && req.query.name != '') {
-//         query = query.regex('name', new RegExp(req.query.name, 'i'))
-//     }
-//     try {
-//         const article = await query.exec()
-//         res.render('user/rejectedarticle', {
-//             articles: article,
-//             searchOptions: req.query
-//         })
-//     } catch (err) {
-//         console.log(err)
-//         res.redirect('/user')
-//     }
-// })
-
 // get page new Article
 router.get('/newarticle', isUser, async (req, res) => {
     const topic = await Topic.find({})
@@ -220,9 +214,15 @@ router.post('/newarticle', isUser, upload.single('file'), async (req, res) => {
     const newName = req.body.name
     const description = req.body.description
     const newAuthor = req.body.author
-    if (!newName) return res.status(400).send('No name')
-    if (!newAuthor) return res.status(400).send('No author')
-    if (!description) return description = 'Description will be updated later'
+    const file = req.file.filename
+    if (!newName) return req.flash('errorMessage','Name must be added')
+    if (!newAuthor) return req.flash('errorMessage','Author must be added')
+    if (!description) return req.flash('errorMessage', 'Description must be added')
+    if (!file) {
+        file = 'null'
+        req.flash('errorMessage', 'File must be added')
+        res.redirect('back')
+    }
     //new article
     const article = new Article({
         name: newName,
@@ -231,7 +231,7 @@ router.post('/newarticle', isUser, upload.single('file'), async (req, res) => {
         poster: req.session.userId,
         topic: req.body.topic,
         faculty: faculty,
-        fileName: req.file.filename
+        fileName: file
     })
     saveCover(article, req.body.cover)
     try {

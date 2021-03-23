@@ -18,6 +18,10 @@ router.get('/', isAdmin, async (req, res) => {
     const countTotalUser = await User.find({role:'user'}).countDocuments()
     const countTotalCoordinator = await User.find({role:'coordinator'}).countDocuments()
     const countTotalAdmin = await User.find({role:'admin'}).countDocuments()
+    const array = analytics.requestsPerDay
+    let d = new Date()
+    let day = array[d.getDay()]
+    console.log(day)
     res.render('admin/index', {
         user: user,
         countTotalFaculty : countTotalFaculty,
@@ -25,7 +29,7 @@ router.get('/', isAdmin, async (req, res) => {
         countTotalArticle : countTotalArticle,
         totalRequests: analytics.totalRequests,
         day: analytics.requestsPerDay[0]._id,
-        requestsInDay: analytics.requestsPerDay[0].numberOfRequests,
+        requestsInDay: analytics.requestsPerDay[0].requestsInDay,
         totalAccount: countTotalAccount,
         totalUser : countTotalUser,
         totalCoordinator: countTotalCoordinator,

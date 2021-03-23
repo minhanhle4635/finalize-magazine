@@ -7,7 +7,7 @@ const Login = async (req,res,next) => {
     const user = await User.findOne({username: username}).select(['+password']).exec()
     //if no username is founded
     if(!user) {
-        req.flash('errorMessage', 'username is not founded')
+        req.flash('errorMessage', 'username is not found')
         return res.redirect('back')
     }
     //if the password is wrong
