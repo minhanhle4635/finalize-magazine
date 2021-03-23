@@ -110,6 +110,17 @@ router.get('/topic/:id', isUser, async (req, res) => {
     }
 })
 
+//get article page from index
+router.get('/:id', isUser, async  (req,res)=>{
+    try {
+        const article = await Article.findById(req.params.id).populate("topic").exec()
+        res.render('user/showArticleIndex', { article: article })
+    } catch (error) {
+        console.log(error)
+        res.redirect('/user')
+    }
+})
+
 //get page article index
 router.get('/article', isUser, async (req, res) => {
     let query = Article.find({poster: req.session.userId})

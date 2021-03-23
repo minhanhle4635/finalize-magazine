@@ -18,6 +18,10 @@ router.get('/', isAdmin, async (req, res) => {
     const countTotalUser = await User.find({role:'user'}).countDocuments()
     const countTotalCoordinator = await User.find({role:'coordinator'}).countDocuments()
     const countTotalAdmin = await User.find({role:'admin'}).countDocuments()
+    const array = analytics.requestsPerDay
+    let d = new Date()
+    let day = array[d.getDay()]
+    console.log(day)
     res.render('admin/index', {
         user: user,
         countTotalFaculty : countTotalFaculty,
@@ -25,7 +29,7 @@ router.get('/', isAdmin, async (req, res) => {
         countTotalArticle : countTotalArticle,
         totalRequests: analytics.totalRequests,
         day: analytics.requestsPerDay[0]._id,
-        requestsInDay: analytics.requestsPerDay[0].numberOfRequests,
+        requestsInDay: analytics.requestsPerDay[0].requestsInDay,
         totalAccount: countTotalAccount,
         totalUser : countTotalUser,
         totalCoordinator: countTotalCoordinator,
@@ -36,12 +40,12 @@ router.get('/', isAdmin, async (req, res) => {
 //User function
 
 router.get('/user', async (req, res) => {
-    let query = User.find({}).populate('faculty').exec()
+    let query = User.find()
     if (req.query.name != null && req.query.name != '') {
         query = query.regex('name', new RegExp(req.query.name, 'i'))
     }
     try {
-        const user = await query
+        const user = await query.populate('faculty').exec()
         res.render('admin/user', {
             user: user,
             searchOptions: req.query
