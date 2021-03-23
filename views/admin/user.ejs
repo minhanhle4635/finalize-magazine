@@ -1,5 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <section>
+        <nav class="sticky sticky-admin">
+            <div class="row">
+                <img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
+                <img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black">
+                    <ul class="main-nav">
+                    <li> <a href="/admin/faculty">Manage falcuty </a> </li>
+                    <li> <a href="/admin/logout">logout </a> </li>
+                 </ul>
+            </div>
+        </nav>
+    </section>
+
+<h3>Search User</h3>
 <a href="/admin/user/new">Add New User</a>
-<h1>Search User</h1>
 <form action="/admin/user" method="GET">
     <div>
         <label>Name</label>
@@ -7,6 +23,7 @@
     </div>
     <button type="submit">Search</button>
 </form>
+
 <div>
     <% user.forEach(user=>{ %>
         <table>
@@ -29,4 +46,8 @@
         </table>
     <% }) %>
 </div>
-<a href="/admin">Home</a>
+
+</body>
+</html>
+
+
