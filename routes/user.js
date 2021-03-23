@@ -49,6 +49,18 @@ router.get('/', isUser, async (req, res) => {
     })
 })
 
+// //get article page from index
+// router.get('/:id', isUser, async  (req,res)=>{
+//     try {
+//         const article = await Article.findById(req.params.id).populate("topic").exec()
+//         res.render('user/showArticleIndex', { article: article })
+//     } catch (error) {
+//         console.log(error)
+//         res.redirect('/user')
+//     }
+// })
+
+
 
 //get topic index page 
 router.get('/topic', isUser, async (req, res) => {
@@ -107,17 +119,6 @@ router.get('/topic/:id', isUser, async (req, res) => {
     } catch (error) {
         console.log(error)
         res.redirect('/user/topic')
-    }
-})
-
-//get article page from index
-router.get('/:id', isUser, async  (req,res)=>{
-    try {
-        const article = await Article.findById(req.params.id).populate("topic").exec()
-        res.render('user/showArticleIndex', { article: article })
-    } catch (error) {
-        console.log(error)
-        res.redirect('/user')
     }
 })
 
