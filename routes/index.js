@@ -72,7 +72,7 @@ router.get('/', async (req, res) => {
            status: 'accepted'
         })
         .sort({createdAt: 'desc'})
-        .limit(6)
+        .limit(8)
         .exec()
        res.render('index',{
         articles: article

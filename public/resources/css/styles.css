@@ -198,6 +198,14 @@ header {
   border-bottom: 2px solid #e67e22;
 }
 
+li form{
+  display: inline-block;
+}
+
+.btn-search{
+ display: inline-block;
+}
+
 /*sticky nav*/
 .sticky {
   position: fixed;
@@ -274,7 +282,33 @@ header {
 .posts-showcase li {
   display: block;
   float: left;
+  height: 100%;
   width: 25%;
+}
+
+.btn-post{
+  display: none;
+  position: relative;
+}
+
+.btn-titles{
+  display: inline-block; /*can edit padding and border*/
+  padding: 10px 30px;
+  font-weight: 300;
+  text-decoration: none;
+  border-radius: 200px;
+  transition: background-color 0.5s, border 0.5s, color 0.5s;
+}
+.wrapper:hover .btn-post {
+  display: inline-block;
+  
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+
+.input-bg {
+  background-color: none;
 }
 
 .post-img {
@@ -286,7 +320,7 @@ header {
 
 .post-img img {
   width: 100%; /* 100% of 100% .post-img*/
-  height: auto;
+  height: 400px;
   transform: scale(1.15);
   transition: transform 0.5s, opacity 0.5s;
   opacity: 0.7;

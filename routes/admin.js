@@ -36,12 +36,12 @@ router.get('/', isAdmin, async (req, res) => {
 //User function
 
 router.get('/user', async (req, res) => {
-    let query = User.find({}).populate('faculty').exec()
+    let query = User.find()
     if (req.query.name != null && req.query.name != '') {
         query = query.regex('name', new RegExp(req.query.name, 'i'))
     }
     try {
-        const user = await query
+        const user = await query.populate('faculty').exec()
         res.render('admin/user', {
             user: user,
             searchOptions: req.query
