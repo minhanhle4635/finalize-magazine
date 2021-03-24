@@ -1,15 +1,44 @@
-<a href="/admin/faculty/new">Add New Faculty</a>
-<h1>Search Faculty</h1>
-<form action="/admin/faculty" method="GET">
-    <div>
-        <label>Name</label>
-        <input type="text" name="name" value="<%= searchOptions.name %>">
+<nav class="sticky sticky-admin">
+    <div class="row">
+        <img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
+        <img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black">
+        <ul class="main-nav">
+            <li> <a href="/admin/user">Manage User </a> </li>
+            <li> <a href="/admin">Home </a> </li>
+            <li> <a href="/admin/logout">logout </a> </li>
+        </ul>
     </div>
-    <button type="submit">Search</button>
-</form>
-<div>
-    <% faculty.forEach(faculty =>{ %>
-        <a href="/admin/faculty/<%= faculty._id %>"><%= faculty.name %></a>
-    <% }) %>
-</div>
-<a href="/admin">Home</a>
+</nav>
+
+<section class="centered-search">
+    <h3>Search Faculty</h3>
+    <form action="/admin/faculty" method="GET">
+        <div class="search-css">
+            <input type="text" name="name" value="<%= searchOptions.name %>">
+        </div>
+        <button class="btn btn-full" type="submit">Search</button>
+        <a class="btn btn-full" href="/admin/faculty/new">Add New Falcuty</a>
+        <a class="btn btn-full" href="/admin/faculty">Refresh</a>
+    </form>
+</section>
+
+<section class="section-rewards">
+    <div class="row">
+        <h2>FALCUTIES</h2>
+    </div>
+    
+    <div class="row">
+        <% faculty.forEach(faculty =>{ %>
+            <div class="col-cat span-1-of-3">
+                <div class="catergories-box">
+                    <div>
+                        <p class="catergories">
+                            <a class="btn btn-ghost" href="/admin/faculty/<%= faculty._id %>"><%= faculty.name %></a>
+                        </p>
+                    </div>           
+                </div>
+            </div> 
+            <% }) %>     
+    </div>
+   
+</section>

@@ -659,3 +659,38 @@ footer p {
   margin-right: auto;
   margin-bottom: 15px;
 }
+
+/*-------------- ADMIN/FALCUTY SETUP ---------------*/
+
+.catergories-box {
+  /* put rewardbox class inside col allow me to edit the reward box more freely*/
+  background-color: #fff;
+  border-radius: 10px;
+  width: 90%;
+  margin-left: 5%; /* half of 10 in 100% since we use 90%*/
+  box-shadow: 0 2px 2px #efefef; /*x y blur color*/
+}
+
+.catergories-box div {
+  padding: 10px;
+  border-bottom: 1px solid #e8e8e8;
+  text-align: center;
+  border: 0;
+}
+
+.catergories {
+  font-size: 125%;
+  margin-bottom: 10px;
+  font-weight: 100;
+  color: #e67e22;
+}
+
+.col-cat {
+  display: block;
+  float: left;
+  margin: 1% 0 1% 1%;
+}
+
+.fal-add-css {
+  text-align: center;
+}

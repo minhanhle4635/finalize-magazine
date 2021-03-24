@@ -1,11 +1,54 @@
-<h2><%= faculty.name %></h2>
+<nav class="sticky sticky-admin">
+    <div class="row">
+        <img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
+        <img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black">
+        <ul class="main-nav">
+            <li> <a href="/admin/user">Manage User </a> </li>
+            <li> <a href="/admin">Home </a> </li>
+            <li> <a href="/admin/logout">logout </a> </li>
+        </ul>
+    </div>
+</nav>
 
-<div> Description: <%= faculty.description %> </div>
+<div class="row">
+    <form class="signup-form">
+        <div class="log-border">
+            <h2> <%= faculty.name %> </h2>
+            <div class="row">
+                <div class="col span-1-of-3">
+                    <label for="">Description:</label>
+                </div>
+                <div class="col span-2-of-3">
+                    <%= faculty.description %>
+                </div>
+            </div>
 
-<div> Topic belong to this Faculty: 
-    <% topic.forEach(topic => { %>
-        <%= topic.name %>
-    <% }) %>
+            <div class="row">
+                <div class="col span-1-of-3">
+                    <label for="">Faculty topic:</label>
+                </div>
+                <div class="col span-2-of-3">
+                    <% topic.forEach(topic => { %>
+                        <%= topic.name %>
+                    <% }) %>
+                </div>
+            </div>
+            
+            <div class="row fal-add-css">
+                <div class="col span-1-of-3">
+                    <a class="btn btn-ghost" href="/admin/faculty/<%= faculty._id %>/edit">Edit</a>
+                </div>
+
+                <div class="col span-1-of-3">
+                    <%- include('../partials/deleteForm', {url: `/admin/faculty/${faculty._id}`})%>      
+                </div>
+
+                <div class="col span-1-of-3">
+                    <a class="btn btn-ghost" href="/admin/faculty">Home</a>
+                </div>
+            </div>
+        <div>
+</form>
 </div>
 <div>
     <form action="/admin/faculty/downloadAll/<%= faculty._id %>" method="GET">
@@ -13,6 +56,3 @@
     </form>
 </div>
 
-<a href="/admin/faculty/<%= faculty._id %>/edit">Edit</a>
-<%- include('../partials/deleteForm', {url: `/admin/faculty/${faculty._id}`})%>
-<a href="/admin">Home</a>
