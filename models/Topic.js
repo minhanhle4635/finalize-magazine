@@ -22,4 +22,16 @@ const topicSchema = mongoose.Schema({
     }
 })
 
+topicSchema.pre('remove', function(next){
+    Article.find({topic: this.id}, (err,articles)=>{
+        if(err){
+            next(err)
+        } else if( articles.length > 0){
+            next(new Error('This faculty has article still'))
+        } else {
+            next()
+        }
+    })
+})
+
 module.exports = mongoose.model('Topic', topicSchema)
