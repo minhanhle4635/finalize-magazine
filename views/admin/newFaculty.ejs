@@ -1,13 +1,51 @@
-<h1>Add New Faculty</h1>
-<form action="/admin/faculty/new" method="POST">
-<div>
-    <label for="name">Name</label>
-    <input type="text" id="name" name="name" required>
-</div>
-<div>
-    <label for="description">Description</label>
-    <textarea name="description"></textarea>
-</div>
-<button type="submit">Add</button>
+<nav class="sticky sticky-admin">
+    <div class="row">
+        <img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
+        <img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black">
+        <ul class="main-nav">
+            <li> <a href="/admin/user">Manage User </a> </li>
+            <li> <a href="/admin">Home </a> </li>
+            <li> <a href="/admin/logout">logout </a> </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="row">
+    <form method="POST" action="/admin/faculty/new" class="signup-form">
+        <div class="log-border">
+            <h2> Add New Faculty </h2>
+            <div class="row">
+                <div class="col span-1-of-3">
+                    <label for="">Name</label>
+                </div>
+                <div class="col span-2-of-3">
+                    <input type="text" name="name" id="name" placeholder="Enter falcuty name" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col span-1-of-3">
+                    <label for="">Falcuty description</label>
+                </div>
+                <div class="col span-2-of-3">
+                    <textarea name="description"></textarea>
+                </div>
+            </div>
+
+            
+            <div class="row fal-add-css">
+                <div class="col span-1-of-3">
+                    <a class="btn btn-ghost" href="/admin/faculty">Cancel</a>
+                </div>
+                
+                <div class="col span-1-of-3">
+                    <button class="btn btn-ghost" type="submit">ADD</button>
+                </div>
+
+                <div class="col span-1-of-3">
+                    <a class="btn btn-ghost" href="/admin/faculty">Home</a>
+                </div>
+            </div>
+        <div>
 </form>
-<a href="/admin/faculty">Cancel</a>
+</div>

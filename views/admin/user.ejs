@@ -7,6 +7,7 @@
             <img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black">
             <ul class="main-nav">
                 <li> <a href="/admin/faculty">Manage falcuty </a> </li>
+                <li> <a href="/admin">Home </a> </li>
                 <li> <a href="/admin/logout">logout </a> </li>
             </ul>
         </div>
@@ -35,7 +36,7 @@
     <% user.forEach(user=>{ %> 
         <tbody>
             <tr>
-                <td><a href="/admin/user/<%= user._id %>">
+                <td style="text-align: center;" ><a class="btn" href="/admin/user/<%= user._id %>">
                     <%= user.name %> </a>
                 </td>
                 <td><%= user.role %></td>
