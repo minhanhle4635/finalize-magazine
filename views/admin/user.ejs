@@ -1,30 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <body>
-    <section>
-        <nav class="sticky sticky-admin">
-            <div class="row">
-                <img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
-                <img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black">
-                    <ul class="main-nav">
-                    <li> <a href="/admin/faculty">Manage falcuty </a> </li>
-                    <li> <a href="/admin/logout">logout </a> </li>
-                 </ul>
-            </div>
-        </nav>
-    </section>
+    <nav class="sticky sticky-admin">
+        <div class="row">
+            <img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
+            <img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black">
+            <ul class="main-nav">
+                <li> <a href="/admin/faculty">Manage falcuty </a> </li>
+                <li> <a href="/admin/logout">logout </a> </li>
+            </ul>
+        </div>
+    </nav>
 
-<h3>Search User</h3>
-<a href="/admin/user/new">Add New User</a>
-<form action="/admin/user" method="GET">
-    <div>
-        <label>Name</label>
-        <input type="text" name="name" value="<%= searchOptions.name %>">
+<section class="centered-search">
+    <h3>Search User</h3>
+    <form action="/admin/user" method="GET">
+        <div class="search-css">
+            <input type="text" name="name" value="<%= searchOptions.name %>">
+        </div>
+        <button class="btn btn-full" type="submit">Search</button>
+        <a class="btn btn-full" href="/admin/user/new">Add New User</a>
+    </form>
+</section>
+
+<table class="content-table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Falcuty</th>
+        </tr>
+    </thead>
+    <% user.forEach(user=>{ %> 
+        <tbody>
+            <tr>
+                <td><a href="/admin/user/<%= user._id %>">
+                    <%= user.name %> </a>
+                </td>
+                <td><%= user.role %></td>
+                <td><% if(user.faculty) { %>
+                <%= user.faculty.name %>
+                <% } %>
+                </td>
+            </tr>
+        </tbody>
+    <% }) %> 
+</table>
+
+<footer>
+    <div class="row">
+        <div class="col span-1-of-2">
+            <ul class="nav-footer">
+                <li> <a href="#">about us</a> </li> 
+                <li> <a href="#">blog</a> </li> 
+                <li> <a href="#">Press</a> </li> 
+                <li> <a href="#">IOS app</a> </li> 
+                <li> <a href="#">ANDROID app</a> </li> 
+            </ul>
+        </div>
+        <div class="col span-1-of-2">
+            <ul class="social-link-footer">
+                <li>
+                    <a href="#"> <i class="ion-logo-facebook"></i> </a> 
+                </li>
+                <li>
+                    <a href="#"> <i class="ion-logo-twitter"></i> </a> 
+                </li>
+                <li>
+                    <a href="#"> <i class="ion-logo-googleplus"></i> </a> 
+                </li>
+                <li>
+                    <a href="#"> <i class="ion-logo-instagram"></i> </a> 
+                </li>
+            </ul>
+        </div>
     </div>
-    <button type="submit">Search</button>
-</form>
+    <div class="row">
+        <p>
+            Copyrighted &copy; 2020 by Unipara all rights reversed
+        </p>
+    </div>
+</footer>
+</body>
+</html>
 
-<div>
+
+<!--
+    <div>
     <% user.forEach(user=>{ %>
         <table>
             <tr>
@@ -49,8 +111,4 @@
         </table>
     <% }) %>
 </div>
-
-</body>
-</html>
-
-
+ -->
