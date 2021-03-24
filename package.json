@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "@hapi/joi": "^17.1.1",
+    "adm-zip": "^0.5.4",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "ejs": "^3.1.6",
@@ -18,6 +19,10 @@
     "express-ejs-layouts": "^2.5.0",
     "express-flash": "0.0.2",
     "express-session": "^1.17.1",
+    "express-zip": "^3.0.0",
+    "file-saver": "^2.0.5",
+    "jszip": "^3.6.0",
+    "jszip-utils": "^0.1.0",
     "method-override": "^3.0.0",
     "moment": "^2.29.1",
     "momentjs": "^2.0.0",

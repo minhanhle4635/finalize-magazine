@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <body>
     <header class="header-img">
         <nav>
             <div class="row">
                 <img src="resources/img/logo.jpg" alt="missing picture" class="logo">
                 <img src="resources/img/logo.jpg" alt="missing picture" class="logo-black">
-                    <ul class="main-nav">
+                <ul class="main-nav">
                     <li> <a href="#cat">Categories </a> </li>
                     <li> <a href="#guides">How to contribute </a> </li>
                     <li> <a href="#branches">Our branches </a> </li>
@@ -28,25 +29,28 @@
         <div class="row">
             <h2>Write your discovery &mdash; Share to all</h2>
             <p class="long-text">
-                Greeting, this is Unipara's magazine posts website(UMP's webiste), where student from ALL of the braches of this university come to post their discovery to help building a social environment and earn rewards ! 
+                Greeting, this is Unipara's magazine posts website(UMP's webiste), where student from ALL of the braches
+                of this university come to post their discovery to help building a social environment and earn rewards !
             </p>
             <div class="row">
                 <div class="col span-1-of-4 box">
                     <i class="ion-md-mail icon-big"></i>
                     <h3>Simple posting</h3>
                     <p>
-                        Whatever your subjects maybe, simply follow the steps below to start posting your latest work/research of your courses
+                        Whatever your subjects maybe, simply follow the steps below to start posting your latest
+                        work/research of your courses
                     </p>
                 </div>
-            
+
                 <div class="col span-1-of-4 box">
                     <i class="ion-md-eye icon-big"></i>
                     <h3>Easy spectating</h3>
                     <p>
-                        If you are not sure what falcuty to join, all other works are available to be visited and read in the categories section
+                        If you are not sure what falcuty to join, all other works are available to be visited and read
+                        in the categories section
                     </p>
                 </div>
-              
+
                 <div class="col span-1-of-4 box">
                     <i class="ion-ios-information-circle icon-big"></i>
                     <h3>Safe and secured</h3>
@@ -54,12 +58,13 @@
                         All of your data and work are preseved in the most high quality server of UMP's website
                     </p>
                 </div>
-            
+
                 <div class="col span-1-of-4 box ">
                     <i class="ion-md-infinite icon-big"></i>
                     <h3>Posts anything</h3>
                     <p>
-                        We don't want limit your creativity, which means you can post to any falcuty you like as long as it within the university courses!
+                        We don't want limit your creativity, which means you can post to any falcuty you like as long as
+                        it within the university courses!
                     </p>
                 </div>
             </div>
@@ -73,36 +78,40 @@
                 <li>
                     <figure class="post-img wrapper">
                         <div class="wrapper">
-                            <img src="<%= article.coverImagePath %>"> 
-                        <a class="btn-full btn-post" href="/<%= article._id %>"> <%= article.name %> </a>
-                        <br>
-                        <br>
+                            <img src="<%= article.coverImagePath %>">
+                            <a class="btn-full btn-post" href="/<%= article._id %>">
+                                <%= article.name %>
+                            </a>
+                            <br>
+                            <br>
                             <form class="btn-post" action="/download/<%= article._id %>" method="GET">
                                 <input type="submit" value="Download">
-                            </form>   
+                            </form>
                         </div>
-                         
+
                     </figure>
                 </li>
-            <% }) %>
+                <% }) %>
         </ul>
         <ul class="posts-showcase clearfix ">
             <% articles.forEach(article=>{ %>
                 <li>
                     <figure class="post-img wrapper">
                         <div class="wrapper">
-                            <img src="<%= article.coverImagePath %>"> 
-                        <a class="btn-full btn-post" href="/<%= article._id %>"> <%= article.name %> </a>
-                        <br>
-                        <br>
+                            <img src="<%= article.coverImagePath %>">
+                            <a class="btn-full btn-post" href="/<%= article._id %>">
+                                <%= article.name %>
+                            </a>
+                            <br>
+                            <br>
                             <form class="btn-post" action="/download/<%= article._id %>" method="GET">
                                 <input type="submit" value="Download">
-                            </form>   
+                            </form>
                         </div>
-                         
+
                     </figure>
                 </li>
-            <% }) %>
+                <% }) %>
         </ul>
     </section>
 
@@ -145,7 +154,7 @@
 
             </div>
         </div>
-        
+
     </section>
 
     <section class="section-cities" id="branches">
@@ -169,9 +178,9 @@
                     <i class="ion-logo-twitter icon-sm"></i>
                     <a href="#">@Unipara_lx</a>
                 </div>
-                
+
             </div>
-        
+
             <div class="col span-1-of-4 box">
                 <img src="resources/img/san-francisco.jpg" alt="missing pic">
                 <h3>San Francisco</h3>
@@ -187,9 +196,9 @@
                     <i class="ion-logo-twitter icon-sm"></i>
                     <a href="#">@Unipara_sf</a>
                 </div>
-                
+
             </div>
-       
+
             <div class="col span-1-of-4 box">
                 <img src="resources/img/berlin.jpg" alt="missing pic">
                 <h3>Berlin</h3>
@@ -205,9 +214,9 @@
                     <i class="ion-logo-twitter icon-sm"></i>
                     <a href="#">@Unipara_berlin</a>
                 </div>
-                
+
             </div>
-        
+
             <div class="col span-1-of-4 box">
                 <img src="resources/img/london.jpg" alt="missing pic">
                 <h3>London</h3>
@@ -223,7 +232,7 @@
                     <i class="ion-logo-twitter icon-sm "></i>
                     <a href="#">@Unipara_london</a>
                 </div>
-                
+
             </div>
         </div>
 
@@ -237,19 +246,22 @@
         <div class="row">
             <div class="col span-1-of-3 ">
                 <blockquote>
-                    UMP is just a good tool to boarden your horizon and also deepen your knowledge of current course that you are going through,is a good learning experiences that you should not let it pass
+                    UMP is just a good tool to boarden your horizon and also deepen your knowledge of current course
+                    that you are going through,is a good learning experiences that you should not let it pass
                     <cite><img src="resources/img/customer-1.jpg" alt="">Alberto Duncan</cite>
                 </blockquote>
             </div>
             <div class="col span-1-of-3 ">
                 <blockquote>
-                    By posting your work on UMP, you are helping the university to enhance the learning experience not only for yourself but those around you and for many future generation to come!
+                    By posting your work on UMP, you are helping the university to enhance the learning experience not
+                    only for yourself but those around you and for many future generation to come!
                     <cite><img src="resources/img/customer-2.jpg" alt="">Joana Silva</cite>
                 </blockquote>
             </div>
             <div class="col span-1-of-3 ">
                 <blockquote>
-                    Using UMP will not only improve your academic scores but also a chance for you to earn unique prizes that may not be obtainable anywhere else, so will not join now ?
+                    Using UMP will not only improve your academic scores but also a chance for you to earn unique prizes
+                    that may not be obtainable anywhere else, so will not join now ?
                     <cite><img src="resources/img/customer-3.jpg" alt="">Milton Chapman</cite>
                 </blockquote>
             </div>
@@ -270,7 +282,7 @@
                         </p>
                         <p class="reward-descriptions">
                             That’s 30.0$ per day!
-                        </p> 
+                        </p>
                     </div>
                     <div>
                         <ul>
@@ -294,7 +306,7 @@
                         </p>
                         <p class="reward-descriptions">
                             That’s 10.0$ per day!
-                        </p> 
+                        </p>
                     </div>
                     <div>
                         <ul>
@@ -317,8 +329,8 @@
                             150$ <span>/ month allowances</span>
                         </p>
                         <p class="reward-descriptions">
-                            That’s 5.0$ per day!  
-                        </p> 
+                            That’s 5.0$ per day!
+                        </p>
                     </div>
                     <div>
                         <ul>
@@ -340,26 +352,26 @@
         <div class="row">
             <div class="col span-1-of-2">
                 <ul class="nav-footer">
-                    <li> <a href="#">about us</a> </li> 
-                    <li> <a href="#">blog</a> </li> 
-                    <li> <a href="#">Press</a> </li> 
-                    <li> <a href="#">IOS app</a> </li> 
-                    <li> <a href="#">ANDROID app</a> </li> 
+                    <li> <a href="#">about us</a> </li>
+                    <li> <a href="#">blog</a> </li>
+                    <li> <a href="#">Press</a> </li>
+                    <li> <a href="#">IOS app</a> </li>
+                    <li> <a href="#">ANDROID app</a> </li>
                 </ul>
             </div>
             <div class="col span-1-of-2">
                 <ul class="social-link-footer">
                     <li>
-                        <a href="#"> <i class="ion-logo-facebook"></i> </a> 
+                        <a href="#"> <i class="ion-logo-facebook"></i> </a>
                     </li>
                     <li>
-                        <a href="#"> <i class="ion-logo-twitter"></i> </a> 
+                        <a href="#"> <i class="ion-logo-twitter"></i> </a>
                     </li>
                     <li>
-                        <a href="#"> <i class="ion-logo-googleplus"></i> </a> 
+                        <a href="#"> <i class="ion-logo-googleplus"></i> </a>
                     </li>
                     <li>
-                        <a href="#"> <i class="ion-logo-instagram"></i> </a> 
+                        <a href="#"> <i class="ion-logo-instagram"></i> </a>
                     </li>
                 </ul>
             </div>
@@ -371,4 +383,5 @@
         </div>
     </footer>
 </body>
+
 </html>

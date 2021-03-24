@@ -7,6 +7,11 @@
         <%= topic.name %>
     <% }) %>
 </div>
+<div>
+    <form action="/admin/faculty/downloadAll/<%= faculty._id %>" method="GET">
+        <button type="submit">Download All</button>
+    </form>
+</div>
 
 <a href="/admin/faculty/<%= faculty._id %>/edit">Edit</a>
 <%- include('../partials/deleteForm', {url: `/admin/faculty/${faculty._id}`})%>
