@@ -198,12 +198,12 @@ header {
   border-bottom: 2px solid #e67e22;
 }
 
-li form{
+li form {
   display: inline-block;
 }
 
-.btn-search{
- display: inline-block;
+.btn-search {
+  display: inline-block;
 }
 
 /*sticky nav*/
@@ -217,7 +217,7 @@ li form{
   z-index: 9999; /* make it on top of ALL OTHER*/
 }
 
-.sticky-admin{
+.sticky-admin {
   background-color: rgba(187, 185, 185, 0.95);
 }
 
@@ -286,12 +286,12 @@ li form{
   width: 25%;
 }
 
-.btn-post{
+.btn-post {
   display: none;
   position: relative;
 }
 
-.btn-titles{
+.btn-titles {
   display: inline-block; /*can edit padding and border*/
   padding: 10px 30px;
   font-weight: 300;
@@ -301,7 +301,7 @@ li form{
 }
 .wrapper:hover .btn-post {
   display: inline-block;
-  
+
   left: 50%;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
@@ -607,4 +607,55 @@ footer p {
   color: #888;
   text-align: center;
   margin-top: 20px;
+}
+
+/*-------------- TABLE SETUP ---------------*/
+
+.content-table {
+  border-collapse: collapse;
+  margin: 25px;
+  font-size: 0.9em;
+  min-width: 400px; /* will expand if needed*/
+  border-radius: 5px 5px 0 0;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0;
+}
+
+.content-table thead tr {
+  background-color: #60d2d6;
+  color: #ffffff;
+  text-align: left;
+  font-weight: bold;
+}
+
+.content-table th,
+.content-table td {
+  padding: 12px 15px;
+}
+
+.content-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+.content-table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.content-table tbody tr:last-of-type {
+  border-bottom: 2px solid #60d2d6;
+}
+
+/*-------------- ADMIN/USER SETUP ---------------*/
+
+.centered-search {
+  text-align: center;
+}
+
+.search-css {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 15px;
 }
