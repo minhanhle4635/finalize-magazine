@@ -29,7 +29,7 @@ router.get('/', isAdmin, async (req, res) => {
         countTotalArticle : countTotalArticle,
         totalRequests: analytics.totalRequests,
         day: analytics.requestsPerDay[0]._id,
-        requestsInDay: analytics.requestsPerDay[0].requestsInDay,
+        requestsInDay: analytics.requestsPerDay[0].numberOfRequests,
         totalAccount: countTotalAccount,
         totalUser : countTotalUser,
         totalCoordinator: countTotalCoordinator,
@@ -66,12 +66,19 @@ router.get('/user/new', isAdmin, async (req, res) => {
 router.post('/user/new', isAdmin, async (req, res) => {
     const ExistedUser = await User.findOne({ username: req.body.username })
     const hashedPassword = await bcrypt.hash(req.body.password, 10)
+    const role = req.body.role
+    let faculty
+    if (role != 'coordinator') {
+        faculty = null
+    } else {
+        faculty = req.body.faculty
+    }
     const newUser = new User({
         name: req.body.name,
         username: req.body.username,
         password: hashedPassword,
         role: req.body.role,
-        faculty: req.body.faculty
+        faculty: faculty
     })
     try {
         if (!ExistedUser){

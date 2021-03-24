@@ -31,6 +31,7 @@
                 <td>Name</td>
                 <td>Role</td>
                 <td>Faculty</td>
+                <td>Created At</td>
             </tr>
             <tr>
                 <td><a href="/admin/user/<%= user._id %>">
@@ -40,7 +41,9 @@
                 <td><%= user.role %></td>
                 <td><% if(user.faculty) { %>
                     <%= user.faculty.name %>
-                <% } %></td>
+                <% } %>
+                </td>
+                <td>user.createdAt</td>
             </tr>
 
         </table>
