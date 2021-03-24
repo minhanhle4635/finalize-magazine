@@ -29,6 +29,7 @@
             <th>Name</th>
             <th>Role</th>
             <th>Falcuty</th>
+            <th>Created At</th>
         </tr>
     </thead>
     <% user.forEach(user=>{ %> 
@@ -42,6 +43,7 @@
                 <%= user.faculty.name %>
                 <% } %>
                 </td>
+                <td><%= user.createdAt %></td>
             </tr>
         </tbody>
     <% }) %> 
@@ -83,29 +85,3 @@
 </footer>
 </body>
 </html>
-
-
-<!--
-    <div>
-    <% user.forEach(user=>{ %>
-        <table>
-            <tr>
-                <td>Name</td>
-                <td>Role</td>
-                <td>Faculty</td>
-            </tr>
-            <tr>
-                <td><a href="/admin/user/<%= user._id %>">
-                        <%= user.name %>
-                    </a>
-                </td>
-                <td><%= user.role %></td>
-                <td><% if(user.faculty) { %>
-                    <%= user.faculty.name %>
-                <% } %></td>
-            </tr>
-
-        </table>
-    <% }) %>
-</div>
- -->

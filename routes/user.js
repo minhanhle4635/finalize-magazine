@@ -69,37 +69,32 @@ router.get('/topic', isUser, async (req, res) => {
         // cần phân loại các topics dựa trên faculty của nó
         // nên tôi tạo ra 1 "hash-map" - aka Object.
         const facultyList = {};
+        const nonExpiredFacultyList = {}
 
         topics.forEach(topic => {
-            // điểm khác biệt của object với array là tôi có
-            // thể phân biệt được "faculty" mà tôi check tại topic này
-            // đã được phân loại chưa
+            if (new Date <= topic.expiredDate) {
+                if (!nonExpiredFacultyList[topic.faculty._id]) {
+                    nonExpiredFacultyList[topic.faculty._id] = {
+                        name: topic.faculty.name,
+                        topics: [],
+                    }
+                }
+                nonExpiredFacultyList[topic.faculty._id].topics.push(topic);
+            }
+        })
+
+        topics.forEach(topic => {
             if (!facultyList[topic.faculty._id]) {
-                // nếu trong trường hợp "chưa được phân loại"
-                //
-                // thì `facultyList.abc` = undefined;
-                //
-                // với `abc` là `topic.faculty._id`
                 facultyList[topic.faculty._id] = {
                     name: topic.faculty.name,
                     topics: [],
                 }
-                // nếu chưa có faculty đó thì tôi tạo 1 object
-                // chứa: name của faculty + các topic của nó.
-                // vd:
-                // facultyList = {
-                //      abc: {
-                //          name: "IT",
-                //          topics: []  <- array topics của faculty
-                //      }
-                // }
-                //
             }
-            // sau đó tôi chỉ việc push cái thông tin topic
-            // vào cái `topics` array bên trên.
             facultyList[topic.faculty._id].topics.push(topic);
         })
+
         res.render('user/topic', {
+            nonExpiredList: nonExpiredFacultyList,
             faculties: facultyList
         })
     } catch {
@@ -212,6 +207,8 @@ router.post('/newarticle', isUser, upload.single('file'), async (req, res) => {
     const deadline = new Date(topic.expiredDate);
     const faculty = topic.faculty
     //validation
+    console.log(req.body.isTermAccepted)
+    const isTermAccepted = req.body.isTermAccepted
     const newName = req.body.name
     const description = req.body.description
     const newAuthor = req.body.author
@@ -224,28 +221,34 @@ router.post('/newarticle', isUser, upload.single('file'), async (req, res) => {
         req.flash('errorMessage', 'File must be added')
         res.redirect('back')
     }
-    //new article
-    const article = new Article({
-        name: newName,
-        description: description,
-        author: newAuthor,
-        poster: req.session.userId,
-        topic: req.body.topic,
-        faculty: faculty,
-        fileName: file
-    })
-    saveCover(article, req.body.cover)
+
     try {
-        //compare deadline
-        const dateNow = new Date();
-        // const deadline = topic.expiredDate
-        if (dateNow.getTime() <= deadline.getTime()) {
-            await article.save();
-            req.flash('errorMessage', 'Wait for permision')
-            res.redirect('/user/article')
+        if (isTermAccepted) {
+            //new article
+            const article = new Article({
+                name: newName,
+                description: description,
+                author: newAuthor,
+                poster: req.session.userId,
+                topic: req.body.topic,
+                faculty: faculty,
+                fileName: file
+            })
+            saveCover(article, req.body.cover)
+            //compare deadline
+            const dateNow = new Date();
+            // const deadline = topic.expiredDate
+            if (dateNow.getTime() <= deadline.getTime()) {
+                await article.save();
+                req.flash('errorMessage', 'Wait for permision')
+                res.redirect('/user/poster')
+            } else {
+                if (article.fileName != null) { removefile(article.fileName) }
+                req.flash('errorMessage', 'This topic has met its deadline')
+                res.redirect('back')
+            }
         } else {
-            if (article.fileName != null) { removefile(article.fileName) }
-            req.flash('errorMessage', 'This topic has met its deadline')
+            req.flash('errorMessage', 'You have to accept term')
             res.redirect('back')
         }
     } catch (error) {

@@ -1,4 +1,20 @@
-<h1>Topic</h1>
+<h2>Active Topic</h2>
+
+<% Object.keys(nonExpiredList).forEach(facultyId=>{ %>
+    <h2><%= nonExpiredList[facultyId].name %></h2>
+    <table>
+        <tr>
+            <td>
+                <% nonExpiredList[facultyId].topics.forEach(topic => { %>
+                 <p><a href="/user/topic/<%= topic.id %>"><%= topic.name %></a></p>
+                <% }) %>
+            </td>
+        </tr>
+    </table>
+    <hr>
+<% }) %>
+
+<h2>All Topic</h2>
 
 <% Object.keys(faculties).forEach(facultyId=>{ %>
     <h2><%= faculties[facultyId].name %></h2>
