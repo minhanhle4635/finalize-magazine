@@ -348,6 +348,47 @@ router.delete('/faculty/:id', isAdmin, async (req, res) => {
     }
 })
 
+//show Topic
+router.get('/topic/:id', async (req, res) => {
+    const topic = await Topic.findById(req.params.id)
+    const articles = await Article.find({ topic: topic.id })
+    res.render('admin/showTopic', {
+        topic: topic,
+        articles: articles
+    })
+})
+
+router.get('/topic/:id/assigndate', isAdmin, async (req, res) => {
+    const topic = await Topic.findById(req.params.id)
+    res.render('admin/editdate', {
+        topic: topic
+    })
+})
+
+router.put('/topic/:id/assigndate', isAdmin, async (req, res) => {
+    try {
+        const newED = req.body.expiredDate
+        const newFED = req.body.finalExpiredDate
+
+        let topic = await Topic.findById(req.params.id)
+        if (newED) {
+            topic.expiredDate = newED
+        }
+        if (newFED) {
+            topic.finalExpiredDate = newFED
+        }
+        await topic.save()
+        req.flash('errorMessage', 'Update successfully')
+        res.redirect(`/admin/topic/${topic._id}`)
+    } catch (e) {
+        console.log(e)
+        req.flash('errorMessage', 'Can not update this topic')
+        res.redirect('back')
+    }
+
+
+})
+
 function isAdmin(req, res, next) {
     console.log(req.session)
     if (req.session.isAdmin === true) { next() }

@@ -1,0 +1,12 @@
+<h2>Edit Date</h2>
+
+<form action="/admin/topic/<%=topic.id%>/assigndate?_method=PUT" method="POST">
+    <div>Previous Expired Date : <%= topic.expiredDate==null? '' : topic.expiredDate.toISOString().split('T')[0] %>
+    </div>
+    <div>Wanted Expired Date : <input type="date" name="expiredDate"></div>
+    <div>Final Expired Date : <%= topic.finalExpiredDate==null? '' :topic.finalExpiredDate.toISOString().split('T')[0]
+            %>
+    </div>
+    <div>Wanted Final Expired Date : <input type="date" name="finalExpiredDate"></div>
+    <button type="submit">Update</button>
+</form>
