@@ -3,7 +3,8 @@ const router = express.Router()
 const Faculty = require('../models/Faculty')
 const Topic = require('../models/Topic')
 const Article = require('../models/Article')
-const {Logout} = require('../Login')
+const { Logout } = require('../Login')
+
 
 const fs = require("fs");
 const path = require("path");
@@ -59,17 +60,17 @@ router.get('/faculty/downloadAll/:id', async (req, res) => {
 
             const binaryCover = article.coverImage;
             if (binaryCover) {
-                if(article.coverImageType === 'image/png'){
+                if (article.coverImageType === 'image/png') {
                     const type = '.png';
                     zip.addFile(article.fileName + type, binaryCover, '', 0644 << 16);
                 } else if (article.coverImageType === 'image/jpeg') {
                     const type = '.jpeg';
                     zip.addFile(article.fileName + type, binaryCover, '', 0644 << 16);
-                } else if(article.coverImageType === 'images/gif'){
+                } else if (article.coverImageType === 'images/gif') {
                     const type = '.gif';
                     zip.addFile(article.fileName + type, binaryCover, '', 0644 << 16);
                 }
-                
+
             }
         });
 
@@ -87,18 +88,18 @@ router.get('/faculty/downloadAll/:id', async (req, res) => {
     }
 })
 
-router.get('/topic/:id', async(req,res)=>{
+router.get('/topic/:id', async (req, res) => {
     const topic = await Topic.findById(req.params.id)
-    const articles = await Article.find({topic: topic.id})
-    res.render('manager/showTopic',{
+    const articles = await Article.find({ topic: topic.id })
+    res.render('manager/showTopic', {
         topic: topic,
         articles: articles
     })
 })
 
-router.get('/article/:id', async(req,res)=>{
+router.get('/article/:id', async (req, res) => {
     const article = await Article.findById(req.params.id)
-    res.render('manager/showArticle',{
+    res.render('manager/showArticle', {
         article: article
     })
 })
