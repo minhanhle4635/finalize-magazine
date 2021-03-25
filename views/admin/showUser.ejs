@@ -13,14 +13,16 @@
 <div class="row">
     <form class="signup-form">
         <div class="log-border">
-            <h2> <%= user.name %> </h2>
+            <h2>
+                <%= user.name %>
+            </h2>
             <div class="row">
                 <div class="col span-1-of-3">
                     <label for="">Username:</label>
                 </div>
                 <div class="col span-2-of-3">
                     <%= user.username %>
-                    
+
                 </div>
             </div>
 
@@ -39,39 +41,25 @@
                 </div>
                 <div class="col span-2-of-3">
                     <% if (user.faculty) { %>
-                        <a class="btn btn-full" href="/admin/faculty/<%= user.faculty._id %>"><%= user.faculty.name %></a>
-                    <% } %></div>
+                        <a class="btn btn-full" href="/admin/faculty/<%= user.faculty._id %>">
+                            <%= user.faculty.name %>
+                        </a>
+                        <% } %>
                 </div>
             </div>
-            
-            <div class="row fal-add-css">
-                <div class="col span-1-of-3">
-                    <a class="btn btn-ghost" href="/admin/user/<%= user._id %>/edit">Edit</a>
-                </div>
+        </div>
+    </form>
+    <div class="row fal-add-css">
+        <div class="col span-1-of-3">
+            <a class="btn btn-ghost" href="/admin/user/<%= user._id %>/edit">Edit</a>
+        </div>
 
-                <div class="col span-1-of-3">
-                    <%- include('../partials/deleteForm', {url: `/admin/user/${user._id}`})%>     
-                </div>
+        <div class="col span-1-of-3">
+            <%- include('../partials/deleteForm', {url: `/admin/user/${user._id}`})%>
+        </div>
 
-                <div class="col span-1-of-3">
-                    <a class="btn btn-ghost" href="/admin/user">Home</a>
-                </div>
-            </div>
-        <div>
-</form>
+        <div class="col span-1-of-3">
+            <a class="btn btn-ghost" href="/admin/user">Home</a>
+        </div>
+    </div>
 </div>
-
-<!--
-    <h2><%= user.name %></h2>
-
-<div> Username: <%= user.username %></div>
-<div> Role: <%= user.role %> </div>
-
-<div> Faculty Assigned: <% if (user.faculty) { %>
-    <a href="/admin/faculty/<%= user.faculty._id %>"><%= user.faculty.name %></a>
-<% } %></div>
-
-<a href="/admin/user/<%= user._id %>/edit">Edit</a>
-<%- include('../partials/deleteForm', {url: `/admin/user/${user._id}`})%>
-<a href="/admin">Home</a>
- -->

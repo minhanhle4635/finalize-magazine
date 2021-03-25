@@ -4,9 +4,17 @@ const bcrypt = require('bcrypt')
 const User = require('../models/User')
 const Faculty = require('../models/Faculty')
 const Topic = require('../models/Topic')
+
+const FileSaver = require('file-saver')
 const Article = require('../models/Article')
 const RequestLog = require('../analytics_service')
 const { Logout } = require('../Login')
+
+const fs = require("fs");
+const path = require("path");
+const AdmZip = require('adm-zip');
+const articleFilePath = path.join('public', Article.fileBasePath)
+
 
 router.get('/', isAdmin, async (req, res) => {
     const user = await User.findById(req.session.userId)
@@ -15,23 +23,23 @@ router.get('/', isAdmin, async (req, res) => {
     const countTotalTopic = await Topic.find().estimatedDocumentCount()
     const countTotalFaculty = await Faculty.find().estimatedDocumentCount()
     const countTotalAccount = await User.find().estimatedDocumentCount()
-    const countTotalUser = await User.find({role:'user'}).countDocuments()
-    const countTotalCoordinator = await User.find({role:'coordinator'}).countDocuments()
-    const countTotalAdmin = await User.find({role:'admin'}).countDocuments()
+    const countTotalUser = await User.find({ role: 'user' }).countDocuments()
+    const countTotalCoordinator = await User.find({ role: 'coordinator' }).countDocuments()
+    const countTotalAdmin = await User.find({ role: 'admin' }).countDocuments()
     const array = analytics.requestsPerDay
     let d = new Date()
     let day = array[d.getDay()]
     console.log(day)
     res.render('admin/index', {
         user: user,
-        countTotalFaculty : countTotalFaculty,
+        countTotalFaculty: countTotalFaculty,
         countTotalTopic: countTotalTopic,
-        countTotalArticle : countTotalArticle,
+        countTotalArticle: countTotalArticle,
         totalRequests: analytics.totalRequests,
         day: analytics.requestsPerDay[0]._id,
         requestsInDay: analytics.requestsPerDay[0].numberOfRequests,
         totalAccount: countTotalAccount,
-        totalUser : countTotalUser,
+        totalUser: countTotalUser,
         totalCoordinator: countTotalCoordinator,
         totalAdmin: countTotalAdmin
     })
@@ -81,11 +89,11 @@ router.post('/user/new', isAdmin, async (req, res) => {
         faculty: faculty
     })
     try {
-        if (!ExistedUser){
-        await newUser.save()
-        res.redirect('/admin')
+        if (!ExistedUser) {
+            await newUser.save()
+            res.redirect('/admin')
         } else {
-            req.flash('errorMessage','Username already used')
+            req.flash('errorMessage', 'Username already used')
             req.redirect('back')
         }
     } catch (err) {
@@ -210,7 +218,7 @@ router.post('/faculty/new', async (req, res) => {
         if (existedFaculty == null) {
             await newFaculty.save()
             res.redirect('/admin/faculty')
-        } else { 
+        } else {
             req.flash('errorMessage', 'Faculty Existed')
             res.redirect('back')
         }
@@ -233,6 +241,51 @@ router.get('/faculty/:id', isAdmin, async (req, res) => {
     } catch (err) {
         console.log(err)
         res.redirect('/admin/faculty')
+    }
+})
+
+router.get('/faculty/downloadAll/:id', isAdmin, async (req, res) => {
+    const faculty = await Faculty.findOne({ _id: req.params.id })
+    const articles = await Article.find({ faculty: faculty._id })
+    if (!articles || articles.length === 0) {
+        return res.redirect('back');
+    }
+
+    try {
+        const zip = new AdmZip();
+        articles.forEach(article => {
+            const pathToFile = path.join(articleFilePath, article.fileName);
+            if (fs.existsSync(pathToFile)) {
+                zip.addLocalFile(pathToFile);
+            }
+
+            const binaryCover = article.coverImage;
+            if (binaryCover) {
+                if(article.coverImageType === 'image/png'){
+                    const type = '.png';
+                    zip.addFile(article.fileName + type, binaryCover, '', 0644 << 16);
+                } else if (article.coverImageType === 'image/jpeg') {
+                    const type = '.jpeg';
+                    zip.addFile(article.fileName + type, binaryCover, '', 0644 << 16);
+                } else if(article.coverImageType === 'images/gif'){
+                    const type = '.gif';
+                    zip.addFile(article.fileName + type, binaryCover, '', 0644 << 16);
+                }
+                
+            }
+        });
+
+        const zipFilename = `${new Date().valueOf()}_All_Articles.zip`;
+        // write everything to disk
+        const pathTemp = path.join(articleFilePath, zipFilename);
+        zip.writeZip(pathTemp, () => {
+            return res.download(pathTemp, zipFilename, () => {
+                fs.unlinkSync(pathTemp)
+            });
+        });
+    } catch (e) {
+        console.log(e);
+        return res.redirect('back');
     }
 })
 
