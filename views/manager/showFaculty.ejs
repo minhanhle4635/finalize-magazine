@@ -27,7 +27,8 @@
                         <thead>
                             <tr>
                                 <th>Name</th>
-                                <th>Expired date</th>
+                                <th>Expired Date</th>
+                                <th>Final Expired Date</th>
                             </tr>
                         </thead>
                         <% topic.forEach(topic => { %>
@@ -35,6 +36,7 @@
                                 <tr>
                                     <td><a href="/manager/topic/<%=topic._id%>"><%= topic.name %></a></td>
                                     <td><%= topic.expiredDate.toISOString().split('T')[0] %></td>
+                                    <td><%= topic.finalExpiredDate.toISOString().split('T')[0]</td>
                                 </tr>
                             </tbody>
                         <% }) %> 
