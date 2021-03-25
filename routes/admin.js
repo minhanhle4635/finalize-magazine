@@ -21,9 +21,10 @@ router.get('/', isAdmin, async (req, res) => {
     const countTotalTopic = await Topic.find().estimatedDocumentCount()
     const countTotalFaculty = await Faculty.find().estimatedDocumentCount()
     const countTotalAccount = await User.find().estimatedDocumentCount()
-    const countTotalUser = await User.find({ role: 'user' }).countDocuments()
+    const countTotalStudent = await User.find({ role: 'student' }).countDocuments()
     const countTotalCoordinator = await User.find({ role: 'coordinator' }).countDocuments()
     const countTotalAdmin = await User.find({ role: 'admin' }).countDocuments()
+    const countTotalManager = await User.find({ role: 'manager' }).countDocuments()
     const array = analytics.requestsPerDay
     let d = new Date()
     let day = array[d.getDay()]
@@ -37,8 +38,9 @@ router.get('/', isAdmin, async (req, res) => {
         day: analytics.requestsPerDay[0]._id,
         requestsInDay: analytics.requestsPerDay[0].numberOfRequests,
         totalAccount: countTotalAccount,
-        totalUser: countTotalUser,
+        totalStudent: countTotalStudent,
         totalCoordinator: countTotalCoordinator,
+        totalManager: countTotalManager,
         totalAdmin: countTotalAdmin
     })
 })
@@ -75,7 +77,7 @@ router.post('/user/new', isAdmin, async (req, res) => {
     const role = req.body.role
     let faculty
     if (role === 'coordinator' || role === 'student' || role === 'guest') {
-        faculty = req.body.faculty 
+        faculty = req.body.faculty
     } else {
         faculty = null
     }
@@ -135,7 +137,7 @@ router.put('/user/:id/edit', isAdmin, async (req, res) => {
     const newRole = req.body.role;
     const newFaculty = req.body.faculty
 
-    if(newRole === 'coordinator' || newRole === 'student' || newRole === 'guest'){
+    if (newRole === 'coordinator' || newRole === 'student' || newRole === 'guest') {
         faculty = req.body.faculty
     } else {
         faculty = null
@@ -175,10 +177,15 @@ router.put('/user/:id/edit', isAdmin, async (req, res) => {
 router.delete('/user/:id', isAdmin, async (req, res) => {
     let user
     try {
-        user = await User.findById(req.params.id)
-        await user.remove()
+        if (req.params.id === req.session.userId) {
+            req.flash('errorMessage', 'You can not delete yourself')
+            res.redirect('back')
+        } else {
+            user = await User.findByIdAndRemove(req.params.id)
+        }
         res.redirect('/admin/user')
-    } catch {
+    } catch (err) {
+        console.log(err)
         if (user != null) {
             req.flash('errorMessage', 'Could not delete the user')
             res.redirect('back')
@@ -265,17 +272,17 @@ router.get('/faculty/downloadAll/:id', isAdmin, async (req, res) => {
 
             const binaryCover = article.coverImage;
             if (binaryCover) {
-                if(article.coverImageType === 'image/png'){
+                if (article.coverImageType === 'image/png') {
                     const type = '.png';
                     zip.addFile(article.fileName + type, binaryCover, '', 0644 << 16);
                 } else if (article.coverImageType === 'image/jpeg') {
                     const type = '.jpeg';
                     zip.addFile(article.fileName + type, binaryCover, '', 0644 << 16);
-                } else if(article.coverImageType === 'images/gif'){
+                } else if (article.coverImageType === 'images/gif') {
                     const type = '.gif';
                     zip.addFile(article.fileName + type, binaryCover, '', 0644 << 16);
                 }
-                
+
             }
         });
 
@@ -328,7 +335,7 @@ router.put('/faculty/:id/edit', isAdmin, async (req, res) => {
 router.delete('/faculty/:id', isAdmin, async (req, res) => {
     let faculty
     try {
-        faculty = await Faculty.findById(req.params.id)
+        faculty = await Faculty.findByIdAndRemove(req.params.id)
         await faculty.remove()
         res.redirect('/admin/faculty')
     } catch {
@@ -344,6 +351,7 @@ router.delete('/faculty/:id', isAdmin, async (req, res) => {
 function isAdmin(req, res, next) {
     console.log(req.session)
     if (req.session.isAdmin === true) { next() }
+    else if (req.session.isManager === true) { return res.redirect('/manager') }
     else if (req.session.isCoordinator === true) { return res.redirect('/coordinator') }
     else if (req.session.isUser === true) { return res.redirect('/user') }
     else { res.redirect('/') }

@@ -1,0 +1,24 @@
+<h2>Topic</h2>
+<h2><%= topic.name %></h2>
+
+<div>Expired Date: <%= topic.expiredDate.toISOString().split('T')[0] %></div>
+<div> Description: <%= topic.description %> </div>
+
+<div>
+    <% articles.forEach(article => { %>
+        <table>
+            <tr>
+                <th>Cover</th>
+                <th>Name</th>
+                <th>Author</th>
+            </tr>
+            <tr>
+                <td><img height="150" width="100" src="<%= article.coverImagePath %>"></td>
+                <td><a href="/manager/article/<%= article.id %>"><%= article.name %></a></td>
+                <td><%= article.author %></td>
+            </tr>
+        </table>
+        
+    <% }) %>
+</div>
+

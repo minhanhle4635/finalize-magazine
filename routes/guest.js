@@ -8,7 +8,7 @@ const User = require('../models/User')
 router.get('/',async (req,res)=>{
     const user = await User.findById(req.session.userId)
     const faculty = await Faculty.findById(user.faculty)
-    const topic = await Topic.find({_id: faculty.id})
+    const topic = await Topic.find({faculty: faculty.id})
     console.log(topic)
     res.render('guest/index',{
         faculty: faculty,

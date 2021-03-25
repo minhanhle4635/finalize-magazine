@@ -28,7 +28,17 @@
                 </div>
                 <div class="col span-2-of-3">
                     <% topic.forEach(topic => { %>
-                        <%= topic.name %>
+                        <table>
+                            <tr>
+                                <th>Topic Name</th>
+                                <th>Expired Date</th>
+                            </tr>
+                            <tr>
+                                <td><a href="/manager/topic/<%=topic._id%>"><%= topic.name %></a></td>
+                                <td><%= topic.expiredDate.toISOString().split('T')[0] %></td>
+                            </tr>
+                        </table>
+                        
                     <% }) %>
                 </div>
             </div>

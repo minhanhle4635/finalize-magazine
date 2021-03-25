@@ -52,10 +52,8 @@ router.get('/', isStudent, async (req, res) => {
 //get topic index page 
 router.get('/topic', isStudent, async (req, res) => {
     try {
-        const topics = await Topic.find({}).populate('faculty');
-        // cần phân loại các topics dựa trên faculty của nó
-        // nên tôi tạo ra 1 "hash-map" - aka Object.
-        const facultyList = {};
+        const topics = await Topic.find({}).populate('faculty')
+        const facultyList = {}
         const nonExpiredFacultyList = {}
 
         topics.forEach(topic => {
@@ -253,9 +251,12 @@ router.delete('/poster/:id', isStudent, async (req, res) => {
 
 // get page new Article
 router.get('/newarticle', isStudent, async (req, res) => {
-    const topic = await Topic.find({})
+    const user = await User.findById(req.session.userId)
+    const faculty = await Faculty.findById(user.faculty)
+    const topic = await Topic.find({faculty: faculty})
+    const notExpiredTopic = topic.filter(topic => topic.expiredDate > Date.now())
     res.render('student/newArticle', {
-        topics: topic
+        topics: notExpiredTopic
     })
 })
 

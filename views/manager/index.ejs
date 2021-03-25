@@ -1,3 +1,42 @@
-<h2>Hello Manager</h2>
+<nav class="sticky sticky-admin">
+    <div class="row">
+        <img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
+        <img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black">
+        <ul class="main-nav">
+            <li>Hello Manager</li>
+            <li> <a href="/manager/logout">logout </a> </li>
+        </ul>
+    </div>
+</nav>
+<br>
+<section class="centered-search">
+    <h3>Search Faculty</h3>
+    <form action="/manager/faculty" method="GET">
+        <div class="search-css">
+            <input type="text" name="name" value="<%= searchOptions.name %>">
+        </div>
+        <button class="btn btn-full" type="submit">Search</button>
+        <a class="btn btn-full" href="/manager/faculty">Refresh</a>
+    </form>
+</section>
 
-<a href="/manager/faculty">Faculty</a>
+<section class="section-rewards">
+    <div class="row">
+        <h2>FALCUTIES</h2>
+    </div>
+    
+    <div class="row">
+        <% faculty.forEach(faculty =>{ %>
+            <div class="col-cat span-1-of-3">
+                <div class="catergories-box">
+                    <div>
+                        <p class="catergories">
+                            <a class="btn btn-ghost" href="/manager/faculty/<%= faculty._id %>"><%= faculty.name %></a>
+                        </p>
+                    </div>           
+                </div>
+            </div> 
+            <% }) %>     
+    </div>
+   
+</section>

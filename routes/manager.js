@@ -10,15 +10,15 @@ const path = require("path");
 const AdmZip = require('adm-zip');
 const articleFilePath = path.join('public', Article.fileBasePath)
 
-//oversee faculty
-router.get('/faculty', async (req, res) => {
+// Faculty Section
+router.get('/', async (req, res) => {
     let query = Faculty.find()
     if (req.query.name != null && req.query.name != '') {
         query = query.regex('name', new RegExp(req.query.name, 'i'))
     }
     try {
         const faculty = await query.exec()
-        res.render('manager/faculty', {
+        res.render('manager/index', {
             faculty: faculty,
             searchOptions: req.query
         })
@@ -87,8 +87,20 @@ router.get('/faculty/downloadAll/:id', async (req, res) => {
     }
 })
 
-router.get('/',(req,res)=>{
-    res.render('manager/index')
+router.get('/topic/:id', async(req,res)=>{
+    const topic = await Topic.findById(req.params.id)
+    const articles = await Article.find({topic: topic.id})
+    res.render('manager/showTopic',{
+        topic: topic,
+        articles: articles
+    })
+})
+
+router.get('/article/:id', async(req,res)=>{
+    const article = await Article.findById(req.params.id)
+    res.render('manager/showArticle',{
+        article: article
+    })
 })
 
 router.get('/logout', Logout)
