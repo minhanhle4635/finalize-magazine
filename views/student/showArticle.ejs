@@ -1,6 +1,6 @@
-<a href="/user">Home</a>
+<a href="/student">Home</a>
 <h2><%= article.name %></h2>
-<a href="/article/<%= article._id %>"></a><img width="100" height="150" src="<%= article.coverImagePath %>"></a>
+<img width="100" height="150" src="<%= article.coverImagePath %>">
 <div>
     Author: <%= article.author %>
 </div>
@@ -20,4 +20,5 @@
     Comment from Coordinator: <%= article.comment %>
 </div>
 
-<a href="/user">Back</a>
+<a href="/student/poster/<%= article._id %>/edit">Edit</a>
+<%- include('../partials/deleteForm', {url: `/student/poster/${article._id}`}) %>

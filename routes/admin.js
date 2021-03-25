@@ -4,8 +4,6 @@ const bcrypt = require('bcrypt')
 const User = require('../models/User')
 const Faculty = require('../models/Faculty')
 const Topic = require('../models/Topic')
-
-const FileSaver = require('file-saver')
 const Article = require('../models/Article')
 const RequestLog = require('../analytics_service')
 const { Logout } = require('../Login')
@@ -15,7 +13,7 @@ const path = require("path");
 const AdmZip = require('adm-zip');
 const articleFilePath = path.join('public', Article.fileBasePath)
 
-
+//view statistical data
 router.get('/', isAdmin, async (req, res) => {
     const user = await User.findById(req.session.userId)
     const analytics = await RequestLog.getAnalytics()
@@ -76,10 +74,10 @@ router.post('/user/new', isAdmin, async (req, res) => {
     const hashedPassword = await bcrypt.hash(req.body.password, 10)
     const role = req.body.role
     let faculty
-    if (role != 'coordinator') {
-        faculty = null
+    if (role === 'coordinator' || role === 'student' || role === 'guest') {
+        faculty = req.body.faculty 
     } else {
-        faculty = req.body.faculty
+        faculty = null
     }
     const newUser = new User({
         name: req.body.name,
@@ -137,6 +135,12 @@ router.put('/user/:id/edit', isAdmin, async (req, res) => {
     const newRole = req.body.role;
     const newFaculty = req.body.faculty
 
+    if(newRole === 'coordinator' || newRole === 'student' || newRole === 'guest'){
+        faculty = req.body.faculty
+    } else {
+        faculty = null
+    }
+
     try {
         const user = await User.findById(req.params.id)
         if (!!newName) {
@@ -175,7 +179,7 @@ router.delete('/user/:id', isAdmin, async (req, res) => {
         await user.remove()
         res.redirect('/admin/user')
     } catch {
-        if (faculty != null) {
+        if (user != null) {
             req.flash('errorMessage', 'Could not delete the user')
             res.redirect('back')
         } else {

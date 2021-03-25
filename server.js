@@ -77,14 +77,18 @@ app.use(methodOverride('_method'))
 //Import route
 const indexRoute = require('./routes/index')
 const adminRoute = require('./routes/admin')
+const managerRoute = require('./routes/manager')
 const coorRoute = require('./routes/coordinator')
-const userRoute = require('./routes/user')
+const studentRoute = require('./routes/student')
+const guestRoute = require('./routes/guest')
 
 //Route
 
 app.use('/admin', adminRoute)
+app.use('/manager',managerRoute)
 app.use('/coordinator', coorRoute)
-app.use('/user', userRoute)
+app.use('/student', studentRoute)
+app.use('/guest', guestRoute)
 app.use('/', indexRoute)
 
 const port = process.env.PORT || 80 

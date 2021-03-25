@@ -6,7 +6,7 @@
         <tr>
             <td>
                 <% nonExpiredList[facultyId].topics.forEach(topic => { %>
-                 <p><a href="/user/topic/<%= topic.id %>"><%= topic.name %></a></p>
+                 <p><a href="/student/topic/<%= topic.id %>"><%= topic.name %></a></p>
                 <% }) %>
             </td>
         </tr>
@@ -22,7 +22,7 @@
         <tr>
             <td>
                 <% faculties[facultyId].topics.forEach(topic => { %>
-                 <p><a href="/user/topic/<%= topic.id %>"><%= topic.name %></a></p>
+                 <p><a href="/student/topic/<%= topic.id %>"><%= topic.name %></a></p>
                 <% }) %>
             </td>
         </tr>

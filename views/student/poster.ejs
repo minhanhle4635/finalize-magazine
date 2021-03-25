@@ -1,0 +1,75 @@
+<a href="/student">Home</a>
+
+<h1>Article</h1>
+
+<a href="/student/newarticle">New Article</a>
+
+<h1>Search Your Article</h1>
+<form action="/student/poster" method="GET">
+    <div>
+        <label>Name</label>
+        <input type="text" name="name" value="<%= searchOptions.name %>">
+    </div>
+    <button type="submit">Search</button>
+</form>
+
+<div>
+    <form action="/student/poster" method="POST">
+        <h2>Your Article</h2>
+        <select name="status">
+            <% if (!status || status==='all' ) { %>
+                <option selected value="all">All</option>
+            <% } else { %>
+                <option value="all">All</option>
+            <% } %>
+
+            <% if (status && status==='pending' ) { %>
+                <option selected value="pending">Pending</option>
+            <% } else { %>
+                <option value="pending">Pending</option>
+            <% } %>
+
+            <% if (status && status==='accepted' ) { %>
+                <option selected value="accepted">Accepted</option>
+            <% } else { %>
+                <option value="accepted">Accepted</option>
+            <% } %>
+
+            <% if (status && status==='rejected' ) { %>
+                <option selected value="rejected">Rejected</option>
+            <% } else { %>
+                <option value="rejected">Rejected</option>
+            <% } %>
+        </select>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<div>
+    <table>
+        <tr>
+            <td>Cover</td>
+            <td>Name</td>
+            <td>Status</td>
+            <td>Created At</td>
+        </tr>
+        <% articles.forEach(article=>{ %>
+            <tr>
+                <td>
+                    <img height="150" width="100" src="<%= article.coverImagePath %>">
+                </td>
+                <td>
+                    <a href="/student/poster/<%= article._id %>">
+                        <%= article.name %>
+                    </a>
+                </td>
+                <td>
+                    <%= article.status %>
+                </td>
+                <td>
+                    <%= article.createdAt.toISOString().split('T')[0] %>
+                </td>
+            </tr>
+    </table>
+    <% }) %>
+</div>

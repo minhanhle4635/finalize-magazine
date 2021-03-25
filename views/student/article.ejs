@@ -16,18 +16,18 @@
             <tr>
                 <td>Cover</td>
                 <td>Name</td>
-                <td>Status</td>
+                <td>Author</td>
                 <td>Link download</td>
             </tr>
             <tr>
                 <td><img height="150" width="100" src="<%= article.coverImagePath %>"></td>
-                <td><a href="/user/article/<%= article._id %>">
+                <td><a href="/student/article/<%= article._id %>">
                         <%= article.name %>
                     </a>
                 </td>
-                <td><%= article.status %> </td>
+                <td><%= article.author %> </td>
                 <td>
-                    <form action="/user/article/download/<%= article._id %>" method="GET">
+                    <form action="/student/article/download/<%= article._id %>" method="GET">
                         <input type="submit" value="Download">
                     </form>
                 </td>

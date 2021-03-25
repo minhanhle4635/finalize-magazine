@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const Article = require('../models/Article')
 
 const facultySchema = mongoose.Schema({
     name:{

@@ -19,25 +19,7 @@
                     <label for="">Name</label>
                 </div>
                 <div class="col span-2-of-3">
-                    <input type="text" name="name" value="<%= user.name %>">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col span-1-of-3">
-                    <label for="">Username</label>
-                </div>
-                <div class="col span-2-of-3">
-                    <input type="text" name="username" value="<%= user.username %>">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col span-1-of-3">
-                    <label for="">Password</label>
-                </div>
-                <div class="col span-2-of-3">
-                    <input type="password" name="password">
+                    <%= user.name %>
                 </div>
             </div>
 
@@ -46,10 +28,12 @@
                     <label for="">New role: </label>
                 </div>
                 <div class="col span-2-of-3">
-                    <select name="role" aria-valuenow="<%= user.role %>">
+                    <select name="role">
                         <option value="admin">Admin</option>
                         <option value="coordinator">Coordinator</option>
-                        <option value="user">User</option>
+                        <option value="student">Student</option>
+                        <option value="user">Manager</option>
+                        <option value="guest">Guest</option>
                     </select>
                 </div>
             </div>
@@ -76,7 +60,7 @@
                     <a class="btn btn-ghost" href="/admin/user">Return</a>
                 </div>
             </div>
-        <div>
+        </div>
 </form>
 </div>
 
