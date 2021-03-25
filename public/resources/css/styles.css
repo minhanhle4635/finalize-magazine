@@ -694,3 +694,10 @@ footer p {
 .fal-add-css {
   text-align: center;
 }
+
+/*-------------- MANAGER SETUP ---------------*/
+
+.tp-info {
+  text-align: center;
+  margin-bottom: 3%;
+}

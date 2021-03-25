@@ -10,7 +10,7 @@
 </nav>
 
 <div class="row">
-    <form class="signup-form">
+    <form style="margin-bottom: 20px;" class="signup-form">
         <div class="log-border">
             <h2> <%= faculty.name %> </h2>
             <div class="row">
@@ -21,39 +21,73 @@
                     <%= faculty.description %>
                 </div>
             </div>
-
+            <br>
             <div class="row">
-                <div class="col span-1-of-3">
-                    <label for="">Faculty topic:</label>
-                </div>
-                <div class="col span-2-of-3">
-                    <% topic.forEach(topic => { %>
-                        <table>
+                    <table class="content-table">
+                        <thead>
                             <tr>
-                                <th>Topic Name</th>
-                                <th>Expired Date</th>
+                                <th>Name</th>
+                                <th>Expired date</th>
                             </tr>
-                            <tr>
-                                <td><a href="/manager/topic/<%=topic._id%>"><%= topic.name %></a></td>
-                                <td><%= topic.expiredDate.toISOString().split('T')[0] %></td>
-                            </tr>
-                        </table>
-                        
-                    <% }) %>
-                </div>
+                        </thead>
+                        <% topic.forEach(topic => { %>
+                            <tbody>
+                                <tr>
+                                    <td><a href="/manager/topic/<%=topic._id%>"><%= topic.name %></a></td>
+                                    <td><%= topic.expiredDate.toISOString().split('T')[0] %></td>
+                                </tr>
+                            </tbody>
+                        <% }) %> 
+                    </table>
             </div>
-            
-            <div class="row fal-add-css">            
-                <div class="col span-1-of-3">
-                    <a class="btn btn-ghost" href="/manager/faculty">Home</a>
-                </div>
-            </div>
-        <div>
+        </div>
 </form>
-</div>
-<div>
-    <form action="/manager/faculty/downloadAll/<%= faculty._id %>" method="GET">
-        <button type="submit">Download All</button>
-    </form>
+
+<div style="margin-bottom: 100px;" class="row fal-add-css">            
+    <div class="col span-1-of-2">
+        <a class="btn btn-ghost" href="/manager">Home</a>
+    </div>
+
+    <div class="col span-1-of-2">
+        <form action="/manager/faculty/downloadAll/<%= faculty._id %>" method="GET">
+            <button class="btn btn-ghost" type="submit">Download All</button>
+        </form>
+    </div>
 </div>
 
+</div>
+
+<footer>
+    <div class="row">
+        <div class="col span-1-of-2">
+            <ul class="nav-footer">
+                <li> <a href="#">about us</a> </li> 
+                <li> <a href="#">blog</a> </li> 
+                <li> <a href="#">Press</a> </li> 
+                <li> <a href="#">IOS app</a> </li> 
+                <li> <a href="#">ANDROID app</a> </li> 
+            </ul>
+        </div>
+        <div class="col span-1-of-2">
+            <ul class="social-link-footer">
+                <li>
+                    <a href="#"> <i class="ion-logo-facebook"></i> </a> 
+                </li>
+                <li>
+                    <a href="#"> <i class="ion-logo-twitter"></i> </a> 
+                </li>
+                <li>
+                    <a href="#"> <i class="ion-logo-googleplus"></i> </a> 
+                </li>
+                <li>
+                    <a href="#"> <i class="ion-logo-instagram"></i> </a> 
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <p>
+            Copyrighted &copy; 2020 by Unipara all rights reversed
+        </p>
+    </div>
+</footer>
