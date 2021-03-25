@@ -4,16 +4,17 @@
         <img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black">
         <ul class="main-nav">
             <li> <a href="/admin/user">Manage User </a> </li>
-            <li> <a href="/admin">Home </a> </li>
+            <li> <a href="/admin"> Home </a> </li>
             <li> <a href="/admin/logout">logout </a> </li>
         </ul>
     </div>
 </nav>
 
 <div class="row">
-    <form class="signup-form">
-        <div class="log-border">
+    <div class="log-border">
+        <form class="signup-form">
             <h2> <%= faculty.name %> </h2>
+
             <div class="row">
                 <div class="col span-1-of-3">
                     <label for="">Description:</label>
@@ -33,26 +34,27 @@
                     <% }) %>
                 </div>
             </div>
-            
-            <div class="row fal-add-css">
-                <div class="col span-1-of-3">
-                    <a class="btn btn-ghost" href="/admin/faculty/<%= faculty._id %>/edit">Edit</a>
-                </div>
-
-                <div class="col span-1-of-3">
-                    <%- include('../partials/deleteForm', {url: `/admin/faculty/${faculty._id}`})%>      
-                </div>
-
-                <div class="col span-1-of-3">
-                    <a class="btn btn-ghost" href="/admin/faculty">Home</a>
-                </div>
-            </div>
-        <div>
-</form>
-</div>
-<div>
-    <form action="/admin/faculty/downloadAll/<%= faculty._id %>" method="GET">
-        <button type="submit">Download All</button>
     </form>
+    <div class="row fal-add-css">
+        <div class="col span-1-of-3">
+            <a class="btn btn-ghost" href="/admin/faculty/<%= faculty._id %>/edit">Edit</a>
+        </div>
+
+        <div class="col span-1-of-3">
+         <%- include('../partials/deleteForm', {url: `/admin/faculty/${faculty._id}`})%>      
+        </div>
+
+        <div class="col span-1-of-3">
+            <form action="/admin/faculty/downloadAll/<%= faculty._id %>" method="GET">
+             <button class="btn btn-ghost" type="submit">Download All</button>
+            </form>
+        </div>
+    </div>
+    </div>
+    
+
+
 </div>
+
+
 
