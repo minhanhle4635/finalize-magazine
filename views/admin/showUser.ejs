@@ -11,8 +11,8 @@
 </nav>
 
 <div class="row">
-    <form class="signup-form">
-        <div class="log-border">
+    <div class="log-border">
+        <form class="signup-form">
             <h2>
                 <%= user.name %>
             </h2>
@@ -22,7 +22,6 @@
                 </div>
                 <div class="col span-2-of-3">
                     <%= user.username %>
-
                 </div>
             </div>
 
@@ -47,19 +46,20 @@
                         <% } %>
                 </div>
             </div>
-        </div>
-    </form>
-    <div class="row fal-add-css">
-        <div class="col span-1-of-3">
-            <a class="btn btn-ghost" href="/admin/user/<%= user._id %>/edit">Edit</a>
-        </div>
+        </form>
+        <div class="row fal-add-css">
+            <div class="col span-1-of-3">
+                <a class="btn btn-ghost" href="/admin/user/<%= user._id %>/edit">Edit</a>
+            </div>
 
-        <div class="col span-1-of-3">
-            <%- include('../partials/deleteForm', {url: `/admin/user/${user._id}`})%>
-        </div>
+            <div class="col span-1-of-3">
+                <%- include('../partials/deleteForm', {url: `/admin/user/${user._id}`})%>
+            </div>
 
-        <div class="col span-1-of-3">
-            <a class="btn btn-ghost" href="/admin/user">Home</a>
+            <div class="col span-1-of-3">
+                <a class="btn btn-ghost" href="/admin/user">Home</a>
+            </div>
         </div>
     </div>
+
 </div>

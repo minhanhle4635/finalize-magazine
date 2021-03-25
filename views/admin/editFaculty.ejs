@@ -10,8 +10,8 @@
     </div>
 </nav>
 
-<div action="/admin/faculty/<%= faculty._id %>/edit?_method=PUT" method="POST" class="row">
-    <form class="signup-form">
+<div class="row">
+    <form class="signup-form" action="/admin/faculty/<%= faculty._id %>/edit?_method=PUT" method="POST">
         <div class="log-border">
             <h2> Edit Faculty </h2>
             <div class="row">
@@ -38,7 +38,7 @@
                 </div>
 
                 <div class="col span-1-of-2">
-                    <a class="btn btn-ghost" href="/admin/faculty/:id">Cancel</a>
+                    <a class="btn btn-ghost" href="/admin/faculty/<%= faculty._id %>">Cancel</a>
                 </div>
             </div>
         <div>
