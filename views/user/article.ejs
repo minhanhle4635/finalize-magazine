@@ -1,0 +1,71 @@
+<a href="/user">Home</a>
+
+<h2>All Articles</h2>
+
+<form action="/user/article" method="GET">
+    <div>
+        <label>Search Article</label>
+        <input type="text" name="name" value="<%= searchOptions.name %>">
+    </div>
+    <button type="submit">Search</button>
+</form>
+
+<section>
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="table-id">Cover</th>
+                <th class="table-name">Name</th>
+                <th>Author</th>
+                <th style="text-align: center;">Option</th>
+            </tr>
+        </thead>
+        <% articles.forEach(article=>{ %>
+            <tbody>
+                <tr>
+                    <td><img height="150" width="100" src="<%= article.coverImagePath %>"></td>
+                    <td>
+                        <%= article.name %>
+                    </td>
+                    <td>
+                        <%= article.status %>
+                    </td>
+                    <td class="p-2">
+                        <form action="/user/article/download/<%= article._id %>" method="GET">
+                            <input type="submit" value="Download">
+                        </form>
+                        <a href="/user/article/<%= article._id %>">
+                       View
+                    </a>
+                    </td>
+                </tr>
+            </tbody>
+            <% }) %>
+    </table>
+</section>
+
+<!-- 
+    <% articles.forEach(article=>{ %>
+        <table>
+            <tr>
+                <td>Cover</td>
+                <td>Name</td>
+                <td>Status</td>
+                <td>Link download</td>
+            </tr>
+            <tr>
+                <td><img height="150" width="100" src="<%= article.coverImagePath %>"></td>
+                <td><a href="/user/article/<%= article._id %>">
+                        <%= article.name %>
+                    </a>
+                </td>
+                <td><%= article.status %> </td>
+                <td>
+                    <form action="/user/article/download/<%= article._id %>" method="GET">
+                        <input type="submit" value="Download">
+                    </form>
+                </td>
+            </tr>
+        </table>
+        <% }) %>
+-->
