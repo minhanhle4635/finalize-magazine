@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const User = require('../models/User')
 
 const fileBasePath = 'uploads/file'
 

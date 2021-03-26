@@ -5,14 +5,15 @@ const Article = require('../models/Article')
 const Faculty = require('../models/Faculty')
 const Topic = require('../models/Topic')
 const User = require('../models/User')
+const Profile = require('../models/Profile')
 const multer = require('multer')
 const path = require('path')
 const uploadPath = path.join('public', Article.fileBasePath)
+const uploadAvatarPath = path.join('public', Profile.avatarBasePath)
 const fileMimeTypes = require('../helper/mime-file')
 const imageMimeTypes = ['image/jpeg', 'image/png', 'images/gif']
 const fs = require('fs');
-const { findById } = require('../models/Article')
-const Profile = require('../models/Profile')
+
 const bcrypt = require('bcrypt')
 
 const storage = multer.diskStorage({
@@ -38,11 +39,38 @@ const storage = multer.diskStorage({
         }
         const fileSave = `${file.fieldname}-${Date.now()}${extension}`
         callback(null, fileSave)
-
     }
 })
 
 const upload = multer({ storage: storage })
+
+const avatarStorage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, uploadAvatarPath)
+    },
+    fileFilter: (req, file, callback) => {
+        callback(null, imageMimeTypes.includes(file.mimetype))
+    },
+    filename: (req, file, callback) => {
+        let extension = '';
+        const mimeAvatar = file.mimetype;
+        switch (mimeAvatar) {
+            case imageMimeTypes[0]:
+                extension = '.jpeg';
+                break;
+            case imageMimeTypes[1]:
+                extension = '.png';
+                break;
+            case imageMimeTypes[2]:
+                extension = '.gif';
+                break;
+        }
+        const fileSave = `${file.fieldname}-${Date.now()}${extension}`
+        callback(null, fileSave)
+    }
+})
+
+const uploadAvatar = multer({ storage: avatarStorage })
 
 //get topic index page 
 router.get('/topic', isStudent, async (req, res) => {
@@ -267,13 +295,10 @@ router.get('/newarticle', isStudent, async (req, res) => {
 
 //create new Article
 router.post('/newarticle', isStudent, upload.single('file'), async (req, res) => {
-    // const{error} = newArticleValidation(req.body)
-    // if(error) return res.status(400).send(error.details[0].message)
     const topic = await Topic.findOne({ _id: req.body.topic })
     const deadline = new Date(topic.expiredDate);
     const faculty = topic.faculty
     //validation
-    console.log(req.body.isTermAccepted)
     const isTermAccepted = req.body.isTermAccepted
     const newName = req.body.name
     const description = req.body.description
@@ -324,17 +349,6 @@ router.post('/newarticle', isStudent, upload.single('file'), async (req, res) =>
     }
 })
 
-//show accepted Article
-router.get('/article/:id', isStudent, async (req, res) => {
-    try {
-        const article = await Article.findById(req.params.id).populate("topic").exec()
-        res.render('student/showArticleIndex', { article: article })
-    } catch (error) {
-        console.log(error)
-        res.redirect('/student')
-    }
-})
-
 //download article
 router.get('/article/download/:id', async (req, res) => {
     try {
@@ -365,6 +379,17 @@ router.get('/article', async (req, res) => {
     }
 })
 
+//show specific Article
+router.get('/article/:id', isStudent, async (req, res) => {
+    try {
+        const article = await Article.findById(req.params.id).populate("topic").exec()
+        res.render('student/showArticleIndex', { article: article })
+    } catch (error) {
+        console.log(error)
+        res.redirect('/student')
+    }
+})
+
 //PROFILE SECTION
 
 router.get('/profile/:id', isStudent, async (req, res) => {
@@ -382,14 +407,15 @@ router.get('/profile/:id/edit', isStudent, async (req, res) => {
     })
 })
 
-router.put('/profile/:id/edit', isStudent, async (req, res) => {
-    const profile = await Profile.findById(req.params.id)
+router.put('/profile/:id/edit', [isStudent, uploadAvatar.single('avatar')], async (req, res) => {
+    let profile = await Profile.findById(req.params.id)
 
     const newName = req.body.fullname
     const newGender = req.body.gender
     const newDob = req.body.dob
     const newIntro = req.body.introduction
     const newEmail = req.body.email
+    const avatar = req.file.filename;
 
     if (newName) {
         profile.fullName = newName
@@ -397,7 +423,7 @@ router.put('/profile/:id/edit', isStudent, async (req, res) => {
     if (newGender) {
         profile.gender = newGender
     } else {
-        req.flash('errorMessage', '')
+        req.flash('errorMessage', 'Gender must be filled')
         res.redirect('back')
     }
     if (newDob) {
@@ -414,9 +440,13 @@ router.put('/profile/:id/edit', isStudent, async (req, res) => {
         req.flash('errorMessage', 'You need to add your email')
         res.redirect('back')
     }
+    if (avatar) {
+        profile.avatarImageName = avatar
+    }
     try {
         await profile.save()
-        req.redirect(`/student/profile/${profile.id}`)
+        req.flash('errorMessage', 'Updated Successfully')
+        res.redirect(`/student/profile/${profile.id}`)
     } catch (error) {
         console.log(error)
         req.flash('errorMessage', 'Can not update this profile')
@@ -439,26 +469,61 @@ router.get('/profile/:id/changepassword', isStudent, async (req, res) => {
 
 })
 
-router.put('/profile/:id/changepassword', isStudent, async(req,res)=>{
+router.get('/profile/:id/avatar', async (req, res) => {
+    const defaultPath = path.join(__dirname, '../public/uploads/avatar');
+    const profileId = req.params.id;
+    if (!profileId) {
+        return res.status(404);
+    }
+    const profile = await Profile.findById(profileId);
+    if (!profile) {
+        return res.status(404);
+    }
+    const userId = req.session.userId;
+    const defaultName = profile.gender === "male" ? 'male.jpg' : "female.jpg";
+    let defaultAvatar = path.join(defaultPath, defaultName);
+    if (profile.avatarImageName) {
+        defaultAvatar = path.join(defaultPath, userId, profile.avatarImageName);
+    }
+
+    if (fs.existsSync(defaultAvatar)) {
+        return res.sendFile(defaultAvatar);
+    }
+
+    return res.status(404);
+});
+
+
+router.put('/profile/:id/changepassword', isStudent, async (req, res) => {
     const password = req.body.password
     const verifyPassword = req.body.verifyPassword
 
-    const hashedPasword = await bcrypt.hash(password, 10)
-    const hashedVerifyPasword = await bcrypt.hash(verifyPassword, 10)
-
-    const validPass = await bcrypt.compare(hashedPasword, hashedVerifyPasword)
-    if(validPass == true){
-        user.password = hashedPasword
+    let hashedPassword
+    if(password === verifyPassword){
+        hashedPassword = await bcrypt.hash(password, 10)
     }
-    try{
+    
+    if(password != verifyPassword){
+        req.flash('errorMessage','Verify Password is wrong')
+        res.redirect('back')
+    }
+
+    const user = await User.findById(req.session.userId)
+    const profile = await Profile.findById(req.params.id)
+
+    user.password = hashedPassword
+    try {
         await user.save()
         req.flash('errorMessage', 'Saved Successfully')
         res.redirect(`/student/profile/${profile.id}`)
-    }catch(e){
+    } catch (e) {
+        console.log(e)
         req.flash('errorMessage', 'Can not be updated')
         res.redirect('back')
     }
 })
+
+
 
 router.get('/logout', Logout)
 

@@ -44,13 +44,11 @@
                             <%= article.status %>
                         </td>
                         <td class="p-2">
-                            <form action="/user/article/download/<%= article._id %>" method="GET">
+                            <form action="/student/article/download/<%= article._id %>" method="GET">
                                 <input type="submit" value="Download">
                             </form>
                             <br>
-                            <a class="btn btn-ghost" href="/user/article/<%= article._id %>">
-                        View
-                        </a>
+                            <a class="btn btn-ghost" href="/student/article/<%= article._id %>">View</a>
                         </td>
                     </tr>
                 </tbody>

@@ -56,18 +56,6 @@ router.post('/register', async (req, res) => {
     }
 })
 
-router.get('/:id', async (req, res) => {
-    try {
-        const article = await Article.findById(req.params.id)
-        res.render('showArticle', {
-            article: article
-        })
-    } catch (error) {
-        console.log(error)
-        res.redirect('/')
-    }
-})
-
 router.get('/download/:id', async (req, res) => {
     try {
         const article = await Article.findById(req.params.id)
@@ -78,6 +66,18 @@ router.get('/download/:id', async (req, res) => {
         res.redirect('/')
     }
 })
+
+// router.get('/:id', async (req, res) => {
+//     try {
+//         const article = await Article.findById(req.params.id)
+//         res.render('showArticle', {
+//             article: article
+//         })
+//     } catch (error) {
+//         console.log(error)
+//         res.redirect('/')
+//     }
+// })
 
 router.get('/', async (req, res) => {
     let article
@@ -94,7 +94,6 @@ router.get('/', async (req, res) => {
     } catch (error) {
         articles = []
     }
-
 })
 
 module.exports = router
