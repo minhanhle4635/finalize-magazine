@@ -1,38 +1,358 @@
-<nav class="sticky sticky-admin">
-    <div class="row">
-        <img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
-        <img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black">
-        <ul class="main-nav">
-            <li> <a href="/guest/logout">logout </a> </li>
+<body>
+    <header class="header-img">
+        <nav>
+            <div class="row">
+                <img src="resources/img/logo.jpg" alt="missing picture" class="logo">
+                <img src="resources/img/logo.jpg" alt="missing picture" class="logo-black">
+                <ul class="main-nav">
+                    <li> <a href="/#">Hello guest </a> </li>
+                    <li> <a href="#cat">Related articles </a> </li>
+                    <li> <a href="#guides">How to contribute </a> </li>
+                    <li> <a href="#branches">Our branches </a> </li>
+                    <li> <a href="/logout">LOGOUT </a> </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="header-text-box">
+            <h1>
+                Welcome, dear students. <br> To Unipara magazine posts.
+            </h1>
+            <a class="btn btn-full js-btn-scroll-rewards" href="#">I wanted to contribute</a>
+            <a class="btn btn-ghost js-btn-scroll-guide" href="#">Guide me</a>
+        </div>
+    </header>
+
+    <section class="section-features js-section-features">
+        <div class="row">
+            <h2>Write your discovery &mdash; Share to all</h2>
+            <p class="long-text">
+                Greeting, this is Unipara's magazine posts website(UMP's webiste), where student from ALL of the braches
+                of this university come to post their discovery to help building a social environment and earn rewards !
+            </p>
+            <div class="row">
+                <div class="col span-1-of-4 box">
+                    <i class="ion-md-mail icon-big"></i>
+                    <h3>Simple posting</h3>
+                    <p>
+                        Whatever your subjects maybe, simply follow the steps below to start posting your latest
+                        work/research of your courses
+                    </p>
+                </div>
+
+                <div class="col span-1-of-4 box">
+                    <i class="ion-md-eye icon-big"></i>
+                    <h3>Easy spectating</h3>
+                    <p>
+                        If you are not sure what falcuty to join, all other works are available to be visited and read
+                        in the categories section
+                    </p>
+                </div>
+
+                <div class="col span-1-of-4 box">
+                    <i class="ion-ios-information-circle icon-big"></i>
+                    <h3>Safe and secured</h3>
+                    <p>
+                        All of your data and work are preseved in the most high quality server of UMP's website
+                    </p>
+                </div>
+
+                <div class="col span-1-of-4 box ">
+                    <i class="ion-md-infinite icon-big"></i>
+                    <h3>Posts anything</h3>
+                    <p>
+                        We don't want limit your creativity, which means you can post to any falcuty you like as long as
+                        it within the university courses!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-subject-posts" id="cat">
+        <h2>Recently Added</h2>
+        <ul class="posts-showcase clearfix ">
+            <% articles.forEach(article=>{ %>
+                <li>
+                    <figure class="post-img wrapper">
+                        <div class="wrapper">
+                            <img src="<%= article.coverImagePath %>">
+                            <a class="btn-full btn-post" href="/guest/<%= article._id %>">
+                                <%= article.name %>
+                            </a>
+                        </div>
+                    </figure>
+                </li>
+                <% }) %>
         </ul>
-    </div>
-</nav>
+    </section>
 
-<div class="row">
-    <form class="signup-form">
-        <div class="log-border">
-            <h2> <%= faculty.name %> </h2>
-            <div class="row">
-                <div class="col span-1-of-3">
-                    <label for="">Description:</label>
+    <section class="section-post-guide" id="guides">
+        <div class="row">
+            <h2>How To post &mdash; Simple as breathing</h2>
+        </div>
+
+        <div class="row">
+            <div class="col span-1-of-2 step-bx">
+                <img src="resources/img/app-iPhone.png" alt="missing pictures" class="guide-screen">
+            </div>
+            <div class="col span-1-of-2 step-bx">
+                <div class="post-guide-step">
+                    <div>1</div>
+                    <p>
+                        Sign up your account or login
+                    </p>
                 </div>
-                <div class="col span-2-of-3">
-                    <%= faculty.description %>
+                <div class="post-guide-step">
+                    <div>2</div>
+                    <p>
+                        Click on contributes to post
+                    </p>
                 </div>
+                <div class="post-guide-step">
+                    <div>3</div>
+                    <p>
+                        Upload your files, DONE!
+                    </p>
+                </div>
+
+                <a href="#" class="btn-app">
+                    <img src="resources/img/download-app.svg" alt="missing app pic">
+                </a>
+
+                <a href="#" class="btn-app">
+                    <img src="resources/img/download-app-android.png" alt="missing app pic">
+                </a>
+
+            </div>
+        </div>
+
+    </section>
+
+    <section class="section-cities" id="branches">
+        <div class="row">
+            <h2>We're have many branches</h2>
+        </div>
+
+        <div class="row">
+            <div class="col span-1-of-4 box">
+                <img src="resources/img/lisbon-3.jpg" alt="missing pic">
+                <h3>Libson</h3>
+                <div class="city-feats">
+                    <i class="ion-ios-person icon-sm"></i>
+                    1600+ Students
+                </div>
+                <div class="city-feats">
+                    <i class="ion-ios-star icon-sm"></i>
+                    100+ contributors
+                </div>
+                <div class="city-feats">
+                    <i class="ion-logo-twitter icon-sm"></i>
+                    <a href="#">@Unipara_lx</a>
+                </div>
+
             </div>
 
-            <div class="row">
-                <div class="col span-1-of-3">
-                    <label for="">Faculty topic:</label>
+            <div class="col span-1-of-4 box">
+                <img src="resources/img/san-francisco.jpg" alt="missing pic">
+                <h3>San Francisco</h3>
+                <div class="city-feats">
+                    <i class="ion-ios-person icon-sm"></i>
+                    3700+ Students
                 </div>
-                <div class="col span-2-of-3">
-                    <% topics.forEach(topic => { %>
-                        <%= topic.name %>
-                    <% }) %>
+                <div class="city-feats">
+                    <i class="ion-ios-star icon-sm"></i>
+                    120+ contributors
+                </div>
+                <div class="city-feats">
+                    <i class="ion-logo-twitter icon-sm"></i>
+                    <a href="#">@Unipara_sf</a>
+                </div>
+
+            </div>
+
+            <div class="col span-1-of-4 box">
+                <img src="resources/img/berlin.jpg" alt="missing pic">
+                <h3>Berlin</h3>
+                <div class="city-feats">
+                    <i class="ion-ios-person icon-sm"></i>
+                    2300+ Students
+                </div>
+                <div class="city-feats">
+                    <i class="ion-ios-star icon-sm"></i>
+                    160+ contributors
+                </div>
+                <div class="city-feats">
+                    <i class="ion-logo-twitter icon-sm"></i>
+                    <a href="#">@Unipara_berlin</a>
+                </div>
+
+            </div>
+
+            <div class="col span-1-of-4 box">
+                <img src="resources/img/london.jpg" alt="missing pic">
+                <h3>London</h3>
+                <div class="city-feats">
+                    <i class="ion-ios-person icon-sm"></i>
+                    1200+ Students
+                </div>
+                <div class="city-feats">
+                    <i class="ion-ios-star icon-sm"></i>
+                    60+ contributors
+                </div>
+                <div class="city-feats">
+                    <i class="ion-logo-twitter icon-sm "></i>
+                    <a href="#">@Unipara_london</a>
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+
+    <section class="section-quotes">
+        <div class="row">
+            <h2>Why should you use UMP's website</h2>
+        </div>
+
+        <div class="row">
+            <div class="col span-1-of-3 ">
+                <blockquote>
+                    UMP is just a good tool to boarden your horizon and also deepen your knowledge of current course
+                    that you are going through,is a good learning experiences that you should not let it pass
+                    <cite><img src="resources/img/customer-1.jpg" alt="">Alberto Duncan</cite>
+                </blockquote>
+            </div>
+            <div class="col span-1-of-3 ">
+                <blockquote>
+                    By posting your work on UMP, you are helping the university to enhance the learning experience not
+                    only for yourself but those around you and for many future generation to come!
+                    <cite><img src="resources/img/customer-2.jpg" alt="">Joana Silva</cite>
+                </blockquote>
+            </div>
+            <div class="col span-1-of-3 ">
+                <blockquote>
+                    Using UMP will not only improve your academic scores but also a chance for you to earn unique prizes
+                    that may not be obtainable anywhere else, so will not join now ?
+                    <cite><img src="resources/img/customer-3.jpg" alt="">Milton Chapman</cite>
+                </blockquote>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-rewards js-section-reward">
+        <div class="row">
+            <h2>Top 3 contribution rewards</h2>
+        </div>
+        <div class="row">
+            <div class="col span-1-of-3">
+                <div class="reward-box">
+                    <div>
+                        <h3>1ST place</h3>
+                        <p class="rewards">
+                            600$ <span>/ month allowances</span>
+                        </p>
+                        <p class="reward-descriptions">
+                            That’s 30.0$ per day!
+                        </p>
+                    </div>
+                    <div>
+                        <ul>
+                            <li><i class="ion-ios-checkmark icon-sm"></i>Large academic score boost</li>
+                            <li><i class="ion-ios-checkmark icon-sm"></i>fully-Funded equipment</li>
+                            <li><i class="ion-ios-checkmark icon-sm"></i>Access to limited editions</li>
+                            <li><i class="ion-ios-checkmark icon-sm"></i>Name in hall of fame</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <a href="#" class="btn btn-full">I wanted to contribute</a>
+                    </div>
                 </div>
             </div>
-        <div>
-</form>
-</div>
+            <div class="col span-1-of-3">
+                <div class="reward-box">
+                    <div>
+                        <h3>2ND place</h3>
+                        <p class="rewards">
+                            300$ <span>/ month allowances</span>
+                        </p>
+                        <p class="reward-descriptions">
+                            That’s 10.0$ per day!
+                        </p>
+                    </div>
+                    <div>
+                        <ul>
+                            <li><i class="ion-ios-checkmark icon-sm"></i>Medium academic score boost</li>
+                            <li><i class="ion-ios-checkmark icon-sm"></i>Mostly-Funded equipment</li>
+                            <li><i class="ion-ios-checkmark icon-sm"></i>Access to limited editions</li>
+                            <li><i class="ion-ios-checkmark icon-sm"></i>Name in hall of fame</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <a href="#" class="btn btn-full">I wanted to contribute</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col span-1-of-3">
+                <div class="reward-box">
+                    <div>
+                        <h3>3RD place</h3>
+                        <p class="rewards">
+                            150$ <span>/ month allowances</span>
+                        </p>
+                        <p class="reward-descriptions">
+                            That’s 5.0$ per day!
+                        </p>
+                    </div>
+                    <div>
+                        <ul>
+                            <li><i class="ion-ios-checkmark icon-sm"></i>Small academic score boost</li>
+                            <li><i class="ion-ios-checkmark icon-sm"></i>Small-Funded equipment</li>
+                            <li><i class="ion-ios-close icon-sm"></i>No access for limited edition </li>
+                            <li><i class="ion-ios-checkmark icon-sm"></i>Name in hall of fame</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <a href="#" class="btn btn-full">I wanted to contribute</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="row">
+            <div class="col span-1-of-2">
+                <ul class="nav-footer">
+                    <li> <a href="#">about us</a> </li>
+                    <li> <a href="#">blog</a> </li>
+                    <li> <a href="#">Press</a> </li>
+                    <li> <a href="#">IOS app</a> </li>
+                    <li> <a href="#">ANDROID app</a> </li>
+                </ul>
+            </div>
+            <div class="col span-1-of-2">
+                <ul class="social-link-footer">
+                    <li>
+                        <a href="#"> <i class="ion-logo-facebook"></i> </a>
+                    </li>
+                    <li>
+                        <a href="#"> <i class="ion-logo-twitter"></i> </a>
+                    </li>
+                    <li>
+                        <a href="#"> <i class="ion-logo-googleplus"></i> </a>
+                    </li>
+                    <li>
+                        <a href="#"> <i class="ion-logo-instagram"></i> </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <p>
+                Copyrighted &copy; 2020 by Unipara all rights reversed
+            </p>
+        </div>
+    </footer>
+</body>
 
 

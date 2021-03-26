@@ -74,44 +74,48 @@
     <section class="section-subject-posts" id="cat">
         <h2>Recently Added</h2>
         <ul class="posts-showcase clearfix ">
-            <% articles.forEach(article=>{ %>
-                <li>
-                    <figure class="post-img wrapper">
-                        <div class="wrapper">
-                            <img src="<%= article.coverImagePath %>">
-                            <a class="btn-full btn-post" href="/<%= article._id %>">
-                                <%= article.name %>
-                            </a>
-                            <br>
-                            <br>
-                            <form class="btn-post" action="/download/<%= article._id %>" method="GET">
-                                <input type="submit" value="Download">
-                            </form>
-                        </div>
-
-                    </figure>
-                </li>
-                <% }) %>
+            <li>
+                <figure class="post-img">
+                    <img src="resources/img/1.jpg" alt="missing picture">
+                </figure>
+            </li>
+            <li>
+                <figure class="post-img">
+                    <img src="resources/img/2.jpg" alt="missing picture">
+                </figure>
+            </li>
+            <li>
+                <figure class="post-img">
+                    <img src="resources/img/3.jpg" alt="missing picture">
+                </figure>
+            </li>
+            <li>
+                <figure class="post-img">
+                    <img src="resources/img/4.jpg" alt="missing picture">
+                </figure>
+            </li>
         </ul>
-        <ul class="posts-showcase clearfix ">
-            <% articles.forEach(article=>{ %>
-                <li>
-                    <figure class="post-img wrapper">
-                        <div class="wrapper">
-                            <img src="<%= article.coverImagePath %>">
-                            <a class="btn-full btn-post" href="/<%= article._id %>">
-                                <%= article.name %>
-                            </a>
-                            <br>
-                            <br>
-                            <form class="btn-post" action="/download/<%= article._id %>" method="GET">
-                                <input type="submit" value="Download">
-                            </form>
-                        </div>
-
-                    </figure>
-                </li>
-                <% }) %>
+        <ul class="posts-showcase clearfix">
+            <li>
+                <figure class="post-img">
+                    <img src="resources/img/5.jpg" alt="missing picture">
+                </figure>
+            </li>
+            <li>
+                <figure class="post-img">
+                    <img src="resources/img/6.jpg" alt="missing picture">
+                </figure>
+            </li>
+            <li>
+                <figure class="post-img">
+                    <img src="resources/img/7.jpg" alt="missing picture">
+                </figure>
+            </li>
+            <li>
+                <figure class="post-img">
+                    <img src="resources/img/8.jpg" alt="missing picture">
+                </figure>
+            </li>
         </ul>
     </section>
 
@@ -385,3 +389,29 @@
 </body>
 
 </html>
+
+<!-- 
+    <section class="section-subject-posts" id="cat">
+        <h2>Recently Added</h2>
+        <ul class="posts-showcase clearfix ">
+            <% articles.forEach(article=>{ %>
+                <li>
+                    <figure class="post-img wrapper">
+                        <div class="wrapper">
+                            <img src="<%= article.coverImagePath %>">
+                            <a class="btn-full btn-post" href="/<%= article._id %>">
+                                <%= article.name %>
+                            </a>
+                            <br>
+                            <br>
+                            <form class="btn-post" action="/download/<%= article._id %>" method="GET">
+                                <input type="submit" value="Download">
+                            </form>
+                        </div>
+
+                    </figure>
+                </li>
+                <% }) %>
+        </ul>
+    </section>
+-->
