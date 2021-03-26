@@ -11,6 +11,41 @@
 </form>
 
 <div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="table-id">Cover</th>
+                <th class="table-name">Name</th>
+                <th>Author</th>
+                <th>Option</th>
+            </tr>
+        </thead>
+        <% articles.forEach(article=>{ %>
+            <tbody>
+                <tr>
+                    <td><img height="150" width="100" src="<%= article.coverImagePath %>"></td>
+                    <td>
+                        <%= article.name %>
+                    </td>
+                    <td>
+                        <%= article.status %>
+                    </td>
+                    <td class="p-2">
+                        <form action="/user/article/download/<%= article._id %>" method="GET">
+                            <input type="submit" value="Download">
+                        </form>
+                        <a href="/user/article/<%= article._id %>">
+                       View
+                    </a>
+                    </td>
+                </tr>
+            </tbody>
+            <% }) %>
+    </table>
+
+</div>
+
+<!-- 
     <% articles.forEach(article=>{ %>
         <table>
             <tr>
@@ -34,4 +69,4 @@
             </tr>
         </table>
         <% }) %>
-</div>
+-->
