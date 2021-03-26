@@ -11,6 +11,9 @@ const uploadPath = path.join('public', Article.fileBasePath)
 const fileMimeTypes = require('../helper/mime-file')
 const imageMimeTypes = ['image/jpeg', 'image/png', 'images/gif']
 const fs = require('fs');
+const { findById } = require('../models/Article')
+const Profile = require('../models/Profile')
+const bcrypt = require('bcrypt')
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -40,14 +43,6 @@ const storage = multer.diskStorage({
 })
 
 const upload = multer({ storage: storage })
-
-
-router.get('/', isStudent, async (req, res) => {
-    const article = await Article.find({ status: 'accepted' })
-    res.render('student/index', {
-        articles: article
-    })
-})
 
 //get topic index page 
 router.get('/topic', isStudent, async (req, res) => {
@@ -222,8 +217,8 @@ router.put('/poster/:id/edit', isStudent, upload.single('file'), async (req, res
 
             await article.save()
             res.redirect(`/student/article/${article._id}`)
-        } else{
-            req.flash('errorMessage','Cant edit this article because final deadline has expire')
+        } else {
+            req.flash('errorMessage', 'Cant edit this article because final deadline has expire')
             res.redirect('back')
         }
     } catch (error) {
@@ -340,17 +335,6 @@ router.get('/article/:id', isStudent, async (req, res) => {
     }
 })
 
-// //show refused Article
-// router.get('/rejectedarticle/:id', isUser, async (req, res) => {
-//     try {
-//         const article = await Article.findById(req.params.id).populate("topic").exec()
-//         res.render('user/showArticle', { article: article })
-//     } catch (error) {
-//         console.log(error)
-//         res.redirect('/user')
-//     }
-// })
-
 //download article
 router.get('/article/download/:id', async (req, res) => {
     try {
@@ -381,7 +365,117 @@ router.get('/article', async (req, res) => {
     }
 })
 
+//PROFILE SECTION
+
+router.get('/profile/:id', isStudent, async (req, res) => {
+    const user = await User.findById(req.session.userId)
+    const profile = await Profile.findOne({ user: user._id })
+    res.render('student/showProfile', {
+        profile: profile
+    })
+})
+
+router.get('/profile/:id/edit', isStudent, async (req, res) => {
+    const profile = await Profile.findById(req.params.id)
+    res.render('student/editProfile', {
+        profile: profile
+    })
+})
+
+router.put('/profile/:id/edit', isStudent, async (req, res) => {
+    const profile = await Profile.findById(req.params.id)
+
+    const newName = req.body.fullname
+    const newGender = req.body.gender
+    const newDob = req.body.dob
+    const newIntro = req.body.introduction
+    const newEmail = req.body.email
+
+    if (newName) {
+        profile.fullName = newName
+    }
+    if (newGender) {
+        profile.gender = newGender
+    } else {
+        req.flash('errorMessage', '')
+        res.redirect('back')
+    }
+    if (newDob) {
+        profile.dob = newDob
+    }
+    if (newIntro) {
+        profile.introduction = newIntro
+    } else {
+        profile.introduction = 'I am a student in FPT college'
+    }
+    if (newEmail) {
+        profile.email = newEmail
+    } else {
+        req.flash('errorMessage', 'You need to add your email')
+        res.redirect('back')
+    }
+    try {
+        await profile.save()
+        req.redirect(`/student/profile/${profile.id}`)
+    } catch (error) {
+        console.log(error)
+        req.flash('errorMessage', 'Can not update this profile')
+        res.redirect('back')
+    }
+})
+
+router.get('/profile/:id/changepassword', isStudent, async (req, res) => {
+    try {
+        const user = await User.findById(req.session.userId)
+        const profile = await Profile.findOne({ user: user.id })
+        res.render('student/changepassword', {
+            user: user,
+            profile: profile
+        })
+    } catch (e) {
+        console.log(e)
+        res.redirect(`/student/profile/${profile.id}`)
+    }
+
+})
+
+router.put('/profile/:id/changepassword', isStudent, async(req,res)=>{
+    const password = req.body.password
+    const verifyPassword = req.body.verifyPassword
+
+    const hashedPasword = await bcrypt.hash(password, 10)
+    const hashedVerifyPasword = await bcrypt.hash(verifyPassword, 10)
+
+    const validPass = await bcrypt.compare(hashedPasword, hashedVerifyPasword)
+    if(validPass == true){
+        user.password = hashedPasword
+    }
+    try{
+        await user.save()
+        req.flash('errorMessage', 'Saved Successfully')
+        res.redirect(`/student/profile/${profile.id}`)
+    }catch(e){
+        req.flash('errorMessage', 'Can not be updated')
+        res.redirect('back')
+    }
+})
+
 router.get('/logout', Logout)
+
+router.get('/', isStudent, async (req, res) => {
+    try {
+        const articles = await Article.find({ status: 'accepted' })
+        const profile = await Profile.findOne({ user: req.session.userId })
+        res.render('student/index', {
+            articles: articles,
+            profile: profile
+        })
+    } catch (e) {
+        console.log(e)
+        res.redirect('back')
+    }
+
+})
 
 function saveCover(article, coverEncoded) {
     if (coverEncoded == null) return

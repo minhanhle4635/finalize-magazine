@@ -1,0 +1,32 @@
+<h2>Edit User</h2>
+<form action="/student/profile/<%= profile.id %>/edit?_method=PUT" method="POST">
+    <div>
+        <label>Name</label>
+        <input type="text" name="fullname" value="<%= profile.fullName %>">
+    </div>
+    <div>
+        <label>Gender</label>
+        <input type="checkbox" name="gender" value="male"> <label id="male">Male</label>
+        <input type="checkbox" name="gender" value="female"> <label id="female">Female</label>
+        <input type="checkbox" name="gender" value="other"> <label id="other">Male</label>
+    
+    </div>
+    <div>
+        <label>Date of Birth</label>
+        <input type="date" name="dob" value="<%= profile.dob %>">
+    </div>
+    <div>
+        <label>Email</label>
+        <input type="email" name="email" value="<%= profile.email== null? '' : profile.email %>">
+    </div>
+    <div>
+        <label for="introduction">Introduction</label>
+        <textarea name="introduction"><%= profile.introduction %></textarea>
+    </div>
+
+    <div>
+        <label for="avatar">Avatar</label>
+        <input type="file" name="avatar" class="filepond">
+    </div>
+    <button type="submit">Update</button>
+</form>

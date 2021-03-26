@@ -1,0 +1,13 @@
+<div><a href="/student">Home</a></div>
+<h2>
+    <%= profile.fullName %>
+</h2>
+
+<div> <img src="<%= profile.avatarImageName == null ? '/public/uploads/avatar/male.jpg' : profile.avatarImageName %>"></div>
+<div> Gender: <%= profile.gender==null ? 'None' : profile.gender %></div>
+<div> Date of Birth: <%= profile.dob==null ? '' : profile.dob.toISOString().split('T')[0]%></div>
+<div> Email: <%= profile.email %></div>
+<div> Introduction: <%= profile.Introduction %></div>
+
+<a href="/student/profile/<%= profile.id %>/edit">Edit</a>
+<a href="/student/profile/<%= profile.id %>/changepassword">Change Password</a>
