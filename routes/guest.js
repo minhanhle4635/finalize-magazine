@@ -6,6 +6,8 @@ const {Logout} = require('../Login')
 const User = require('../models/User')
 const Article = require('../models/Article')
 
+router.get('/logout', Logout)
+
 router.get('/',async (req,res)=>{
     const user = await User.findById(req.session.userId)
     const faculty = await Faculty.findById(user.faculty)
@@ -32,7 +34,7 @@ router.get('/:id', async (req, res) => {
     } 
 })
 
-router.get('/logout', Logout)
+
 
 
 
