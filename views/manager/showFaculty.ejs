@@ -1,0 +1,95 @@
+<nav class="sticky sticky-admin">
+    <div class="row">
+        <img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
+        <img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black">
+        <ul class="main-nav">
+            <li> <a href="/manager">Home </a> </li>
+            <li> <a href="/manager/logout">logout </a> </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="row">
+    <form style="margin-bottom: 20px;" class="signup-form">
+        <div class="log-border">
+            <h2> <%= faculty.name %> </h2>
+            <div class="row">
+                <div class="col span-1-of-3">
+                    <label for="">Description:</label>
+                </div>
+                <div class="col span-2-of-3">
+                    <%= faculty.description %>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                    <table class="content-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Expired Date</th>
+                                <th>Final Expired Date</th>
+                            </tr>
+                        </thead>
+                        <% topic.forEach(topic => { %>
+                            <tbody>
+                                <tr>
+                                    <td><a href="/manager/topic/<%=topic._id%>"><%= topic.name %></a></td>
+                                    <td><%= topic.expiredDate.toISOString().split('T')[0] %></td>
+                                    <td><%= topic.finalExpiredDate.toISOString().split('T')[0] %></td>
+                                </tr>
+                            </tbody>
+                            <% }) %> 
+                    </table>
+            </div>
+        </div>
+</form>
+
+<div style="margin-bottom: 100px;" class="row fal-add-css">            
+    <div class="col span-1-of-2">
+        <a class="btn btn-ghost" href="/manager">Home</a>
+    </div>
+
+    <div class="col span-1-of-2">
+        <form action="/manager/faculty/downloadAll/<%= faculty._id %>" method="GET">
+            <button class="btn btn-ghost" type="submit">Download All</button>
+        </form>
+    </div>
+</div>
+
+</div>
+
+<footer>
+    <div class="row">
+        <div class="col span-1-of-2">
+            <ul class="nav-footer">
+                <li> <a href="#">about us</a> </li> 
+                <li> <a href="#">blog</a> </li> 
+                <li> <a href="#">Press</a> </li> 
+                <li> <a href="#">IOS app</a> </li> 
+                <li> <a href="#">ANDROID app</a> </li> 
+            </ul>
+        </div>
+        <div class="col span-1-of-2">
+            <ul class="social-link-footer">
+                <li>
+                    <a href="#"> <i class="ion-logo-facebook"></i> </a> 
+                </li>
+                <li>
+                    <a href="#"> <i class="ion-logo-twitter"></i> </a> 
+                </li>
+                <li>
+                    <a href="#"> <i class="ion-logo-googleplus"></i> </a> 
+                </li>
+                <li>
+                    <a href="#"> <i class="ion-logo-instagram"></i> </a> 
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <p>
+            Copyrighted &copy; 2020 by Unipara all rights reversed
+        </p>
+    </div>
+</footer>

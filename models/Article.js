@@ -1,5 +1,5 @@
-const { boolean } = require('@hapi/joi')
 const mongoose = require('mongoose')
+const User = require('../models/User')
 
 const fileBasePath = 'uploads/file'
 

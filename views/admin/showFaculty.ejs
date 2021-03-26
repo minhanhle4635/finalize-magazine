@@ -30,7 +30,14 @@
                 </div>
                 <div class="col span-2-of-3">
                     <% topic.forEach(topic => { %>
-                        <%= topic.name %>
+                        <table>
+                            <tr>
+                                <th>Topic Name</th>
+                            </tr>
+                            <tr>
+                                <a href="/admin/topic/<%= topic.id %>"><%= topic.name %></a>
+                            </tr>
+                        </table>    
                     <% }) %>
                 </div>
             </div>

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const Article = require('../models/Article')
 
 const topicSchema = mongoose.Schema({
     name:{
@@ -16,6 +17,10 @@ const topicSchema = mongoose.Schema({
         type: Date,
         required: true
     },
+    finalExpiredDate:{
+        type: Date,
+        required: true
+    },
     faculty: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Faculty'
@@ -27,7 +32,8 @@ topicSchema.pre('remove', function(next){
         if(err){
             next(err)
         } else if( articles.length > 0){
-            next(new Error('This faculty has article still'))
+            req.flash('errorMessage','This topic cant be deleted')
+            next(new Error('This topic has article still'))
         } else {
             next()
         }

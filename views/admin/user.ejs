@@ -28,6 +28,7 @@
     <thead>
         <tr>
             <th>Name</th>
+            <th>Account</th>
             <th>Role</th>
             <th>Falcuty</th>
             <th>Created At</th>
@@ -39,12 +40,13 @@
                 <td style="text-align: center;" ><a class="btn" href="/admin/user/<%= user._id %>">
                     <%= user.name %> </a>
                 </td>
+                <td><%= user.username %></td>
                 <td><%= user.role %></td>
                 <td><% if(user.faculty) { %>
                 <%= user.faculty.name %>
                 <% } %>
                 </td>
-                <td><%= user.createdAt %></td>
+                <td><%= user.createdAt.toISOString().split('T')[0] %></td>
             </tr>
         </tbody>
     <% }) %> 

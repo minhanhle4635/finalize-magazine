@@ -7,7 +7,6 @@ const expressLayouts = require('express-ejs-layouts')
 const session = require('express-session')
 const flash = require('express-flash')
 const mongoose = require('mongoose')
-const passport = require('passport')
 const methodOverride = require('method-override')
 const bodyParser = require('body-parser')
 const RequestLog = require('./models/requestLog')
@@ -77,14 +76,18 @@ app.use(methodOverride('_method'))
 //Import route
 const indexRoute = require('./routes/index')
 const adminRoute = require('./routes/admin')
+const managerRoute = require('./routes/manager')
 const coorRoute = require('./routes/coordinator')
-const userRoute = require('./routes/user')
+const studentRoute = require('./routes/student')
+const guestRoute = require('./routes/guest')
 
 //Route
 
 app.use('/admin', adminRoute)
+app.use('/manager',managerRoute)
 app.use('/coordinator', coorRoute)
-app.use('/user', userRoute)
+app.use('/student', studentRoute)
+app.use('/guest', guestRoute)
 app.use('/', indexRoute)
 
 const port = process.env.PORT || 80 

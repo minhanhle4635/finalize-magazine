@@ -11,7 +11,6 @@ const uploadPath = path.join('public', Article.fileBasePath)
 const fileMimeTypes = require('../helper/mime-file')
 const imageMimeTypes = ['image/jpeg', 'image/png', 'images/gif']
 const fs = require('fs');
-const { query } = require('express')
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -43,33 +42,18 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage })
 
 
-router.get('/', isUser, async (req, res) => {
+router.get('/', isStudent, async (req, res) => {
     const article = await Article.find({ status: 'accepted' })
-    res.render('user/index', {
+    res.render('student/index', {
         articles: article
     })
 })
 
-// //get article page from index
-// router.get('/:id', isUser, async  (req,res)=>{
-//     try {
-//         const article = await Article.findById(req.params.id).populate("topic").exec()
-//         res.render('user/showArticleIndex', { article: article })
-//     } catch (error) {
-//         console.log(error)
-//         res.redirect('/user')
-//     }
-// })
-
-
-
 //get topic index page 
-router.get('/topic', isUser, async (req, res) => {
+router.get('/topic', isStudent, async (req, res) => {
     try {
-        const topics = await Topic.find({}).populate('faculty');
-        // cần phân loại các topics dựa trên faculty của nó
-        // nên tôi tạo ra 1 "hash-map" - aka Object.
-        const facultyList = {};
+        const topics = await Topic.find({}).populate('faculty')
+        const facultyList = {}
         const nonExpiredFacultyList = {}
 
         topics.forEach(topic => {
@@ -94,7 +78,7 @@ router.get('/topic', isUser, async (req, res) => {
             facultyList[topic.faculty._id].topics.push(topic);
         })
 
-        res.render('user/topic', {
+        res.render('student/topic', {
             nonExpiredList: nonExpiredFacultyList,
             faculties: facultyList
         })
@@ -105,21 +89,21 @@ router.get('/topic', isUser, async (req, res) => {
 
 
 //show topic
-router.get('/topic/:id', isUser, async (req, res) => {
+router.get('/topic/:id', isStudent, async (req, res) => {
     try {
         const topic = await Topic.findById(req.params.id)
         console.log(req.params.id)
-        res.render('user/showTopic', {
+        res.render('student/showTopic', {
             topic: topic
         })
     } catch (error) {
         console.log(error)
-        res.redirect('/user/topic')
+        res.redirect('/student/topic')
     }
 })
 
 //get page article index
-router.get('/poster', isUser, async (req, res) => {
+router.get('/poster', isStudent, async (req, res) => {
     let query = Article.find({ poster: req.session.userId })
     if (req.query.name != null && req.query.name != '') {
         query = query.regex('name', new RegExp(req.query.name, 'i'))
@@ -127,18 +111,18 @@ router.get('/poster', isUser, async (req, res) => {
     try {
         const status = req.body.status
         const article = await query.exec()
-        res.render('user/poster', {
+        res.render('student/poster', {
             articles: article,
             searchOptions: req.query,
             status: status
         })
     } catch (err) {
         console.log(err)
-        res.redirect('/user')
+        res.redirect('/student')
     }
 })
 
-router.post('/poster', isUser, async (req, res) => {
+router.post('/poster', isStudent, async (req, res) => {
     const status = req.body.status
     try {
         if (status === 'all') {
@@ -147,7 +131,7 @@ router.post('/poster', isUser, async (req, res) => {
                 query = query.regex('name', new RegExp(req.query.name, 'i'))
             }
             const article = await query.exec()
-            return res.render('user/poster', {
+            return res.render('student/poster', {
                 articles: article,
                 searchOptions: req.query,
                 status: status
@@ -158,7 +142,7 @@ router.post('/poster', isUser, async (req, res) => {
                 query = query.regex('name', new RegExp(req.query.name, 'i'))
             }
             const article = await query.exec()
-            res.render('user/poster', {
+            res.render('student/poster', {
                 articles: article,
                 searchOptions: req.query,
                 status: status
@@ -169,7 +153,7 @@ router.post('/poster', isUser, async (req, res) => {
                 query = query.regex('name', new RegExp(req.query.name, 'i'))
             }
             const article = await query.exec()
-            res.render('user/poster', {
+            res.render('student/poster', {
                 articles: article,
                 searchOptions: req.query,
                 status: status
@@ -180,7 +164,7 @@ router.post('/poster', isUser, async (req, res) => {
                 query = query.regex('name', new RegExp(req.query.name, 'i'))
             }
             const article = await query.exec()
-            res.render('user/poster', {
+            res.render('student/poster', {
                 articles: article,
                 searchOptions: req.query,
                 status: status
@@ -192,16 +176,102 @@ router.post('/poster', isUser, async (req, res) => {
     }
 })
 
+router.get('/poster/:id', isStudent, async (req, res) => {
+    try {
+        const article = await Article.findById(req.params.id).populate("topic").exec()
+        res.render('student/showArticle', { article: article })
+    } catch (error) {
+        console.log(error)
+        res.redirect('/user')
+    }
+})
+
+//get article edit page
+router.get('/poster/:id/edit', isStudent, async (req, res) => {
+    try {
+        const article = await Article.findById(req.params.id)
+        const topic = await Topic.find({})
+        const params = {
+            article: article,
+            topics: topic
+        }
+        res.render('student/editArticle', params)
+    } catch (error) {
+        console.log(error)
+        res.redirect(`/student/article/${article._id}`)
+    }
+})
+
+//edit article
+router.put('/poster/:id/edit', isStudent, upload.single('file'), async (req, res) => {
+    let article
+    try {
+        article = await Article.findById(req.params.id)
+
+        const topic = await Topic.findById(article.topic)
+        const dateNow = Date.now()
+        const FED = topic.finalExpiredDate
+
+        if (dateNow.getDate() === FED.getDate()) {
+            article.name = req.body.name
+            article.author = req.body.author
+            article.description = req.body.description
+            article.topic = req.body.topic
+            article.file = req.file.originalname
+            saveCover(article, req.body.cover)
+
+            await article.save()
+            res.redirect(`/student/article/${article._id}`)
+        } else{
+            req.flash('errorMessage','Cant edit this article because final deadline has expire')
+            res.redirect('back')
+        }
+    } catch (error) {
+        console.log(error)
+        if (article != null) {
+            req.flash('errorMessage', 'Cannot edit this topic')
+            res.redirect('back')
+        } else {
+            res.redirect('/student/article')
+        }
+    }
+})
+
+//delete article
+router.delete('/poster/:id', isStudent, async (req, res) => {
+    let article
+    try {
+        article = await Article.findById(req.params.id)
+        console.log(article)
+        await article.remove()
+        res.redirect('/student/article')
+    } catch {
+        if (article != null) {
+            res.render('student/showArticleIndex', {
+                article: article,
+            })
+            req.flash('errorMessage', 'Could not delete the article')
+        } else {
+            res.redirect(`/student/article/${article._id}`)
+        }
+    }
+})
+
+
+
 // get page new Article
-router.get('/newarticle', isUser, async (req, res) => {
-    const topic = await Topic.find({})
-    res.render('user/newArticle', {
-        topics: topic
+router.get('/newarticle', isStudent, async (req, res) => {
+    const user = await User.findById(req.session.userId)
+    const faculty = await Faculty.findById(user.faculty)
+    const topic = await Topic.find({ faculty: faculty })
+    const notExpiredTopic = topic.filter(topic => topic.expiredDate > Date.now())
+    res.render('student/newArticle', {
+        topics: notExpiredTopic
     })
 })
 
 //create new Article
-router.post('/newarticle', isUser, upload.single('file'), async (req, res) => {
+router.post('/newarticle', isStudent, upload.single('file'), async (req, res) => {
     // const{error} = newArticleValidation(req.body)
     // if(error) return res.status(400).send(error.details[0].message)
     const topic = await Topic.findOne({ _id: req.body.topic })
@@ -242,7 +312,7 @@ router.post('/newarticle', isUser, upload.single('file'), async (req, res) => {
             if (dateNow.getTime() <= deadline.getTime()) {
                 await article.save();
                 req.flash('errorMessage', 'Wait for permision')
-                res.redirect('/user/poster')
+                res.redirect('/student/poster')
             } else {
                 if (article.fileName != null) { removefile(article.fileName) }
                 req.flash('errorMessage', 'This topic has met its deadline')
@@ -260,13 +330,13 @@ router.post('/newarticle', isUser, upload.single('file'), async (req, res) => {
 })
 
 //show accepted Article
-router.get('/article/:id', isUser, async (req, res) => {
+router.get('/article/:id', isStudent, async (req, res) => {
     try {
         const article = await Article.findById(req.params.id).populate("topic").exec()
-        res.render('user/showArticle', { article: article })
+        res.render('student/showArticleIndex', { article: article })
     } catch (error) {
         console.log(error)
-        res.redirect('/user')
+        res.redirect('/student')
     }
 })
 
@@ -289,85 +359,25 @@ router.get('/article/download/:id', async (req, res) => {
         res.download(pathToFile, article.fileName)
     } catch (error) {
         console.log(error)
-        res.redirect('/user/article')
+        res.redirect('/student/article')
     }
 })
 
-//get article edit page
-router.get('/article/:id/edit', isUser, async (req, res) => {
-    try {
-        const article = await Article.findById(req.params.id)
-        const topic = await Topic.find({})
-        const params = {
-            article: article,
-            topics: topic
-        }
-        res.render('user/editArticle', params)
-    } catch (error) {
-        console.log(error)
-        res.redirect(`/user/article/${article._id}`)
-    }
-})
-
-//edit article
-router.put('/article/:id/edit', isUser, upload.single('file'), async (req, res) => {
-    let article
-    try {
-        article = await Article.findById(req.params.id)
-        article.name = req.body.name
-        article.author = req.body.author
-        article.description = req.body.description
-        article.topic = req.body.topic
-        article.file = req.file.originalname
-        saveCover(article, req.body.cover)
-
-        await article.save()
-        res.redirect(`/user/article/${article._id}`)
-    } catch (error) {
-        console.log(error)
-        if (article != null) {
-            req.flash('errorMessage', 'Cannot edit this topic')
-            res.redirect('back')
-        } else {
-            res.redirect('/user/article')
-        }
-    }
-})
-
-//delete article
-router.delete('/article/:id', isUser, async (req, res) => {
-    let article
-    try {
-        article = await Article.findById(req.params.id)
-        console.log(article)
-        await article.remove()
-        res.redirect('/user/article')
-    } catch {
-        if (article != null) {
-            res.render('user/showArticle', {
-                article: article,
-            })
-            req.flash('errorMessage', 'Could not delete the article')
-        } else {
-            res.redirect(`/user/article/${article._id}`)
-        }
-    }
-})
 
 //get all article
 router.get('/article', async (req, res) => {
     try {
-        let query = Article.find()
+        let query = Article.find({ status: 'accepted' })
         if (req.query.name != null && req.query.name != '') {
             query = query.regex('name', new RegExp(req.query.name, 'i'))
         }
         const article = await query.exec()
-        res.render('user/article', {
+        res.render('student/article', {
             articles: article,
             searchOptions: req.query
         })
     } catch (error) {
-        res.redirect('/user')
+        res.redirect('/student')
     }
 })
 
@@ -388,12 +398,18 @@ function removefile(fileName) {
     })
 }
 
-function isUser(req, res, next) {
+function isStudent(req, res, next) {
     if (!req.session.userId) {
         return res.redirect('/')
     }
-    else if (req.session.isCoordinator === 'true') {
+    else if (req.session.isCoordinator === true) {
         return res.redirect('/coordinator')
+    } else if (req.session.isAdmin === true) {
+        return res.redirect('/admin')
+    } else if (req.session.isManager === true) {
+        return res.redirect('/manager')
+    } else if (req.session.isGuest === true) {
+        return res.redirect('/guest')
     }
     else {
         next()

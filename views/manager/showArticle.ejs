@@ -1,0 +1,113 @@
+<nav class="sticky sticky-admin">
+    <div class="row">
+        <img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
+        <img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black">
+        <ul class="main-nav">
+            <li> <a href="/manager">Home </a> </li>
+            <li> <a href="/manager/logout">logout </a> </li>
+        </ul>
+    </div>
+</nav>
+
+<section>
+    <form style="margin-top: 2%; margin-bottom: 2%;" class="signup-form">
+        <div class="log-border">
+            <h2><%= article.name %></h2>
+            <div class="row ">
+                    <img class="img-center" width="100" height="150" src="<%= article.coverImagePath %>">
+            </div>
+            <div class="row">
+                <div class="col span-1-of-3">
+                    <label for="author">Author:</label>
+                </div>
+                <div class="col span-2-of-3">
+                    <div>
+                     <%= article.author %>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col span-1-of-3">
+                    <label for="">Created At:</label>
+                </div>
+                <div class="col span-2-of-3">
+                    <div>
+                        <%= article.createdAt %>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col span-1-of-3">
+                    <label for="">Description:</label>
+                </div>
+                <div class="col span-2-of-3">
+                    <div>
+                        <%= article.description %> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col span-1-of-3">
+                    <label for="">File:</label>
+                </div>
+                <div class="col span-2-of-3">
+                    <div>
+                        <%= article.fileName %>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col span-1-of-3">
+                    Comment from Coordinator:
+                </div>
+                <div class="col span-2-of-3">
+                    <div>
+                        <%= article.comment %>
+                    </div>
+                </div>
+            </div>
+            
+        </div>      
+    </form>
+</section>
+
+<footer>
+    <div class="row">
+        <div class="col span-1-of-2">
+            <ul class="nav-footer">
+                <li> <a href="#">about us</a> </li> 
+                <li> <a href="#">blog</a> </li> 
+                <li> <a href="#">Press</a> </li> 
+                <li> <a href="#">IOS app</a> </li> 
+                <li> <a href="#">ANDROID app</a> </li> 
+            </ul>
+        </div>
+        <div class="col span-1-of-2">
+            <ul class="social-link-footer">
+                <li>
+                    <a href="#"> <i class="ion-logo-facebook"></i> </a> 
+                </li>
+                <li>
+                    <a href="#"> <i class="ion-logo-twitter"></i> </a> 
+                </li>
+                <li>
+                    <a href="#"> <i class="ion-logo-googleplus"></i> </a> 
+                </li>
+                <li>
+                    <a href="#"> <i class="ion-logo-instagram"></i> </a> 
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <p>
+            Copyrighted &copy; 2020 by Unipara all rights reversed
+        </p>
+    </div>
+</footer>
+
+

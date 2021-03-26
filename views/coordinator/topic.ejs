@@ -13,7 +13,8 @@
     <table>
         <tr>
             <th>Name</th>
-            <th>expired Date</th>
+            <th>Expired Date</th>
+            <th>Final Expired Date</th>
         </tr>
         <% topic.forEach(topic=>{ %>
             <tr>
@@ -22,6 +23,9 @@
                     </a></td>
                 <td>
                     <%= topic.expiredDate==null ? '' : topic.expiredDate.toISOString().split('T')[0] %>
+                </td>
+                <td>
+                    <%= topic.finalExpiredDate==null ? '': topic.finalExpiredDate.toISOString().split('T')[0] %>
                 </td>
             </tr>
             <% }) %>

@@ -54,6 +54,7 @@ router.post('/topic/new', isCoordinator, async (req, res) => {
         const newTopic = new Topic({
             name: req.body.name,
             expiredDate: req.body.expiredDate,
+            finalExpiredDate: req.body.finalExpiredDate,
             description: req.body.description,
             faculty: user.faculty
         })
@@ -134,8 +135,29 @@ router.delete('/topic/:id', isCoordinator, async (req, res) => {
     }
 })
 
+//show all Article
+router.get('/allArticle',isCoordinator,async(req,res)=>{
+    const query = Article.find()
+    if (req.query.name != null && req.query.name != '') {
+        query = query.regex('name', new RegExp(req.query.name, 'i'))
+    }
+
+    try{
+        const articles = await query.exec()
+        res.render('coordinator/allArticle',{
+            articles: articles,
+            searchOptions: req.query
+        })
+    }catch(e){
+        console.log(e)
+        res.redirect('/coordinator')
+    }
+    
+})
+
 //article permission
 router.get('/article', isCoordinator, async (req, res) => {
+    let query = Article.find()
     if (req.query.name != null && req.query.name != '') {
         query = query.regex('name', new RegExp(req.query.name, 'i'))
     }

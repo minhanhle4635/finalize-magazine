@@ -6,7 +6,7 @@
             <img src="resources/img/logo.jpg" alt="missing picture" class="logo">
             <img src="resources/img/logo.jpg" alt="missing picture" class="logo-black">
                 <ul class="main-nav">
-                <li> <a href="#">Hello Admin <%= user.name %> </a> </li>
+                <li> <a href="#">Hello Admin <%= user.name %></a> </li>
                 <li> <a href="/admin/user">Manage user </a> </li>
                 <li> <a href="/admin/faculty">Manage falcuty </a> </li>
                 <li> <a href="/admin/logout">logout </a> </li>
@@ -16,10 +16,8 @@
 
     <section class="section-rewards js-section-reward">
         <div class="row">
-            <h2>Server database</h2>
+            <h2>Statistics</h2>
         </div>
-
-        <!-- actual shit MANNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN -->
         <div class="row">
             <div class="col span-1-of-3">
                 <div class="reward-box">
@@ -35,12 +33,23 @@
                 </div>
                 <div class="reward-box">
                     <div>
-                        <h3>Total User</h3>
+                        <h3>Total Student</h3>
                         <p class="rewards">
-                            <%= totalUser %>
+                            <%= totalStudent %>
                         </p>
                         <p class="reward-descriptions">
-                            Users
+                            Students
+                        </p> 
+                    </div>
+                </div>
+                <div class="reward-box">
+                    <div>
+                        <h3>Total Manager</h3>
+                        <p class="rewards">
+                            <%= totalManager %>
+                        </p>
+                        <p class="reward-descriptions">
+                            Managers
                         </p> 
                     </div>
                 </div>
@@ -120,7 +129,7 @@
                 </div>
                 <div class="reward-box">
                     <div>
-                        <h3>Nearest Requests</h3>
+                        <h3>Busiest Day</h3>
                         <p class="rewards">
                             <%= requestsInDay %>
                         </p>
@@ -170,139 +179,3 @@
     </footer>
 </body>
 </html>
-
-<!-- 
-    <h1>Hello Admin <%= user.name %></h1>
-
-<a href="/admin/user">User</a>
-<a href="/admin/faculty">Faculty</a>
-
-<a href="/admin/logout">Logout</a>
-        <div class="row">
-            <div class="col span-1-of-3">
-                <div class="reward-box">
-                    <div>
-                        <h3>Total Faculty</h3>
-                        <p class="rewards">
-                             <%= countTotalFaculty %>
-                        </p>
-                        <p class="reward-descriptions">
-                            Falcuties
-                        </p> 
-                    </div>
-                </div>
-                
-            </div>
-            <div class="col span-1-of-3">
-                <div class="reward-box">
-                    <div>
-                        <h3>Total Topic</h3>
-                        <p class="rewards">
-                            <%= countTotalTopic %>
-                        </p>
-                        <p class="reward-descriptions">
-                            Topics
-                        </p> 
-                    </div>
-                </div>
-            </div>
-            <div class="col span-1-of-3">
-                <div class="reward-box">
-                    <div>
-                        <h3>Total Article</h3>
-                        <p class="rewards">
-                            <%= countTotalArticle %>
-                        </p>
-                        <p class="reward-descriptions">
-                            Articles
-                        </p> 
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col span-1-of-3">
-                <div class="reward-box">
-                    <div>
-                        <h3>Total Requests</h3>
-                        <p class="rewards">
-                            <%= totalRequests %>
-                        </p>
-                        <p class="reward-descriptions">
-                            Requests
-                        </p> 
-                    </div>
-                </div>
-            </div>
-            <div class="col span-1-of-3">
-                <div class="reward-box">
-                    <div>
-                        <h3>Nearest Requests</h3>
-                        <p class="rewards">
-                            <%= requestsInDay %>
-                        </p>
-                        <p class="reward-descriptions">
-                            on <%= day %>
-                        </p> 
-                    </div>
-                </div>
-            </div>
-            <div class="col span-1-of-3">
-                <div class="reward-box">
-                    <div>
-                        <h3>Total Account</h3>
-                        <p class="rewards">
-                            <%= totalAccount %>
-                        </p>
-                        <p class="reward-descriptions">
-                            Accounts
-                        </p> 
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col span-1-of-3">
-                <div class="reward-box">
-                    <div>
-                        <h3>Total User</h3>
-                        <p class="rewards">
-                            <%= totalUser %>
-                        </p>
-                        <p class="reward-descriptions">
-                            Users
-                        </p> 
-                    </div>
-                </div>
-            </div>
-            <div class="col span-1-of-3">
-                <div class="reward-box">
-                    <div>
-                        <h3>Total Coordinator</h3>
-                        <p class="rewards">
-                            <%= totalCoordinator %>
-                        </p>
-                        <p class="reward-descriptions">
-                            Coordinators
-                        </p> 
-                    </div>
-                </div>
-            </div>
-            <div class="col span-1-of-3">
-                <div class="reward-box">
-                    <div>
-                        <h3>Total Admin</h3>
-                        <p class="rewards">
-                            <%= totalAdmin %>
-                        </p>
-                        <p class="reward-descriptions">
-                            Admins
-                        </p> 
-                    </div>
-                </div>
-            </div>
-        </div>
--->
-
-
-

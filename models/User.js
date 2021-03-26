@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const Faculty = require('./Faculty')
+const Article = require('../models/Article')
 
 
 const userSchema = mongoose.Schema({
@@ -26,8 +26,8 @@ const userSchema = mongoose.Schema({
     },
     role:{
         type: String,
-        enum: ['admin','coordinator','user'],
-        default: 'user'
+        enum: ['admin','coordinator','student','manager','guest'],
+        default: 'guest'
     },
     faculty: {
         type: mongoose.Schema.Types.ObjectId || String,
@@ -38,6 +38,18 @@ const userSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId || String,
         ref: 'Topic',
         default: null
+    }
+})
+
+userSchema.pre('remove', function(next){
+    const articles = Article.find({poster: this.id})
+    if(err){
+        next(err)
+    } else if( articles.length > 0){
+        req.flash('errorMessage', 'This faculty can not be deleted')
+        next(new Error('This user has article still'))
+    } else {
+        next()
     }
 })
 

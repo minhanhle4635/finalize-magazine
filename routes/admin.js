@@ -4,8 +4,6 @@ const bcrypt = require('bcrypt')
 const User = require('../models/User')
 const Faculty = require('../models/Faculty')
 const Topic = require('../models/Topic')
-
-const FileSaver = require('file-saver')
 const Article = require('../models/Article')
 const RequestLog = require('../analytics_service')
 const { Logout } = require('../Login')
@@ -15,7 +13,7 @@ const path = require("path");
 const AdmZip = require('adm-zip');
 const articleFilePath = path.join('public', Article.fileBasePath)
 
-
+//view statistical data
 router.get('/', isAdmin, async (req, res) => {
     const user = await User.findById(req.session.userId)
     const analytics = await RequestLog.getAnalytics()
@@ -23,9 +21,10 @@ router.get('/', isAdmin, async (req, res) => {
     const countTotalTopic = await Topic.find().estimatedDocumentCount()
     const countTotalFaculty = await Faculty.find().estimatedDocumentCount()
     const countTotalAccount = await User.find().estimatedDocumentCount()
-    const countTotalUser = await User.find({ role: 'user' }).countDocuments()
+    const countTotalStudent = await User.find({ role: 'student' }).countDocuments()
     const countTotalCoordinator = await User.find({ role: 'coordinator' }).countDocuments()
     const countTotalAdmin = await User.find({ role: 'admin' }).countDocuments()
+    const countTotalManager = await User.find({ role: 'manager' }).countDocuments()
     const array = analytics.requestsPerDay
     let d = new Date()
     let day = array[d.getDay()]
@@ -39,8 +38,9 @@ router.get('/', isAdmin, async (req, res) => {
         day: analytics.requestsPerDay[0]._id,
         requestsInDay: analytics.requestsPerDay[0].numberOfRequests,
         totalAccount: countTotalAccount,
-        totalUser: countTotalUser,
+        totalStudent: countTotalStudent,
         totalCoordinator: countTotalCoordinator,
+        totalManager: countTotalManager,
         totalAdmin: countTotalAdmin
     })
 })
@@ -76,10 +76,10 @@ router.post('/user/new', isAdmin, async (req, res) => {
     const hashedPassword = await bcrypt.hash(req.body.password, 10)
     const role = req.body.role
     let faculty
-    if (role != 'coordinator') {
-        faculty = null
-    } else {
+    if (role === 'coordinator' || role === 'student' || role === 'guest') {
         faculty = req.body.faculty
+    } else {
+        faculty = null
     }
     const newUser = new User({
         name: req.body.name,
@@ -137,6 +137,12 @@ router.put('/user/:id/edit', isAdmin, async (req, res) => {
     const newRole = req.body.role;
     const newFaculty = req.body.faculty
 
+    if (newRole === 'coordinator' || newRole === 'student' || newRole === 'guest') {
+        faculty = req.body.faculty
+    } else {
+        faculty = null
+    }
+
     try {
         const user = await User.findById(req.params.id)
         if (!!newName) {
@@ -171,11 +177,16 @@ router.put('/user/:id/edit', isAdmin, async (req, res) => {
 router.delete('/user/:id', isAdmin, async (req, res) => {
     let user
     try {
-        user = await User.findById(req.params.id)
-        await user.remove()
+        if (req.params.id === req.session.userId) {
+            req.flash('errorMessage', 'You can not delete yourself')
+            res.redirect('back')
+        } else {
+            user = await User.findByIdAndRemove(req.params.id)
+        }
         res.redirect('/admin/user')
-    } catch {
-        if (faculty != null) {
+    } catch (err) {
+        console.log(err)
+        if (user != null) {
             req.flash('errorMessage', 'Could not delete the user')
             res.redirect('back')
         } else {
@@ -261,17 +272,17 @@ router.get('/faculty/downloadAll/:id', isAdmin, async (req, res) => {
 
             const binaryCover = article.coverImage;
             if (binaryCover) {
-                if(article.coverImageType === 'image/png'){
+                if (article.coverImageType === 'image/png') {
                     const type = '.png';
                     zip.addFile(article.fileName + type, binaryCover, '', 0644 << 16);
                 } else if (article.coverImageType === 'image/jpeg') {
                     const type = '.jpeg';
                     zip.addFile(article.fileName + type, binaryCover, '', 0644 << 16);
-                } else if(article.coverImageType === 'images/gif'){
+                } else if (article.coverImageType === 'images/gif') {
                     const type = '.gif';
                     zip.addFile(article.fileName + type, binaryCover, '', 0644 << 16);
                 }
-                
+
             }
         });
 
@@ -324,7 +335,7 @@ router.put('/faculty/:id/edit', isAdmin, async (req, res) => {
 router.delete('/faculty/:id', isAdmin, async (req, res) => {
     let faculty
     try {
-        faculty = await Faculty.findById(req.params.id)
+        faculty = await Faculty.findByIdAndRemove(req.params.id)
         await faculty.remove()
         res.redirect('/admin/faculty')
     } catch {
@@ -337,9 +348,51 @@ router.delete('/faculty/:id', isAdmin, async (req, res) => {
     }
 })
 
+//show Topic
+router.get('/topic/:id', async (req, res) => {
+    const topic = await Topic.findById(req.params.id)
+    const articles = await Article.find({ topic: topic.id })
+    res.render('admin/showTopic', {
+        topic: topic,
+        articles: articles
+    })
+})
+
+router.get('/topic/:id/assigndate', isAdmin, async (req, res) => {
+    const topic = await Topic.findById(req.params.id)
+    res.render('admin/editdate', {
+        topic: topic
+    })
+})
+
+router.put('/topic/:id/assigndate', isAdmin, async (req, res) => {
+    try {
+        const newED = req.body.expiredDate
+        const newFED = req.body.finalExpiredDate
+
+        let topic = await Topic.findById(req.params.id)
+        if (newED) {
+            topic.expiredDate = newED
+        }
+        if (newFED) {
+            topic.finalExpiredDate = newFED
+        }
+        await topic.save()
+        req.flash('errorMessage', 'Update successfully')
+        res.redirect(`/admin/topic/${topic._id}`)
+    } catch (e) {
+        console.log(e)
+        req.flash('errorMessage', 'Can not update this topic')
+        res.redirect('back')
+    }
+
+
+})
+
 function isAdmin(req, res, next) {
     console.log(req.session)
     if (req.session.isAdmin === true) { next() }
+    else if (req.session.isManager === true) { return res.redirect('/manager') }
     else if (req.session.isCoordinator === true) { return res.redirect('/coordinator') }
     else if (req.session.isUser === true) { return res.redirect('/user') }
     else { res.redirect('/') }

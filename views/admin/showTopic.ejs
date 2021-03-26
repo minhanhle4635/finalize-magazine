@@ -1,0 +1,27 @@
+<h2>
+    <%= topic.name %>
+</h2>
+<div> Description: <%= topic.description %>
+</div>
+<div>Expired Date: <%= topic.expiredDate==null? '' : topic.expiredDate.toISOString().split('T')[0] %>
+</div>
+<div>Final Expired Date: <%= topic.finalExpiredDate==null? '' : topic.finalExpiredDate.toISOString().split('T')[0] %>
+</div>
+
+
+<a href="/admin/topic/<%= topic.id %>/assigndate">Assign Deadline</a>
+<div>
+    <% articles.forEach(article=> { %>
+        <table>
+            <tr>
+                <th>Article Name</th>
+            </tr>
+            <tr>
+                <td>
+                    <%= article.name %>
+                </td>
+            </tr>
+        </table>
+        <% }) %>
+</div>
+<a href="/admin">Home</a>
