@@ -207,15 +207,25 @@ router.put('/poster/:id/edit', isStudent, upload.single('file'), async (req, res
     let article
     try {
         article = await Article.findById(req.params.id)
-        article.name = req.body.name
-        article.author = req.body.author
-        article.description = req.body.description
-        article.topic = req.body.topic
-        article.file = req.file.originalname
-        saveCover(article, req.body.cover)
 
-        await article.save()
-        res.redirect(`/student/article/${article._id}`)
+        const topic = await Topic.findById(article.topic)
+        const dateNow = Date.now()
+        const FED = topic.finalExpiredDate
+
+        if (dateNow.getDate() === FED.getDate()) {
+            article.name = req.body.name
+            article.author = req.body.author
+            article.description = req.body.description
+            article.topic = req.body.topic
+            article.file = req.file.originalname
+            saveCover(article, req.body.cover)
+
+            await article.save()
+            res.redirect(`/student/article/${article._id}`)
+        } else{
+            req.flash('errorMessage','Cant edit this article because final deadline has expire')
+            res.redirect('back')
+        }
     } catch (error) {
         console.log(error)
         if (article != null) {
@@ -253,7 +263,7 @@ router.delete('/poster/:id', isStudent, async (req, res) => {
 router.get('/newarticle', isStudent, async (req, res) => {
     const user = await User.findById(req.session.userId)
     const faculty = await Faculty.findById(user.faculty)
-    const topic = await Topic.find({faculty: faculty})
+    const topic = await Topic.find({ faculty: faculty })
     const notExpiredTopic = topic.filter(topic => topic.expiredDate > Date.now())
     res.render('student/newArticle', {
         topics: notExpiredTopic
@@ -357,7 +367,7 @@ router.get('/article/download/:id', async (req, res) => {
 //get all article
 router.get('/article', async (req, res) => {
     try {
-        let query = Article.find({status: 'accepted'})
+        let query = Article.find({ status: 'accepted' })
         if (req.query.name != null && req.query.name != '') {
             query = query.regex('name', new RegExp(req.query.name, 'i'))
         }
@@ -394,11 +404,11 @@ function isStudent(req, res, next) {
     }
     else if (req.session.isCoordinator === true) {
         return res.redirect('/coordinator')
-    } else if(req.session.isAdmin === true){
+    } else if (req.session.isAdmin === true) {
         return res.redirect('/admin')
-    } else if(req.session.isManager === true){
+    } else if (req.session.isManager === true) {
         return res.redirect('/manager')
-    } else if(req.session.isGuest === true){
+    } else if (req.session.isGuest === true) {
         return res.redirect('/guest')
     }
     else {
