@@ -180,6 +180,10 @@ router.post('/article', isCoordinator, async (req, res) => {
         const permission = req.body.permission
         const articleId = req.body.articleId
         const article = await Article.findById(articleId)
+        //can't comment after 14 days
+        const today = Date.now()
+        const expiredDate = article.createdAt + 14
+        if(today < expiredDate){
         if (permission === 'accept') {
             article.status = 'accepted'
             article.comment = req.body.comment
@@ -190,6 +194,9 @@ router.post('/article', isCoordinator, async (req, res) => {
             article.comment = req.body.comment
             await article.save()
             res.redirect('/coordinator/article')
+        }} else{
+            article.status = 'refused'
+            await article.save()
         }
     } catch (error) {
         req.flash('errorMessage', 'Cannot permit this article')
