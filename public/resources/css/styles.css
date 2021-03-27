@@ -213,6 +213,11 @@ header {
   border-bottom: 2px solid #e67e22;
 }
 
+.main-nav .icon-rp{
+  display: none;
+  float: left;
+}
+
 li form {
   display: inline-block;
 }

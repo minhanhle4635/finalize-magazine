@@ -7,12 +7,18 @@
             <div class="row">
                 <img src="resources/img/logo.jpg" alt="missing picture" class="logo">
                 <img src="resources/img/logo.jpg" alt="missing picture" class="logo-black">
-                <ul class="main-nav">
+                <ul class="main-nav" id="navi">
+                    <li>
+                        <a href="javascript:void(0);" class="icon-rp"  onclick="myFunction()">
+                            <i class="ion-ios-information-circle"></i>
+                          </a>
+                    </li>
                     <li> <a href="#cat">Categories </a> </li>
                     <li> <a href="#guides">How to contribute </a> </li>
                     <li> <a href="#branches">Our branches </a> </li>
                     <li> <a href="/register">REGISTER </a> </li>
                     <li> <a href="/login">LOGIN </a> </li>
+                    
                 </ul>
             </div>
         </nav>
@@ -389,29 +395,3 @@
 </body>
 
 </html>
-
-<!-- 
-    <section class="section-subject-posts" id="cat">
-        <h2>Recently Added</h2>
-        <ul class="posts-showcase clearfix ">
-            <% articles.forEach(article=>{ %>
-                <li>
-                    <figure class="post-img wrapper">
-                        <div class="wrapper">
-                            <img src="<%= article.coverImagePath %>">
-                            <a class="btn-full btn-post" href="/<%= article._id %>">
-                                <%= article.name %>
-                            </a>
-                            <br>
-                            <br>
-                            <form class="btn-post" action="/download/<%= article._id %>" method="GET">
-                                <input type="submit" value="Download">
-                            </form>
-                        </div>
-
-                    </figure>
-                </li>
-                <% }) %>
-        </ul>
-    </section>
--->
