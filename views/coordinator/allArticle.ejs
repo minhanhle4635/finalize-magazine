@@ -20,7 +20,7 @@
 <body>
 
     <div class="p-4">
-        <img src="../resources/img/logo.jpg" alt="missing picture" class="logo">
+        <a href="/coordinator"><img src="../resources/img/logo.jpg" alt="missing picture" class="logo"></a>
         <ul class="nav m-4 ">
             <li class="nav-item"> <a class="nav-link active" href="/coordinator/topic">Topic </a> </li>
             <li class="nav-item"> <a class="nav-link disabled" href="/coordinator/allArticle">All Article </a> </li>
@@ -41,20 +41,27 @@
                     <th class="table-name">Name</th>
                     <th class="table-date">Date Submitted</th>
                     <th class="table-score">Status</th>
-                    <th>Option</th>
+                    <th>Comment</th>
                 </tr>
             </thead>
             <tbody>
                 <% articles.forEach(article => { %>
                     <tr>
                         <td><img width="100" height="150" src="<%= article.coverImagePath %>"> </td>
-                        <td><%= article.name %></td>
+                        <td><a href="/coordinator/article/<%= article._id %>">
+                            <%= article.name %>
+                        </a></td>
                         <td><%= article.createdAt.toISOString().split('T')[0] %></td>
                         <td><%= article.status %></td>
-                        <td class="p-2">
-                            <a class="p-4" href="">View</a>
-                            <a class="p-4" href="">Comment</a>
-                            <a class="p-4" href="">Scores</a>
+                        <td>
+                            <form action="/coordinator/article" method="POST">
+                                <textarea name="comment"><%= article.comment %></textarea>
+                                <p>
+                                    <button type="submit" name="permission" value="accept" class="btn btn-success">Accept</button>
+                                    <button type="submit" name="permission" value="refuse" class="btn btn-danger">Refuse</button>
+                                </p>
+    
+                            </form>
                         </td>
                     </tr>
                 <% }) %>
@@ -100,7 +107,7 @@
 </body>
 </html>
 
-<a href="/coordinator">Home</a>
+<!-- <a href="/coordinator">Home</a>
 <h1>Article</h1>
 <h1>Search Article</h1>
 <form action="/coordinator/article" method="GET">
@@ -138,4 +145,4 @@
             </table>
         </form>
         <% }) %>
-</div>
+</div> -->

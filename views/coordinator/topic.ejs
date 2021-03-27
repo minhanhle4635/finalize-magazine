@@ -1,35 +1,84 @@
-<a href="/coordinator/topic/new">New Topic</a>
 
-<h1>Topic</h1>
-
-<form action="/coordinator/topic" method="GET">
-    <div>
-        <label>Name</label>
-        <input type="text" name="name" value="<%= searchOptions.name %>">
-    </div>
-    <button type="submit">Search</button>
-</form>
+<div class="p-4">
+    <a href="/coordinator"><img src="../resources/img/logo.jpg" alt="missing picture" class="logo"></a>
+    <ul class="nav m-4 ">
+        <li class="nav-item"> <a class="nav-link disabled" href="/coordinator/topic">Topic </a> </li>
+        <li class="nav-item"> <a class="nav-link active" href="/coordinator/allArticle">Article </a> </li>
+        <li class="nav-item"> <a class="nav-link active" href="/coordinator/logout">Sign Out </a> </li>
+    </ul>
+</div>
 <div>
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Expired Date</th>
-            <th>Final Expired Date</th>
-        </tr>
-        <% topic.forEach(topic=>{ %>
-            <tr>
-                <td><a href="/coordinator/topic/<%= topic.id %>">
-                        <%= topic.name %>
-                    </a></td>
-                <td>
-                    <%= topic.expiredDate==null ? '' : topic.expiredDate.toISOString().split('T')[0] %>
-                </td>
-                <td>
-                    <%= topic.finalExpiredDate==null ? '': topic.finalExpiredDate.toISOString().split('T')[0] %>
-                </td>
-            </tr>
-            <% }) %>
-    </table>
+    <h1 class="text-dark text-center">All Topic</h1>
 </div>
 
-<div><a href="/coordinator">Home</a></div>
+<div class="p-5 mt-5">
+    <div class="topnav p-1">
+        <a class="active" href="/coordinator/topic/new">Add new TOPIC</a>
+        <!-- <div class="search"><input class="search" type="text" value="<%= searchOptions.name %>" placeholder="Search.."><button class="search-c" type="submit">Search</button></div>
+         -->
+         <form action="/coordinator/topic" method="GET" class="search-form">
+            <div>
+                <input type="text" name="name" value="<%= searchOptions.name %>" placeholder="Search.."><!-- <button type="submit"><i class="bi bi-search search-c"></i></button> -->
+            </div>
+            
+        </form>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="table-id">No</th>
+                <th class="table-name">Name</th>
+                <th class="table-date">Expired Date</th>
+                <th class="table-number">Final Expired Date</th>
+            </tr>
+        </thead>
+        <% topic.forEach(topic=>{ %>
+        <tbody>
+            <tr>
+                <td><a href="/coordinator/topic/<%= topic.id %>">
+                    <%= topic.id %>
+                </a></td>
+                <td><a href="/coordinator/topic/<%= topic.id %>">
+                    <%= topic.name %>
+                </a></td>
+                <td><%= topic.expiredDate==null ? '' : topic.expiredDate.toISOString().split('T')[0] %></td>
+                <td> <%= topic.finalExpiredDate==null ? '': topic.finalExpiredDate.toISOString().split('T')[0] %></td>
+            </tr>
+        </tbody>
+        <% }) %>
+    </table>
+</div>
+<footer>
+    <div class="row">
+        <div class="col span-1-of-2">
+            <ul class="nav-footer">
+                <li> <a href="#">about us</a> </li>
+                <li> <a href="#">blog</a> </li>
+                <li> <a href="#">Press</a> </li>
+                <li> <a href="#">IOS app</a> </li>
+                <li> <a href="#">ANDROID app</a> </li>
+            </ul>
+        </div>
+        <div class="col span-1-of-2">
+            <ul class="social-link-footer">
+                <li>
+                    <a href="#"> <i class="ion-logo-facebook"></i> </a>
+                </li>
+                <li>
+                    <a href="#"> <i class="ion-logo-twitter"></i> </a>
+                </li>
+                <li>
+                    <a href="#"> <i class="ion-logo-googleplus"></i> </a>
+                </li>
+                <li>
+                    <a href="#"> <i class="ion-logo-instagram"></i> </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <p>
+            Copyrighted &copy; 2020 by Unipara all rights reversed
+        </p>
+    </div>
+</footer>

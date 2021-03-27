@@ -1,4 +1,67 @@
-<h2>Edit Date</h2>
+<nav class="sticky sticky-admin">
+    <div class="row">
+        <img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
+        <img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black">
+        <ul class="main-nav">
+            <li> <a href="/admin/user">Manage User </a> </li>
+            <li> <a href="/admin/faculty">Manage falcuty </a> </li>
+            <li> <a href="/admin"> Home </a> </li>
+            <li> <a href="/admin/logout">logout </a> </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="row">
+    <div class="log-border">
+        <form style="margin-bottom: 1%;" class="signup-form">
+            <h2> <%= topic.name %> </h2>
+
+            <div class="row">
+                <div class="col span-1-of-2">
+                    <label for="">Previous Expired Date :</label>
+                </div>
+                <div class="col span-1-of-2">
+                    <%= topic.expiredDate==null? '' : topic.expiredDate.toISOString().split('T')[0] %>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col span-1-of-2">
+                    <label for="">New Expired Date:</label>
+                </div>
+                <div class="col span-1-of-2">
+                    <input type="date" name="expiredDate">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col span-1-of-2">
+                    <label for="">Final Expired Date : </label>
+                </div>
+                <div class="col span-1-of-2">
+                    <%= topic.finalExpiredDate==null? '' :topic.finalExpiredDate.toISOString().split('T')[0]%>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col span-1-of-2">
+                    <label for="">New Final Expired Date : </label>
+                </div>
+                <div class="col span-1-of-2">
+                    <input type="date" name="finalExpiredDate">
+                </div>
+            </div>
+            <br>
+            <div style="text-align: center;" class="row">
+                <button class="btn btn-ghost" type="submit">Update</button>
+            </div>    
+    </form>
+    </div>
+</div>
+
+
+<!-- 
+    <h2>Edit Date</h2>
 
 <form action="/admin/topic/<%=topic.id%>/assigndate?_method=PUT" method="POST">
     <div>Previous Expired Date : <%= topic.expiredDate==null? '' : topic.expiredDate.toISOString().split('T')[0] %>
@@ -10,3 +73,4 @@
     <div>Wanted Final Expired Date : <input type="date" name="finalExpiredDate"></div>
     <button type="submit">Update</button>
 </form>
+-->

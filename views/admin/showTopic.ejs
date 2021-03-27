@@ -1,27 +1,73 @@
-<h2>
-    <%= topic.name %>
-</h2>
-<div> Description: <%= topic.description %>
-</div>
-<div>Expired Date: <%= topic.expiredDate==null? '' : topic.expiredDate.toISOString().split('T')[0] %>
-</div>
-<div>Final Expired Date: <%= topic.finalExpiredDate==null? '' : topic.finalExpiredDate.toISOString().split('T')[0] %>
-</div>
+<nav class="sticky sticky-admin">
+    <div class="row">
+        <img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
+        <img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black">
+        <ul class="main-nav">
+            <li> <a href="/admin/user">Manage User </a> </li>
+            <li> <a href="/admin/faculty">Manage falcuty </a> </li>
+            <li> <a href="/admin"> Home </a> </li>
+            <li> <a href="/admin/logout">logout </a> </li>
+        </ul>
+    </div>
+</nav>
 
+<div class="row">
+    <div class="log-border">
+        <form style="margin-bottom: 1%;" class="signup-form">
+            <h2> <%= topic.name %> </h2>
 
-<a href="/admin/topic/<%= topic.id %>/assigndate">Assign Deadline</a>
-<div>
-    <% articles.forEach(article=> { %>
-        <table>
-            <tr>
-                <th>Article Name</th>
-            </tr>
-            <tr>
-                <td>
-                    <%= article.name %>
-                </td>
-            </tr>
-        </table>
-        <% }) %>
+            <div class="row">
+                <div class="col span-1-of-3">
+                    <label for="">Description:</label>
+                </div>
+                <div class="col span-2-of-3">
+                    <%= topic.description %>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col span-1-of-3">
+                    <label for="">Expired Date:</label>
+                </div>
+                <div class="col span-2-of-3">
+                    <%= topic.expiredDate==null? '' : topic.expiredDate.toISOString().split('T')[0] %>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col span-1-of-3">
+                    <label for="">Final Expired Date:</label>
+                </div>
+                <div class="col span-2-of-3">
+                    <%= topic.finalExpiredDate==null? '' : topic.finalExpiredDate.toISOString().split('T')[0] %>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col span-1-of-3">
+                    <label for="">Articles:</label>
+                </div>
+                <div class="col span-2-of-3">
+                    <% articles.forEach(article=> { %>
+                        <table>
+                            <tr>
+                                <td>
+                                    <%= article.name %>
+                                </td>
+                            </tr>
+                        </table>
+                        <% }) %>
+                </div>
+            </div>
+    </form>
+    <div class="row fal-add-css">
+        <div class="col span-1-of-2">
+            <a class="btn btn-ghost" href="/admin/topic/<%= topic.id %>/assigndate">Assign Deadline</a>
+        </div>
+
+        <div class="col span-1-of-2">
+         <%- include('../partials/deleteForm', {url: `/admin/topic/${topic._id}`})%>      
+        </div>
+    </div>
+    </div>
 </div>
-<a href="/admin">Home</a>
