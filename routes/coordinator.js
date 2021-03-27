@@ -228,7 +228,6 @@ router.post('/article/:id', isCoordinator, async (req, res) => {
 router.get('/logout', Logout)
 
 function isCoordinator(req, res, next) {
-    console.log(req.session)
     if (req.session.isCoordinator === true || req.session.isAdmin === true) {
         next()
     } else if (req.session.isUser === true) {
