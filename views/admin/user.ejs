@@ -24,33 +24,43 @@
     </form>
 </section>
 
-<table class="content-table">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Account</th>
-            <th>Role</th>
-            <th>Falcuty</th>
-            <th>Created At</th>
-        </tr>
-    </thead>
-    <% user.forEach(user=>{ %> 
-        <tbody>
+<div>
+    <a href="/admin/user/admin">Admin Account</a>
+    <a href="/admin/user/manager">Manager Account</a>
+    <a href="/admin/user/coordinator">Coordinator Account</a>
+    <a href="/admin/user/student">Student Account</a>
+    <a href="/admin/user/guest">Guest Account</a>
+</div>
+
+<div>
+    <table class="content-table">
+        <thead>
             <tr>
-                <td style="text-align: center;" ><a class="btn" href="/admin/user/<%= user._id %>">
-                    <%= user.name %> </a>
-                </td>
-                <td><%= user.username %></td>
-                <td><%= user.role %></td>
-                <td><% if(user.faculty) { %>
-                <%= user.faculty.name %>
-                <% } %>
-                </td>
-                <td><%= user.createdAt.toISOString().split('T')[0] %></td>
+                <th>Name</th>
+                <th>Account</th>
+                <th>Role</th>
+                <th>Falcuty</th>
+                <th>Created At</th>
             </tr>
-        </tbody>
-    <% }) %> 
-</table>
+        </thead>
+        <% user.forEach(user=>{ %> 
+            <tbody>
+                <tr>
+                    <td style="text-align: center;" ><a class="btn" href="/admin/user/<%= user._id %>">
+                        <%= user.name %> </a>
+                    </td>
+                    <td><%= user.username %></td>
+                    <td><%= user.role %></td>
+                    <td><% if(user.faculty) { %>
+                    <%= user.faculty.name %>
+                    <% } %>
+                    </td>
+                    <td><%= user.createdAt.toISOString().split('T')[0] %></td>
+                </tr>
+            </tbody>
+        <% }) %> 
+    </table>
+</div>
 
 <footer>
     <div class="row">
