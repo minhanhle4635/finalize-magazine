@@ -8,7 +8,8 @@ const profileSchema = mongoose.Schema({
         required: true
     },
     dob:{
-        type: Date
+        type: Date,
+        default: Date.now()
     },
     gender:{
         type: String,

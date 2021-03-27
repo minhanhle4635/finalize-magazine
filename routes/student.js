@@ -6,6 +6,7 @@ const Faculty = require('../models/Faculty')
 const Topic = require('../models/Topic')
 const User = require('../models/User')
 const Profile = require('../models/Profile')
+// const Comment = require('../models/Comment')
 const multer = require('multer')
 const path = require('path')
 const uploadPath = path.join('public', Article.fileBasePath)
@@ -441,6 +442,9 @@ router.put('/profile/:id/edit', [isStudent, uploadAvatar.single('avatar')], asyn
         res.redirect('back')
     }
     if (avatar) {
+        //delete the old avatar
+        removeAvatar(profile.avatarImageName)
+        //new avatar
         profile.avatarImageName = avatar
     }
     try {
@@ -449,6 +453,7 @@ router.put('/profile/:id/edit', [isStudent, uploadAvatar.single('avatar')], asyn
         res.redirect(`/student/profile/${profile.id}`)
     } catch (error) {
         console.log(error)
+        if (profile.avatarImageName != null) { removeAvatar(profile.avatarImageName) }
         req.flash('errorMessage', 'Can not update this profile')
         res.redirect('back')
     }
@@ -479,11 +484,11 @@ router.get('/profile/:id/avatar', async (req, res) => {
     if (!profile) {
         return res.status(404);
     }
-    const userId = req.session.userId;
+    // const userId = req.params.id;
     const defaultName = profile.gender === "male" ? 'male.jpg' : "female.jpg";
     let defaultAvatar = path.join(defaultPath, defaultName);
     if (profile.avatarImageName) {
-        defaultAvatar = path.join(defaultPath, userId, profile.avatarImageName);
+        defaultAvatar = path.join(defaultPath, profile.avatarImageName);
     }
 
     if (fs.existsSync(defaultAvatar)) {
@@ -523,6 +528,10 @@ router.put('/profile/:id/changepassword', isStudent, async (req, res) => {
     }
 })
 
+//Comment Section
+router.get('/comment', isStudent, async(req,res)=>{
+
+})
 
 
 router.get('/logout', Logout)
@@ -553,6 +562,12 @@ function saveCover(article, coverEncoded) {
 
 function removefile(fileName) {
     fs.unlink(path.join(uploadPath, fileName), err => {
+        if (err) console.error(err)
+    })
+}
+
+function removeAvatar(avatarName) {
+    fs.unlink(path.join(uploadAvatarPath, avatarName), err => {
         if (err) console.error(err)
     })
 }

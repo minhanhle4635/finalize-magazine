@@ -176,12 +176,15 @@ router.put('/user/:id/edit', isAdmin, async (req, res) => {
 
 router.delete('/user/:id', isAdmin, async (req, res) => {
     let user
+    let profile
     try {
         if (req.params.id === req.session.userId) {
             req.flash('errorMessage', 'You can not delete yourself')
             res.redirect('back')
         } else {
             user = await User.findByIdAndRemove(req.params.id)
+            // profile = await Profile.findOne({user: user.id})
+            // await profile.remove()
         }
         res.redirect('/admin/user')
     } catch (err) {
