@@ -615,8 +615,8 @@ function isStudent(req, res, next) {
         return res.redirect('/guest')
     }
     else {
-        if (req.session.isTemp = true) {
-            res.redirect('/student/temp')
+        if (req.session.isTemp === true && req.session.isStudent === true) {
+            return res.render('student/temp')
         } else { next() }
     }
 }

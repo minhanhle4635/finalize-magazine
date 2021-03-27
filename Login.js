@@ -27,7 +27,7 @@ const Login = async (req, res, next) => {
                 req.session.isAdmin = user.role === 'admin';
                 req.session.isManager = user.role === 'manager';
                 req.session.isCoordinator = user.role === 'coordinator';
-                req.session.isUser = user.role === 'student';
+                req.session.isStudent = user.role === 'student';
                 req.session.isGuest = user.role === 'guest';
 
                 if (user.role === "admin") {

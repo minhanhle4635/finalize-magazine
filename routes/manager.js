@@ -12,7 +12,7 @@ const AdmZip = require('adm-zip');
 const articleFilePath = path.join('public', Article.fileBasePath)
 
 // Faculty Section
-router.get('/', async (req, res) => {
+router.get('/', isManager, async (req, res) => {
     let query = Faculty.find()
     if (req.query.name != null && req.query.name != '') {
         query = query.regex('name', new RegExp(req.query.name, 'i'))
@@ -29,7 +29,7 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.get('/faculty/:id', async (req, res) => {
+router.get('/faculty/:id', isManager, async (req, res) => {
     try {
         const faculty = await Faculty.findById(req.params.id)
         const topic = await Topic.find({ faculty: faculty._id })
@@ -105,5 +105,18 @@ router.get('/article/:id', async (req, res) => {
 })
 
 router.get('/logout', Logout)
+
+function isManager(req, res, next) {
+    if (req.session.isManager === true || req.session.isAdmin === true) {
+        next()
+    } else if (req.session.isUser === true) {
+        return res.redirect('/user')
+    } else if (req.session.isCoordinator === true) {
+        return res.redirect('/coordinator')
+    }
+    else {
+        return res.redirect('/')
+    }
+}
 
 module.exports = router
