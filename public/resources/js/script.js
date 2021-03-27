@@ -10,6 +10,7 @@ $(document).ready(function(){
         offset: '65px'
       });
 
+
     /*scroll btn*/
     $('.js-btn-scroll-rewards').click(function(){
         $('html,vody').animate({scrollTop: $('.js-section-reward').offset().top}, 1000)

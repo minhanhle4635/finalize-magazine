@@ -80,8 +80,51 @@
     margin: 0 0 1% 1.6%;
   }
 
-  nav {
+  nav .logo,
+  nav .logo-black {
     display: none;
+  }
+
+  .sticky .logo-black {
+    display: none;
+  }
+
+  ul{
+    float: right;
+    list-style: none;
+    text-align: center;
+  }
+
+  .main-nav li{
+    list-style: none;
+  }
+
+  .main-nav li:not(:first-child) {display: none;}
+
+  .main-nav .icon-rp i{
+    font-size: 200%;
+  }
+
+  .main-nav li .icon-rp {
+    float: right;
+    display: block;
+  }
+
+  .main-nav .rp li {
+    float: left;
+    position: relative;
+  }
+  .main-nav .rp li .icon-rp {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .main-nav .rp li a {
+    list-style: none;
+    float: none;
+    display: block;
+    text-align: left;
   }
 
   h1 {

@@ -1,21 +1,68 @@
-<h1>Add New Topic</h1>
-<form action="/coordinator/topic/new" method="POST">
-<div>
-    <label for="name">Name</label>
-    <input type="text" id="name" name="name" required>
+<div class="p-4">
+    <ul class="nav m-4 ">
+        <li class="nav-item"> <a class="nav-link active" href="/coordinator/topic">Topic </a> </li>
+        <li class="nav-item"> <a class="nav-link active" href="/coordinator/allArticle">All Article </a> </li>
+        <li class="nav-item"> <a class="nav-link active" href="/coordinator/article">Article </a> </li>
+        <li class="nav-item"> <a class="nav-link active" href="/index.html">Sign Out </a> </li>
+    </ul>
 </div>
-<div>
-    <label for="expiredDate">Expired Date</label>
-    <input type="date" id="expiredDate" name="expiredDate">
+<div class="p-5">
+    <h1 class="text-danger text-center font-weight-bold">ADD NEW TOPIC</h1>
 </div>
-<div>
-    <label for="finalExpiredDate">Final Expired Date</label>
-    <input type="date" id="finalExpiredDate" name="finalExpiredDate">
-</div>
-<div>
-    <label for="description">Description</label>
-    <textarea name="description"></textarea>
-</div>
-<button type="submit">Add</button>
-</form>
-<a href="/admin/faculty">Cancel</a>
+
+<section class="p-5">
+    <form action="/coordinator/topic/new" method="POST">
+        <div class="p-3">
+            <label for="name" class="fw-bold">Name Of Topic</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div class="p-3">
+            <label for="expiredDate">Expired Date</label>
+            <input type="date" id="expiredDate" name="expiredDate">
+        </div >
+        <div class="p-3">
+            <label for="finalExpiredDate">Final Expired Date</label>
+            <input type="date" id="finalExpiredDate" name="finalExpiredDate">
+        </div>
+        <div class="p-3">
+            <label for="description">Description</label>
+            <textarea name="description"></textarea>
+        </div>
+        <button type="submit" class="btn btn-success">Add topic</button>
+    </form>
+    <a href="/admin/faculty">Cancel</a>
+</section>
+<footer>
+    <div class="row">
+        <div class="col span-1-of-2">
+            <ul class="nav-footer">
+                <li> <a href="#">about us</a> </li>
+                <li> <a href="#">blog</a> </li>
+                <li> <a href="#">Press</a> </li>
+                <li> <a href="#">IOS app</a> </li>
+                <li> <a href="#">ANDROID app</a> </li>
+            </ul>
+        </div>
+        <div class="col span-1-of-2">
+            <ul class="social-link-footer">
+                <li>
+                    <a href="#"> <i class="ion-logo-facebook"></i> </a>
+                </li>
+                <li>
+                    <a href="#"> <i class="ion-logo-twitter"></i> </a>
+                </li>
+                <li>
+                    <a href="#"> <i class="ion-logo-googleplus"></i> </a>
+                </li>
+                <li>
+                    <a href="#"> <i class="ion-logo-instagram"></i> </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <p>
+            Copyrighted &copy; 2020 by Unipara all rights reversed
+        </p>
+    </div>
+</footer>
