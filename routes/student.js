@@ -442,8 +442,9 @@ router.put('/profile/:id/edit', [isStudent, uploadAvatar.single('avatar')], asyn
         res.redirect('back')
     }
     if (avatar) {
-        //delete the old avatar
-        removeAvatar(profile.avatarImageName)
+        // if(profile.avatarImageName){
+        //     removeAvatar(profile.avatarImageName)
+        // }
         //new avatar
         profile.avatarImageName = avatar
     }
@@ -527,12 +528,6 @@ router.put('/profile/:id/changepassword', isStudent, async (req, res) => {
         res.redirect('back')
     }
 })
-
-//Comment Section
-router.get('/comment', isStudent, async(req,res)=>{
-
-})
-
 
 router.get('/logout', Logout)
 

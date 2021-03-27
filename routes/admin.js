@@ -64,6 +64,91 @@ router.get('/user', async (req, res) => {
     }
 })
 
+router.get('/user/admin', async (req, res) => {
+    let query = User.find({role: 'admin'})
+    if (req.query.name != null && req.query.name != '') {
+        query = query.regex('name', new RegExp(req.query.name, 'i'))
+    }
+    try {
+        const user = await query.populate('faculty').exec()
+        res.render('admin/user', {
+            user: user,
+            searchOptions: req.query
+        })
+    } catch (err) {
+        console.log(err)
+        res.redirect('/admin')
+    }
+})
+
+router.get('/user/manager', async (req, res) => {
+    let query = User.find({role: 'manager'})
+    if (req.query.name != null && req.query.name != '') {
+        query = query.regex('name', new RegExp(req.query.name, 'i'))
+    }
+    try {
+        const user = await query.populate('faculty').exec()
+        res.render('admin/user', {
+            user: user,
+            searchOptions: req.query
+        })
+    } catch (err) {
+        console.log(err)
+        res.redirect('/admin')
+    }
+})
+
+router.get('/user/coordinator', async (req, res) => {
+    let query = User.find({role: 'coordinator'})
+    if (req.query.name != null && req.query.name != '') {
+        query = query.regex('name', new RegExp(req.query.name, 'i'))
+    }
+    try {
+        const user = await query.populate('faculty').exec()
+        res.render('admin/user', {
+            user: user,
+            searchOptions: req.query
+        })
+    } catch (err) {
+        console.log(err)
+        res.redirect('/admin')
+    }
+})
+
+router.get('/user/student', async (req, res) => {
+    let query = User.find({role: 'student'})
+    if (req.query.name != null && req.query.name != '') {
+        query = query.regex('name', new RegExp(req.query.name, 'i'))
+    }
+    try {
+        const user = await query.populate('faculty').exec()
+        res.render('admin/user', {
+            user: user,
+            searchOptions: req.query
+        })
+    } catch (err) {
+        console.log(err)
+        res.redirect('/admin')
+    }
+})
+
+router.get('/user/guest', async (req, res) => {
+    let query = User.find({role: 'guest'})
+    if (req.query.name != null && req.query.name != '') {
+        query = query.regex('name', new RegExp(req.query.name, 'i'))
+    }
+    try {
+        const user = await query.populate('faculty').exec()
+        res.render('admin/user', {
+            user: user,
+            searchOptions: req.query
+        })
+    } catch (err) {
+        console.log(err)
+        res.redirect('/admin')
+    }
+})
+
 router.get('/user/new', isAdmin, async (req, res) => {
     const faculty = await Faculty.find({})
     res.render('admin/register', {
@@ -198,7 +283,9 @@ router.delete('/user/:id', isAdmin, async (req, res) => {
     }
 })
 
-//Faculty Function
+/**
+ * FACULTY FUNCTION
+*/
 
 router.get('/faculty', isAdmin, async (req, res) => {
     let query = Faculty.find()
@@ -255,51 +342,6 @@ router.get('/faculty/:id', isAdmin, async (req, res) => {
     } catch (err) {
         console.log(err)
         res.redirect('/admin/faculty')
-    }
-})
-
-router.get('/faculty/downloadAll/:id', isAdmin, async (req, res) => {
-    const faculty = await Faculty.findOne({ _id: req.params.id })
-    const articles = await Article.find({ faculty: faculty._id })
-    if (!articles || articles.length === 0) {
-        return res.redirect('back');
-    }
-
-    try {
-        const zip = new AdmZip();
-        articles.forEach(article => {
-            const pathToFile = path.join(articleFilePath, article.fileName);
-            if (fs.existsSync(pathToFile)) {
-                zip.addLocalFile(pathToFile);
-            }
-
-            const binaryCover = article.coverImage;
-            if (binaryCover) {
-                if (article.coverImageType === 'image/png') {
-                    const type = '.png';
-                    zip.addFile(article.fileName + type, binaryCover, '', 0644 << 16);
-                } else if (article.coverImageType === 'image/jpeg') {
-                    const type = '.jpeg';
-                    zip.addFile(article.fileName + type, binaryCover, '', 0644 << 16);
-                } else if (article.coverImageType === 'images/gif') {
-                    const type = '.gif';
-                    zip.addFile(article.fileName + type, binaryCover, '', 0644 << 16);
-                }
-
-            }
-        });
-
-        const zipFilename = `${new Date().valueOf()}_All_Articles.zip`;
-        // write everything to disk
-        const pathTemp = path.join(articleFilePath, zipFilename);
-        zip.writeZip(pathTemp, () => {
-            return res.download(pathTemp, zipFilename, () => {
-                fs.unlinkSync(pathTemp)
-            });
-        });
-    } catch (e) {
-        console.log(e);
-        return res.redirect('back');
     }
 })
 

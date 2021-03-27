@@ -50,12 +50,6 @@
         <div class="col span-1-of-3">
          <%- include('../partials/deleteForm', {url: `/admin/faculty/${faculty._id}`})%>      
         </div>
-
-        <div class="col span-1-of-3">
-            <form action="/admin/faculty/downloadAll/<%= faculty._id %>" method="GET">
-             <button class="btn btn-ghost" type="submit">Download All</button>
-            </form>
-        </div>
     </div>
     </div>
     
