@@ -75,18 +75,18 @@ const avatarStorage = multer.diskStorage({
 const uploadAvatar = multer({ storage: avatarStorage })
 
 //Student Account without Faculty
-router.get('/temp', isStudent, async(req,res)=>{
+router.get('/temp', isStudent, async (req, res) => {
     res.render('student/temp')
 })
 
-router.post('/temp', isStudent, async(req,res)=>{
-    
+router.post('/temp', isStudent, async (req, res) => {
+
     const sender = await User.findById(req.session.userId);
     const receiver = null;//await User.find({role: 'admin'});
     const message = req.body.message;
-    
-    if(!message){
-        req.flash('errorMessage','Cant send empty message')
+
+    if (!message) {
+        req.flash('errorMessage', 'Cant send empty message')
         return res.redirect('back')
     }
 
@@ -95,11 +95,11 @@ router.post('/temp', isStudent, async(req,res)=>{
         receiver: receiver,
         message: message
     })
-    try{
+    try {
         await newRoom.save()
         req.flash('errorMessage', 'Sent Successfully')
         return res.redirect('back')
-    }catch (e){
+    } catch (e) {
         console.log(e)
         req.flash('errorMessage', 'Cant be sent')
         return res.redirect('back')
@@ -345,7 +345,7 @@ router.post('/newarticle', isStudent, upload.single('file'), async (req, res) =>
     if (!description) return req.flash('errorMessage', 'Description must be added')
     if (!file) {
         req.flash('errorMessage', 'File must be added')
-        res.redirect('back')
+        return res.redirect('back')
     }
 
     try {
@@ -476,7 +476,7 @@ router.put('/profile/:id/edit', [isStudent, uploadAvatar.single('avatar')], asyn
         return res.redirect('back')
     }
     if (avatar) {
-        if(profile.avatarImageName){
+        if (profile.avatarImageName) {
             removeAvatar(profile.avatarImageName)
         }
         //new avatar
@@ -539,12 +539,12 @@ router.put('/profile/:id/changepassword', isStudent, async (req, res) => {
     const verifyPassword = req.body.verifyPassword
 
     let hashedPassword
-    if(password === verifyPassword){
+    if (password === verifyPassword) {
         hashedPassword = await bcrypt.hash(password, 10)
     }
-    
-    if(password != verifyPassword){
-        req.flash('errorMessage','Verify Password is wrong')
+
+    if (password != verifyPassword) {
+        req.flash('errorMessage', 'Verify Password is wrong')
         res.redirect('back')
     }
 
@@ -615,7 +615,9 @@ function isStudent(req, res, next) {
         return res.redirect('/guest')
     }
     else {
-        next()
+        if (req.session.isTemp = true) {
+            res.redirect('/student/temp')
+        } else { next() }
     }
 }
 
