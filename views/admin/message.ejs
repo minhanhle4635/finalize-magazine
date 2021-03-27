@@ -1,0 +1,23 @@
+<h2>Message from student</h2>
+
+<a href="/admin/message/read">Read Message</a>
+<a href="/admin/message/unread">Unread Message</a>
+
+<div>
+    <table>
+        <tr>
+            <th>Sender</th>
+            <th>Send At</th>
+            <th>Option</th>
+        </tr>
+    <% rooms.forEach(room => { %>
+        <tr>
+            <td><%= room.sender.name %></td>
+            <td><%= room.createdAt.toISOString().split('T')[0] %></td>
+            <td><a href="/admin/message/<%= room.id %>">View</a></td>
+        </tr>
+    <% }) %>
+    </table>
+</div>
+
+<a href="/admin">Back</a>

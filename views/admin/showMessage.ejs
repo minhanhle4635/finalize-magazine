@@ -1,0 +1,13 @@
+<h2>Show message</h2>
+
+<div>
+    Message: <%= room.message %>
+    Sent At: <%= room.createdAt.toISOString().split('T')[0] %>
+    Sender: <%= room.sender.name %>
+</div>
+<br/>
+<div>
+    <form action="/admin/message/<%= room.id %>" method="POST">
+        <button name="status" value="done">Received</button>
+    </form>
+</div>

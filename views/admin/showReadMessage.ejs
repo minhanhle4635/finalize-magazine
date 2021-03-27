@@ -1,0 +1,9 @@
+<h2>Show message</h2>
+
+<div>
+    Message: <%= room.message %>
+    Sent At: <%= room.createdAt.toISOString().split('T')[0] %>
+    Sender: <%= room.sender.name %>
+</div>
+
+<a href="/admin/message/read">Back</a>

@@ -37,12 +37,15 @@ const Login = async (req, res, next) => {
                 } else if (user.role === "coordinator") {
                     return res.redirect('/coordinator')
                 } else if (user.role === "student") {
-                    return res.redirect('/student')
+                    if (user.faculty === null) {
+                        return res.redirect('/student/temp')
+                    } else {
+                        return res.redirect('/student')
+                    }
                 } else if (user.role === "guest") {
                     return res.redirect('/guest')
                 }
             } else {
-                console.log(err)
                 return res.redirect('/')
             }
         })

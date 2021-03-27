@@ -2,7 +2,7 @@ const RequestLog = require('./models/requestLog');
 
 module.exports = {
     getAnalytics() {
-        let getTotalRequests = RequestLog.count()
+        let getTotalRequests = RequestLog.countDocuments()
         let getStatsPerRoute = RequestLog.aggregate([
             {
                 $group: {

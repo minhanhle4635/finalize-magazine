@@ -206,7 +206,7 @@ router.post('/article', isCoordinator, async (req, res) => {
 
 router.get('/article/:id', isCoordinator, async (req, res) => {
     try {
-        const article = await Article.findById(req.params.id)
+        const article = await Article.findById(req.params.id).populate('topic').exec()
         res.render('coordinator/showArticle', { article: article })
     } catch (error) {
         console.log(error)

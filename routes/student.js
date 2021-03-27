@@ -16,6 +16,7 @@ const imageMimeTypes = ['image/jpeg', 'image/png', 'images/gif']
 const fs = require('fs');
 
 const bcrypt = require('bcrypt')
+const Room = require('../models/Room')
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -72,6 +73,38 @@ const avatarStorage = multer.diskStorage({
 })
 
 const uploadAvatar = multer({ storage: avatarStorage })
+
+//Student Account without Faculty
+router.get('/temp', isStudent, async(req,res)=>{
+    res.render('student/temp')
+})
+
+router.post('/temp', isStudent, async(req,res)=>{
+    
+    const sender = await User.findById(req.session.userId);
+    const receiver = null;//await User.find({role: 'admin'});
+    const message = req.body.message;
+    
+    if(!message){
+        req.flash('errorMessage','Cant send empty message')
+        return res.redirect('back')
+    }
+
+    const newRoom = new Room({
+        sender: sender,
+        receiver: receiver,
+        message: message
+    })
+    try{
+        await newRoom.save()
+        req.flash('errorMessage', 'Sent Successfully')
+        return res.redirect('back')
+    }catch (e){
+        console.log(e)
+        req.flash('errorMessage', 'Cant be sent')
+        return res.redirect('back')
+    }
+})
 
 //get topic index page 
 router.get('/topic', isStudent, async (req, res) => {
@@ -236,12 +269,14 @@ router.put('/poster/:id/edit', isStudent, upload.single('file'), async (req, res
         const dateNow = Date.now()
         const FED = topic.finalExpiredDate
 
+        const file = req.file
+
         if (dateNow.getDate() === FED.getDate()) {
             article.name = req.body.name
             article.author = req.body.author
             article.description = req.body.description
             article.topic = req.body.topic
-            article.file = req.file.originalname
+            article.file = file.originalname
             saveCover(article, req.body.cover)
 
             await article.save()
@@ -304,12 +339,11 @@ router.post('/newarticle', isStudent, upload.single('file'), async (req, res) =>
     const newName = req.body.name
     const description = req.body.description
     const newAuthor = req.body.author
-    const file = req.file.filename
+    const file = req.file
     if (!newName) return req.flash('errorMessage', 'Name must be added')
     if (!newAuthor) return req.flash('errorMessage', 'Author must be added')
     if (!description) return req.flash('errorMessage', 'Description must be added')
     if (!file) {
-        file = 'null'
         req.flash('errorMessage', 'File must be added')
         res.redirect('back')
     }
@@ -324,7 +358,7 @@ router.post('/newarticle', isStudent, upload.single('file'), async (req, res) =>
                 poster: req.session.userId,
                 topic: req.body.topic,
                 faculty: faculty,
-                fileName: file
+                fileName: file.filename
             })
             saveCover(article, req.body.cover)
             //compare deadline
@@ -416,7 +450,7 @@ router.put('/profile/:id/edit', [isStudent, uploadAvatar.single('avatar')], asyn
     const newDob = req.body.dob
     const newIntro = req.body.introduction
     const newEmail = req.body.email
-    const avatar = req.file.filename;
+    const avatar = req.file;
 
     if (newName) {
         profile.fullName = newName
@@ -425,7 +459,7 @@ router.put('/profile/:id/edit', [isStudent, uploadAvatar.single('avatar')], asyn
         profile.gender = newGender
     } else {
         req.flash('errorMessage', 'Gender must be filled')
-        res.redirect('back')
+        return res.redirect('back')
     }
     if (newDob) {
         profile.dob = newDob
@@ -439,24 +473,24 @@ router.put('/profile/:id/edit', [isStudent, uploadAvatar.single('avatar')], asyn
         profile.email = newEmail
     } else {
         req.flash('errorMessage', 'You need to add your email')
-        res.redirect('back')
+        return res.redirect('back')
     }
     if (avatar) {
-        // if(profile.avatarImageName){
-        //     removeAvatar(profile.avatarImageName)
-        // }
+        if(profile.avatarImageName){
+            removeAvatar(profile.avatarImageName)
+        }
         //new avatar
-        profile.avatarImageName = avatar
+        profile.avatarImageName = avatar.filename
     }
     try {
         await profile.save()
         req.flash('errorMessage', 'Updated Successfully')
-        res.redirect(`/student/profile/${profile.id}`)
+        return res.redirect(`/student/profile/${profile.id}`)
     } catch (error) {
         console.log(error)
         if (profile.avatarImageName != null) { removeAvatar(profile.avatarImageName) }
         req.flash('errorMessage', 'Can not update this profile')
-        res.redirect('back')
+        return res.redirect('back')
     }
 })
 
@@ -470,7 +504,7 @@ router.get('/profile/:id/changepassword', isStudent, async (req, res) => {
         })
     } catch (e) {
         console.log(e)
-        res.redirect(`/student/profile/${profile.id}`)
+        return res.redirect(`/student/profile/${profile.id}`)
     }
 
 })
@@ -521,11 +555,11 @@ router.put('/profile/:id/changepassword', isStudent, async (req, res) => {
     try {
         await user.save()
         req.flash('errorMessage', 'Saved Successfully')
-        res.redirect(`/student/profile/${profile.id}`)
+        return res.redirect(`/student/profile/${profile.id}`)
     } catch (e) {
         console.log(e)
         req.flash('errorMessage', 'Can not be updated')
-        res.redirect('back')
+        return res.redirect('back')
     }
 })
 

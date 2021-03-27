@@ -11,6 +11,7 @@ const { Logout } = require('../Login')
 const fs = require("fs");
 const path = require("path");
 const AdmZip = require('adm-zip');
+const Room = require('../models/Room')
 const articleFilePath = path.join('public', Article.fileBasePath)
 
 //view statistical data
@@ -28,7 +29,6 @@ router.get('/', isAdmin, async (req, res) => {
     const array = analytics.requestsPerDay
     let d = new Date()
     let day = array[d.getDay()]
-    console.log(day)
     res.render('admin/index', {
         user: user,
         countTotalFaculty: countTotalFaculty,
@@ -43,6 +43,56 @@ router.get('/', isAdmin, async (req, res) => {
         totalManager: countTotalManager,
         totalAdmin: countTotalAdmin
     })
+})
+
+//Message
+router.get('/message',isAdmin,async(req,res)=>{
+    const rooms = await Room.find({status: 'unread'}).populate('sender').exec()
+    res.render('admin/message',{
+        rooms: rooms
+    })
+})
+
+router.get('/message/read',isAdmin,async(req,res)=>{
+    const rooms = await Room.find({status: 'read'}).populate(['sender','receiver']).exec()
+    return res.render('admin/readMessage',{
+        rooms: rooms
+    })
+})
+
+router.get('/message/read/:id',isAdmin, async(req,res)=>{
+    const room = await Room.findById(req.params.id).populate(['sender','receiver']).exec()
+    res.render('admin/showReadMessage',{
+        room: room
+    })
+})
+
+router.get('/message/unread',isAdmin,async(req,res)=>{
+    const rooms = await Room.find({status: 'unread'}).populate('sender').exec()
+    return res.render('admin/message',{
+        rooms: rooms
+    })
+})
+
+router.get('/message/:id',isAdmin, async(req,res)=>{
+    const room = await Room.findById(req.params.id).populate('sender').exec()
+    res.render('admin/showMessage',{
+        room: room
+    })
+})
+
+router.post('/message/:id',isAdmin, async(req,res)=>{
+    const room = await Room.findById(req.params.id)
+    const receiver = await User.findById(req.session.userId)
+    const isDone = req.body.status
+    if(isDone === 'done'){
+        room.receiver = receiver.id
+        room.status = 'read'
+        room.receivedAt = Date.now()
+        await room.save()
+        req.flash('errorMessage','Action is done successfully ')
+        return res.redirect('/admin/message')
+    }
 })
 
 //User function

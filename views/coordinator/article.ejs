@@ -4,7 +4,7 @@
         <li class="nav-item"> <a class="nav-link active" href="/coordinator/topic">Topic </a> </li>
         <li class="nav-item"> <a class="nav-link active" href="/coordinator/allArticle">All Article </a> </li>
         <li class="nav-item"> <a class="nav-link disabled" href="/coordinator/article">Article </a> </li>
-        <li class="nav-item"> <a class="nav-link active" href="/index.html">Sign Out </a> </li>
+        <li class="nav-item"> <a class="nav-link active" href="/coordinator/logout">Sign Out </a> </li>
     </ul>
 </div>
 
@@ -17,7 +17,7 @@
     <button type="submit" class="btn btn-info">Search</button>
 </form>
 
-<h2>All Article</h2>
+<h2>Pending Article</h2>
 <div>
     <% articles.forEach(article=>{ %>
         <form action="/coordinator/article" method="POST">
