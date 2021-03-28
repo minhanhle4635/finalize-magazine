@@ -18,7 +18,7 @@
     </h2>
     <div class="mgb50">
         <div class="l25">
-            <img width="400px" height="280px" class="img-center" src="<%= article.coverImagePath %>">
+            <img width="300" height="200" class="img-center" src="<%= article.coverImagePath %>">
 
         </div>
         <div class="r75">
@@ -27,7 +27,7 @@
                     <%= article.author %>
                 </li>
                 <li class="list-group-item"><b>Created At:</b>
-                    <%= article.createdAt %>
+                    <%= article.createdAt.toISOString().split('T')[0] %>
                 </li>
                 <li class="list-group-item"><b>Description:</b>
                     <%= article.description %>

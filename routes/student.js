@@ -12,7 +12,7 @@ const path = require('path')
 const nodemailer = require('nodemailer')
 const uploadPath = path.join('public', Article.fileBasePath)
 const uploadAvatarPath = path.join('public', Profile.avatarBasePath)
-const fileMimeTypes = require('../helper/mime-file').fileMimeTypes
+const fileMimeTypes = require('../helper/mime-file').documentMime
 const imageMimeTypes = require('../helper/mime-file').imageMimeTypes
 const fs = require('fs');
 
@@ -267,21 +267,28 @@ router.put('/poster/:id/edit', isStudent, upload.single('file'), async (req, res
         article = await Article.findById(req.params.id)
 
         const topic = await Topic.findById(article.topic)
-        const dateNow = Date.now()
-        const FED = topic.finalExpiredDate
+        const dateNow = new Date()
+        const FED = new Date(topic.finalExpiredDate)
 
         const file = req.file
 
-        if (dateNow.getDate() === FED.getDate()) {
+        if (dateNow.getTime() <= FED.getTime()) {
             article.name = req.body.name
             article.author = req.body.author
             article.description = req.body.description
             article.topic = req.body.topic
-            article.file = file.originalname
+            if (file) {
+                if (article.fileName) {
+                    removefile(article.fileName)
+                }
+                article.file = file.originalname
+            }
+            
             saveCover(article, req.body.cover)
 
             await article.save()
-            res.redirect(`/student/article/${article._id}`)
+            req.flash('errorMessage','Updated Successfully')
+            res.redirect(`/student/poster/${article._id}`)
         } else {
             req.flash('errorMessage', 'Cant edit this article because final deadline has expire')
             res.redirect('back')
@@ -292,7 +299,7 @@ router.put('/poster/:id/edit', isStudent, upload.single('file'), async (req, res
             req.flash('errorMessage', 'Cannot edit this topic')
             res.redirect('back')
         } else {
-            res.redirect('/student/article')
+            res.redirect('/student/poster')
         }
     }
 })

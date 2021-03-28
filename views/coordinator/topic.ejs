@@ -21,33 +21,28 @@
     <h2 class="text-dark text-center">All Topic</h2>
 </div>
 
+<section class="centered-search">
+    <h3>Search Topic</h3>
+    <form action="/coordinator/topic" method="GET">
+        <div class="search-css">
+            <input type="text" name="name" value="<%= searchOptions.name %>">
+        </div>
+        <button class="btn btn-full" type="submit">Search</button>
+    </form>
+</section>
+
 <div class="p-5 mt-5">
-    <div class="topnav p-1">
-        <a class="active" href="/coordinator/topic/new">Add new TOPIC</a>
-        <form action="/coordinator/article" method="GET">
-            <div class="boxs">
-                <div class="container-2">
-                    <span class="icon"><i class="fa fa-search"></i></span>
-                    <input type="search" value="<%= searchOptions.name %>" id="search" placeholder="Search..." />
-                </div>
-              </div>
-        </form>
-    </div>
     <table class="table">
         <thead>
             <tr>
-                <th class="table-id">No</th>
                 <th class="table-name">Name</th>
                 <th class="table-date">Expired Date</th>
                 <th class="table-number">Final Expired Date</th>
             </tr>
         </thead>
-        <% topic.forEach(topic=>{ %>
+        <% topics.forEach(topic=>{ %>
         <tbody>
             <tr>
-                <td><a href="/coordinator/topic/<%= topic.id %>">
-                    <%= topic.id %>
-                </a></td>
                 <td><a href="/coordinator/topic/<%= topic.id %>">
                     <%= topic.name %>
                 </a></td>
