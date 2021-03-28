@@ -1,33 +1,90 @@
-<h1>Edit Article</h1>
-<form action="/student/poster/<%= article.id %>/edit?_method=PUT" method="POST" enctype="multipart/form-data">
-    <div>
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" value="<%= article.name %>" required>
+<nav class="sticky sticky-admin">
+    <div class="row">
+        <img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
+        <img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black">
+        <ul class="main-nav">
+            <li> <a href="/student">Home</a> </li>
+            <li> <a href="/student/topic">Topic</a> </li>
+            <li> <a href="/student/article">All Article</a> </li>
+            <li> <a href="/student/poster">Your Article</a> </li>
+            <li> <a href="/student/logout">Log out</a> </li>
+        </ul>
     </div>
-    <div>
-        <label for="author">Author</label>
-        <input type="text" name="author" value="<%= article.author %>">
+</nav>
+<br></br>
+<section class="p-5">
+
+    <h2>Edit Article</h2>
+    <form action="/student/poster/<%= article.id %>/edit?_method=PUT" method="POST" enctype="multipart/form-data">
+        <div>
+            <label class="fw-bold" for="name">Name</label>
+            <input type="text" id="name" name="name" value="<%= article.name %>" required>
+        </div>
+        <div class="mgt1">
+            <label class="fw-bold" for="author">Author</label>
+            <input type="text" name="author" value="<%= article.author %>">
+        </div>
+        <div class="mgt1">
+            <label class="fw-bold" for="description">Description</label>
+            <textarea name="description"><%= article.description %></textarea>
+        </div>
+        <div class="mgt1">
+            <label class="fw-bold" for="topic">Topic</label>
+            <select name="topic">
+                <% topics.forEach(topic=> { %>
+                    <option label="<%= topic.name %>" value="<%= topic._id %>">
+                        <% }) %>
+            </select>
+        </div>
+        <div class="mgt1">
+            <label class="fw-bold" for="cover">Cover</label>
+            <input type="file" name="cover" class="filepond filepondcover">
+        </div>
+        <div class="mgt1">
+            <label class="fw-bold" for="file">File</label>
+            <input type="file" name="file">
+        </div>
+        <div class="d-e mgt1">
+            <a class="btn btn-ghost" href="/student">Cancel</a>
+            <button class="btn btn-full" type="submit">Submit</button>
+        </div>
+
+    </form>
+</section>
+
+
+
+<footer>
+    <div class="row">
+        <div class="col span-1-of-2">
+            <ul class="nav-footer">
+                <li> <a href="#">about us</a> </li>
+                <li> <a href="#">blog</a> </li>
+                <li> <a href="#">Press</a> </li>
+                <li> <a href="#">IOS app</a> </li>
+                <li> <a href="#">ANDROID app</a> </li>
+            </ul>
+        </div>
+        <div class="col span-1-of-2">
+            <ul class="social-link-footer">
+                <li>
+                    <a href="#"> <i class="ion-logo-facebook"></i> </a>
+                </li>
+                <li>
+                    <a href="#"> <i class="ion-logo-twitter"></i> </a>
+                </li>
+                <li>
+                    <a href="#"> <i class="ion-logo-googleplus"></i> </a>
+                </li>
+                <li>
+                    <a href="#"> <i class="ion-logo-instagram"></i> </a>
+                </li>
+            </ul>
+        </div>
     </div>
-    <div>
-        <label for="description">Description</label>
-        <textarea name="description"><%= article.description %></textarea>
+    <div class="row">
+        <p>
+            Copyrighted &copy; 2020 by Unipara all rights reversed
+        </p>
     </div>
-    <div>
-        <label for="topic">Topic</label>
-        <select name="topic">
-            <% topics.forEach(topic=> { %>
-                <option label="<%= topic.name %>" value="<%= topic._id %>">
-                    <% }) %>
-        </select>
-    </div>
-    <div>
-        <label>Cover</label>
-        <input type="file" name="cover" class="filepond">
-    </div>
-    <div>
-        <label for="file">File</label>
-        <input type="file" name="file">
-    </div>
-    <button type="submit">Add</button>
-</form>
-<a href="/user">Cancel</a>
+</footer>

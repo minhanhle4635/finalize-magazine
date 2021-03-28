@@ -3,9 +3,10 @@
         <img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
         <img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black">
         <ul class="main-nav">
-            <li>Hello User</li>
-            <li> <a href="/student/poster">Your article</a> </li>
             <li> <a href="/student">Home</a> </li>
+            <li> <a href="/student/topic">Topic</a> </li>
+            <li> <a href="/student/article">All Article</a> </li>
+            <li> <a href="/student/poster">Your Article</a> </li>
             <li> <a href="/student/logout">Log out</a> </li>
         </ul>
     </div>
@@ -13,18 +14,18 @@
 
 <section>
     <h2>All Article</h2>
-    <form class="p-2" action="/student/article" method="GET">
-        <div>
-            <h3>Search article</h3>
-            <input type="text" name="name" value="<%= searchOptions.name %>">
+    <form class="search-art" action="/student/article" method="GET">
+        <div class="search-std">
+            <input type="text" name="name" value="<%= searchOptions.name %>" placeholder="Search Article...">
+            <button style="margin-left: 10px;" class="btn btn-full" type="submit">Search</button>
+
         </div>
-        <button class="btn btn-full" type="submit">Search</button>
     </form>
 
     <br>
 
-    <div>
-        <table class="table content-table">
+    <div class="p-5 mt-5">
+        <table class="table-std content-table">
             <thead>
                 <tr>
                     <th class="table-id">Cover</th>
@@ -36,7 +37,7 @@
             <% articles.forEach(article=>{ %>
                 <tbody>
                     <tr>
-                        <td><img height="150" width="100" src="<%= article.coverImagePath %>"></td>
+                        <td><img height="100" width="150" src="<%= article.coverImagePath %>"></td>
                         <td>
                             <%= article.name %>
                         </td>

@@ -2,8 +2,9 @@
     <div class="row">
         <img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
         <img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black">
-        <ul class="main-nav">
-            <li> <a href="/student/profile/<%= profile.id %>">Hello User <%= profile.fullName %> </a></li>
+        <ul class="main-nav ">
+            <li> <a href="/student/profile/<%= profile.id %>">Hello <%= profile.fullName %> </a></li>
+            <li> <a href="/student">Home</a> </li>
             <li> <a href="/student/topic">Topic</a> </li>
             <li> <a href="/student/article">All Article</a> </li>
             <li> <a href="/student/poster">Your Article</a> </li>
@@ -11,48 +12,39 @@
         </ul>
     </div>
 </nav>
-
-
 <section>
-    <div>
-        <h2>Recently Added</h2>
-        <div>
-            <div class="p-5 mt-5">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th class="table-id">Cover</th>
-                            <th class="table-name">Name</th>
-                            <th class="p-2">Option</th>
-                        </tr>
-                    </thead>
-                    <% articles.forEach(article=>{ %>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <img height="150" width="100" src="<%= article.coverImagePath %>">
-                                </td>
-                                <td>
-                                    <%= article.name %>
-                                </td>
-                                <td class="p-2">
-                                    <form action="/student/article/download/<%= article._id %>" method="GET">
-                                        <input type="submit" value="Download">
-                                    </form>
-                                    <a class="btn btn-ghost" href="/student/article/<%= article.id %>">View</a>
-                                </td>
-                            </tr>
-                        </tbody>
-                        <% }) %>
-                </table>
-            </div>
-
-
-
-        </div>
+    <h2>Recently Added</h2>
+    <div class="p-5 mt-5">
+        <table class="table-std content-table">
+            <thead>
+                <tr>
+                    <th class="table-id">Cover</th>
+                    <th class="table-name">Name</th>
+                    <th class="p-2">Option</th>
+                </tr>
+            </thead>
+            <% articles.forEach(article=>{ %>
+                <tbody>
+                    <tr>
+                        <td>
+                            <img height="100" width="150" src="<%= article.coverImagePath %>">
+                        </td>
+                        <td>
+                            <%= article.name %>
+                        </td>
+                        <td class="p-2">
+                            <form action="/student/article/download/<%= article._id %>" method="GET">
+                                <input type="submit" value="Download">
+                            </form>
+                            <br>
+                            <a class="btn btn-ghost" href="/student/article/<%= article.id %>">View</a>
+                        </td>
+                    </tr>
+                </tbody>
+                <% }) %>
+        </table>
     </div>
 </section>
-
 <footer>
     <div class="row">
         <div class="col span-1-of-2">

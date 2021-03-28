@@ -1,12 +1,63 @@
-<h2>Hello Temp Student</h2>
-<a href="/student/logout">Logout</a>
-<br/>
-<div>
-    Send Message to Admin
+<nav class="sticky sticky-admin">
+    <div class="row">
+        <img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
+        <img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black">
+        <ul class="main-nav">
+            <li> <a href="/student">Home</a> </li>
+            <li> <a href="/student/topic">Topic</a> </li>
+            <li> <a href="/student/article">All Article</a> </li>
+            <li> <a href="/student/poster">Your Article</a> </li>
+            <li> <a href="/student/logout">Log out</a> </li>
+        </ul>
+    </div>
+</nav>
+<br></br>
 
-    <form action="/student/temp" method="POST">
-        <input type="text" name="message">
-        <button type="submit">Submit</button>
-    </form>
-</div>
+<section class="p-5">
+    <h2>Hello Temp Student</h2>
+    <div>
+        <b>Send Message to Admin</b>
 
+        <form action="/student/temp" method="POST">
+            <textarea type="text" name="message"></textarea>
+            <div class="mgt1 flr">
+                <button class="btn btn-full " type="submit">Submit</button>
+
+            </div>
+        </form>
+    </div>
+</section>
+<footer class="mgt2">
+    <div class="row">
+        <div class="col span-1-of-2">
+            <ul class="nav-footer">
+                <li> <a href="#">about us</a> </li>
+                <li> <a href="#">blog</a> </li>
+                <li> <a href="#">Press</a> </li>
+                <li> <a href="#">IOS app</a> </li>
+                <li> <a href="#">ANDROID app</a> </li>
+            </ul>
+        </div>
+        <div class="col span-1-of-2">
+            <ul class="social-link-footer">
+                <li>
+                    <a href="#"> <i class="ion-logo-facebook"></i> </a>
+                </li>
+                <li>
+                    <a href="#"> <i class="ion-logo-twitter"></i> </a>
+                </li>
+                <li>
+                    <a href="#"> <i class="ion-logo-googleplus"></i> </a>
+                </li>
+                <li>
+                    <a href="#"> <i class="ion-logo-instagram"></i> </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <p>
+            Copyrighted &copy; 2020 by Unipara all rights reversed
+        </p>
+    </div>
+</footer>
