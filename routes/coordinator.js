@@ -11,7 +11,7 @@ const fs = require('fs')
 const path = require('path')
 const uploadAvatarPath = path.join('public', Profile.avatarBasePath)
 
-const imageMimeTypes = require('../helper/mime-file')
+const imageMimeTypes = require('../helper/mime-file').imageMimeTypes
 
 const avatarStorage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -45,7 +45,7 @@ const uploadAvatar = multer({ storage: avatarStorage })
 router.get('/', isCoordinator, async (req, res) => {
     const user = await User.findById(req.session.userId).populate("faculty").exec()
     const article = await Article.find({ faculty: user.faculty, status: 'pending' }).limit(5)
-    const profile = await Profile.findOne({user: user.id})
+    const profile = await Profile.findOne({user: req.session.userId})
     const allArticle = await Article.find({}).countDocuments()
     const totalPendingArticle = await Article.find({ status: 'pending' }).countDocuments()
     const totalRejectedArticle = await Article.find({ status: 'refused' }).countDocuments()
