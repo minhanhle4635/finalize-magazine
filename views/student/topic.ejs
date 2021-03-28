@@ -1,46 +1,114 @@
-<h2>Active Topic</h2>
+<nav class="sticky sticky-admin">
+    <div class="row">
+        <img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
+        <img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black">
+        <ul class="main-nav">
+            <li> <a href="/student">Home</a> </li>
+            <li> <a href="/student/topic">Topic</a> </li>
+            <li> <a href="/student/article">All Article</a> </li>
+            <li> <a href="/student/poster">Your Article</a> </li>
+            <li> <a href="/student/logout">Log out</a> </li>
+        </ul>
+    </div>
+</nav>
 
-<% Object.keys(nonExpiredList).forEach(facultyId=>{ %>
-    <h2>
-        <%= nonExpiredList[facultyId].name %>
-    </h2>
-    <table>
-        <tr>
-            <td>
-                <% nonExpiredList[facultyId].topics.forEach(topic => { %>
-                    <p>
-                        <a href="/student/topic/<%= topic.id %>">
-                            <%= topic.name %>
-                        </a>
-                    </p>
-                    <% }) %>
-            </td>
-        </tr>
-    </table>
-    <hr>
-    <% }) %>
 
-        <h2>All Topic</h2>
-
-        <% Object.keys(faculties).forEach(facultyId=>{ %>
-            <h2>
-                <%= faculties[facultyId].name %>
-            </h2>
-            <table>
+<section>
+    <h2>Active Topic</h2>
+    <div class=" bdb p-5 mt-5">
+        <table class="table-std content-table">
+            <thead>
                 <tr>
-                    <td>
-                        <% faculties[facultyId].topics.forEach(topic => { %>
-                            <p>
-                                <a href="/student/topic/<%= topic.id %>">
-                                    <%= topic.name %>
-                                </a>
-                            </p>
-                            <% }) %>
-                    </td>
+                    <th class="p-2">Faculty</th>
+                    <th class="p-2">Topic</th>
                 </tr>
-            </table>
-            <hr>
-            <% }) %>
+            </thead>
+            <% Object.keys(nonExpiredList).forEach(facultyId=>{ %>
+                <tbody>
+                    <tr>
+                        <td class="p-2">
+                            <b><%= nonExpiredList[facultyId].name %></b>
+                        </td>
+                        <td>
+                            <% nonExpiredList[facultyId].topics.forEach(topic => { %>
+                                <p style="padding-top: 10px;" class="p-2">
+                                    <a class="btn btn-ghost" href="/student/topic/<%= topic.id %>">
+                                        <%= topic.name %>
+                                    </a>
+                                </p>
+                                <% }) %>
+                        </td>
 
+                    </tr>
+                </tbody>
+                <% }) %>
+        </table>
+    </div>
 
-                <a href="/student">Home</a>
+    <br>
+    <h2>All Topic</h2>
+    <div class="p-5 mt-5">
+        <table class="table-std content-table">
+            <thead>
+                <tr>
+                    <th class="p-2">Faculty</th>
+                    <th class="p-2">Topic</th>
+                </tr>
+            </thead>
+            <% Object.keys(faculties).forEach(facultyId=>{ %>
+
+                <tbody>
+                    <tr>
+                        <td class="p-2">
+                            <b> <%= faculties[facultyId].name %></b>
+                        </td>
+                        <td>
+                            <% faculties[facultyId].topics.forEach(topic => { %>
+                                <p style="padding-top: 10px;" class="p-2">
+                                    <a class="btn btn-ghost" href="/student/topic/<%= topic.id %>">
+                                        <%= topic.name %>
+                                    </a>
+                                </p>
+                                <% }) %>
+                        </td>
+
+                    </tr>
+                </tbody>
+                <% }) %>
+        </table>
+    </div>
+</section>
+<footer>
+    <div class="row">
+        <div class="col span-1-of-2">
+            <ul class="nav-footer">
+                <li> <a href="#">about us</a> </li>
+                <li> <a href="#">blog</a> </li>
+                <li> <a href="#">Press</a> </li>
+                <li> <a href="#">IOS app</a> </li>
+                <li> <a href="#">ANDROID app</a> </li>
+            </ul>
+        </div>
+        <div class="col span-1-of-2">
+            <ul class="social-link-footer">
+                <li>
+                    <a href="#"> <i class="ion-logo-facebook"></i> </a>
+                </li>
+                <li>
+                    <a href="#"> <i class="ion-logo-twitter"></i> </a>
+                </li>
+                <li>
+                    <a href="#"> <i class="ion-logo-googleplus"></i> </a>
+                </li>
+                <li>
+                    <a href="#"> <i class="ion-logo-instagram"></i> </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <p>
+            Copyrighted &copy; 2020 by Unipara all rights reversed
+        </p>
+    </div>
+</footer>

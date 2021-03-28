@@ -1,24 +1,85 @@
-<a href="/student">Home</a>
-<h2><%= article.name %></h2>
-<img width="100" height="150" src="<%= article.coverImagePath %>">
-<div>
-    Author: <%= article.author %>
-</div>
-<div>
-    Created At: <%= article.createdAt %>
-</div>
+<nav class="sticky sticky-admin">
+    <div class="row">
+        <img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
+        <img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black">
+        <ul class="main-nav">
+            <li> <a href="/student">Home</a> </li>
+            <li> <a href="/student/topic">Topic</a> </li>
+            <li> <a href="/student/article">All Article</a> </li>
+            <li> <a href="/student/poster">Your Article</a> </li>
+            <li> <a href="/student/logout">Log out</a> </li>
+        </ul>
+    </div>
+</nav>
+<br></br>
+<section class="p-5">
+    <h2>
+        <%= article.name %>
+    </h2>
+    <div>
 
-<div>
-    Description: <%= article.description %> 
-</div>
+        <img width="1280" height="600" class="img-center" src="<%= article.coverImagePath %>">
 
-<div>
-    File: <%= article.fileName %>
-</div>
+        <ul class="list-group mgt2">
+            <li class="list-group-item"><b>Author:</b>
+                <%= article.author %>
+            </li>
+            <li class="list-group-item"><b>Created At:</b>
+                <%= article.createdAt %>
+            </li>
+            <li class="list-group-item"><b>Description:</b>
+                <%= article.description %>
+            </li>
+            <li class="list-group-item"><b>File:</b>
+                <%= article.fileName %>
+            </li>
+            <li class="list-group-item li-area"><b>Comment from Coordinator:</b>
+                <%= article.comment %>
+            </li>
 
-<div>
-    Comment from Coordinator: <%= article.comment %>
-</div>
+        </ul>
+        <div class="d-e mgt1">
+            <a class="btn btn-ghost" href="/student/poster/<%= article._id %>/edit">Edit</a>
+            <a style="display: inline-flex;">
+                <%- include('../partials/deleteForm', {url: `/student/poster/${article._id}`}) %>
+            </a>
+        </div>
 
-<a href="/student/poster/<%= article._id %>/edit">Edit</a>
-<%- include('../partials/deleteForm', {url: `/student/poster/${article._id}`}) %>
+    </div>
+
+
+</section>
+<footer>
+    <div class="row">
+        <div class="col span-1-of-2">
+            <ul class="nav-footer">
+                <li> <a href="#">about us</a> </li>
+                <li> <a href="#">blog</a> </li>
+                <li> <a href="#">Press</a> </li>
+                <li> <a href="#">IOS app</a> </li>
+                <li> <a href="#">ANDROID app</a> </li>
+            </ul>
+        </div>
+        <div class="col span-1-of-2">
+            <ul class="social-link-footer">
+                <li>
+                    <a href="#"> <i class="ion-logo-facebook"></i> </a>
+                </li>
+                <li>
+                    <a href="#"> <i class="ion-logo-twitter"></i> </a>
+                </li>
+                <li>
+                    <a href="#"> <i class="ion-logo-googleplus"></i> </a>
+                </li>
+                <li>
+                    <a href="#"> <i class="ion-logo-instagram"></i> </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <p>
+            Copyrighted &copy; 2020 by Unipara all rights reversed
+        </p>
+    </div>
+</footer>

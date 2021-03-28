@@ -1,34 +1,90 @@
-<h2>Edit User</h2>
-<form action="/student/profile/<%= profile.id %>/edit?_method=PUT" method="POST" enctype="multipart/form-data">
-    <div>
-        <label>Name</label>
-        <input type="text" name="fullname" value="<%= profile.fullName %>">
+<nav class="sticky sticky-admin">
+    <div class="row">
+        <img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
+        <img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black">
+        <ul class="main-nav">
+            <li> <a href="/student">Home</a> </li>
+            <li> <a href="/student/topic">Topic</a> </li>
+            <li> <a href="/student/article">All Article</a> </li>
+            <li> <a href="/student/poster">Your Article</a> </li>
+            <li> <a href="/student/logout">Log out</a> </li>
+        </ul>
     </div>
-    <div>
-        <label>Gender</label>
-        <input type="radio" name="gender" value="male"> <label id="male">Male</label>
-        <input type="radio" name="gender" value="female"> <label id="female">Female</label>
-        <input type="radio" name="gender" value="other"> <label id="other">Other</label>
-    
-    </div>
-    <div>
-        <label>Date of Birth</label>
-        <input type="date" name="dob" value="<%= profile.dob.toISOString().split('T')[0] %>">
-    </div>
-    <div>
-        <label>Email</label>
-        <input type="email" name="email" value="<%= profile.email== null? '' : profile.email %>">
-    </div>
-    <div>
-        <label for="introduction">Introduction</label>
-        <textarea name="introduction"><%= profile.introduction %></textarea>
-    </div>
+</nav>
+<br></br>
 
-    <div>
-        <label for="avatar">Avatar</label>
-        <input type="file" name="avatar">
-    </div>
-    <button type="submit">Update</button>
-</form>
+<section class="p-5">
+    <h2>Edit User</h2>
+    <form action="/student/profile/<%= profile.id %>/edit?_method=PUT" method="POST" enctype="multipart/form-data">
+        <div>
+            <label class="fw-bold" for="name">Name</label>
+            <input type="text" name="fullname" value="<%= profile.fullName %>">
+        </div>
+        <div class="mgt1">
+            <label class="fw-bold" for="gender">Gender </label>
+            <input type="radio" name="gender" value="male" style="margin-left: 15px;"> <label id="male" style="margin-left: 5px;">Male</label>
+            <input type="radio" name="gender" value="female" style="margin-left: 15px;"> <label id="female" style="margin-left: 5px;">Female</label>
+            <input type="radio" name="gender" value="other" style="margin-left: 15px;"> <label id="other" style="margin-left: 5px;">Other</label>
+        </div>
+        <div class="mgt1">
+            <label class="fw-bold" for="dob">Date of Birth</label>
+            <input style="margin-left: 15px; border-radius: 5px ; border : solid 0.5px gray" type="date" name="dob" value="<%= profile.dob.toISOString().split('T')[0] %>">
+        </div>
 
-<a href="/student/profile/<%= profile.id %>">Cancel</a>
+        <div class="mgt1">
+            <label class="fw-bold" for="email">Email </label>
+            <input type="text" name="email" value="<%= profile.email== null? '' : profile.email %>">
+        </div>
+        <div class="mgt1">
+            <label class="fw-bold" for="intro">Introduction </label>
+            <textarea name="intro"><%= profile.introduction %></textarea>
+        </div>
+        <div class="mgt1">
+            <label class="fw-bold">Avartar: </label>
+            <input type="file" name="avartar" class="filepond filepondava">
+        </div>
+        <br></br>
+        <div class="d-e">
+            <a class="btn btn-ghost" href="/student/profile/<%= profile.id %>">Cancel</a>
+            <button class="btn btn-full" type="submit">Update</button>
+        </div>
+
+
+    </form>
+
+</section>
+
+<footer>
+    <div class="row">
+        <div class="col span-1-of-2">
+            <ul class="nav-footer">
+                <li> <a href="#">about us</a> </li>
+                <li> <a href="#">blog</a> </li>
+                <li> <a href="#">Press</a> </li>
+                <li> <a href="#">IOS app</a> </li>
+                <li> <a href="#">ANDROID app</a> </li>
+            </ul>
+        </div>
+        <div class="col span-1-of-2">
+            <ul class="social-link-footer">
+                <li>
+                    <a href="#"> <i class="ion-logo-facebook"></i> </a>
+                </li>
+                <li>
+                    <a href="#"> <i class="ion-logo-twitter"></i> </a>
+                </li>
+                <li>
+                    <a href="#"> <i class="ion-logo-googleplus"></i> </a>
+                </li>
+                <li>
+                    <a href="#"> <i class="ion-logo-instagram"></i> </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <p>
+            Copyrighted &copy; 2020 by Unipara all rights reversed
+        </p>
+    </div>
+</footer>
