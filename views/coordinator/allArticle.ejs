@@ -52,7 +52,8 @@
                         <td><%= article.createdAt.toISOString().split('T')[0] %></td>
                         <td><%= article.status %></td>
                         <td>
-                            <form action="/coordinator/article" method="POST">
+                            <form action="/coordinator/allArticle" method="POST">
+                                <input type="text" hidden name="articleId" value="<%= article._id %>">
                                 <textarea name="comment"><%= article.comment %></textarea>
                                 <p>
                                     <button type="submit" name="permission" value="accept" class="btn btn-success">Accept</button>

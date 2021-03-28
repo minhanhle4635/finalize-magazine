@@ -108,7 +108,7 @@ router.put('/topic/:id/edit', isCoordinator, async (req, res) => {
     } catch (error) {
         console.log(error)
         if (topic != null) {
-            req.flash( 'errorMessage', 'Cannot edit this topic' )
+            req.flash('errorMessage', 'Cannot edit this topic')
             res.redirect('back')
         } else {
             res.redirect('/coordinator/topic')
@@ -136,24 +136,49 @@ router.delete('/topic/:id', isCoordinator, async (req, res) => {
 })
 
 //show all Article
-router.get('/allArticle',isCoordinator,async(req,res)=>{
+router.get('/allArticle', isCoordinator, async (req, res) => {
     const query = Article.find()
     if (req.query.name != null && req.query.name != '') {
         query = query.regex('name', new RegExp(req.query.name, 'i'))
     }
 
-    try{
+    try {
         const articles = await query.exec()
-        res.render('coordinator/allArticle',{
+        res.render('coordinator/allArticle', {
             articles: articles,
             searchOptions: req.query
         })
-    }catch(e){
+    } catch (e) {
         console.log(e)
         res.redirect('/coordinator')
     }
-    
+
 })
+
+router.post('/allArticle', isCoordinator, async (req, res) => {
+    try {
+        const permission = req.body.permission
+        const articleId = req.body.articleId
+        const article = await Article.findById(articleId)
+        if (permission === 'accept') {
+            article.status = 'accepted'
+            article.comment = req.body.comment
+            await article.save()
+            req.flash('errorMessage','Updated Successfully')
+            res.redirect('back')
+        } else if (permission === 'refuse') {
+            article.status = 'refused'
+            article.comment = req.body.comment
+            await article.save()
+            req.flash('errorMessage','Updated Successfully')
+            res.redirect('back')
+        }
+    } catch (error) {
+        req.flash('errorMessage', 'Cannot permit this article')
+        res.redirect('back')
+    }
+})
+
 
 //article permission
 router.get('/article', isCoordinator, async (req, res) => {
@@ -181,26 +206,27 @@ router.post('/article', isCoordinator, async (req, res) => {
         const articleId = req.body.articleId
         const article = await Article.findById(articleId)
         //can't comment after 14 days
-        const today = Date.now()
-        const expiredDate = article.createdAt + 14
-        if(today < expiredDate){
-        if (permission === 'accept') {
-            article.status = 'accepted'
-            article.comment = req.body.comment
-            await article.save()
-            res.redirect('/coordinator/article')
-        } else if (permission === 'refuse') {
-            article.status = 'refused'
-            article.comment = req.body.comment
-            await article.save()
-            res.redirect('/coordinator/article')
-        }} else{
+        const today = new Date()
+        const expiredDate = new Date(article.createdAt + 12096e5)
+        if (today.getTime() <= expiredDate.getTime()) {
+            if (permission === 'accept') {
+                article.status = 'accepted'
+                article.comment = req.body.comment
+                await article.save()
+                res.redirect('back')
+            } else if (permission === 'refuse') {
+                article.status = 'refused'
+                article.comment = req.body.comment
+                await article.save()
+                res.redirect('back')
+            }
+        } else {
             article.status = 'refused'
             await article.save()
         }
     } catch (error) {
         req.flash('errorMessage', 'Cannot permit this article')
-        res.redirect('/coordinator/article')
+        res.redirect('back')
     }
 })
 
