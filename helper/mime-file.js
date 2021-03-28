@@ -4,4 +4,10 @@ const documentMime = [
     'application/pdf',
 ]
 
-module.exports = documentMime;
+const imageMimeTypes = [
+    'image/jpeg', 
+    'image/png', 
+    'images/gif'
+]
+
+module.exports = {documentMime,imageMimeTypes};

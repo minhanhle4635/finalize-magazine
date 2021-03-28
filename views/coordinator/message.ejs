@@ -1,0 +1,22 @@
+<h2>Message to Coordinator</h2>
+<div>
+    <table>
+        <tr>
+            <th>Sender</th>
+            <th>Receiver</th>
+            <th>Send At</th>
+            <th>Option</th>
+        </tr>
+    <% rooms.forEach(room => { %>
+        <tr>
+            <td><%= room.sender.name %></td>
+            <td><%= room.receiver === null ? 'None' : room.receiver.name %></td>
+            <td><%= room.createdAt.toISOString().split('T')[0] %></td>
+            <td><a href="/coordinator/message/<%= room.id %>">View</a></td>
+            <td><a href="/coordinator/message/<%= room.id %>/read">Read</a></td>
+        </tr>
+    <% }) %>
+    </table>
+</div>
+
+<a href="/student">Back</a>

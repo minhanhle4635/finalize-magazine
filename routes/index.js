@@ -25,10 +25,7 @@ router.post('/register', async (req, res) => {
     try {
         //checking if username is already used
         const ExistedUser = await User.findOne({ username: req.body.username })
-        if (ExistedUser) {
-            req.flash('errorMessage', 'Username has been used')
-            res.redirect('back')
-        }
+        
         //hash password
         const hashedPassword = await bcrypt.hash(req.body.password, 10)
 
@@ -38,18 +35,21 @@ router.post('/register', async (req, res) => {
             password: hashedPassword
         })
 
-        await newUser.save()
-        
-        // const defaultMaleImage = path.join(avatarPath, 'male.jpg')
-        // const defaultFemaleImage = path.join(avatarPath, 'female.jpg')
-        const newProfile = new Profile({
-            fullName: req.body.name,
-            // avatar: defaultMaleImage,
-            user: newUser.id
-        })
+        if (!ExistedUser) {
+            await newUser.save()
 
-        await newProfile.save()
-        res.redirect('/')
+            const newProfile = new Profile({
+                fullName: req.body.name,
+                // avatar: defaultMaleImage,
+                user: newUser.id
+            })
+    
+            await newProfile.save()
+            res.redirect('/login')
+        } else{
+            req.flash('errorMessage', 'Username has been used')
+            res.redirect('back')
+        }
     } catch (err) {
         console.log(err)
         res.redirect('/register')

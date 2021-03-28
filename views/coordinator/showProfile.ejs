@@ -1,0 +1,17 @@
+<div><a href="/coordinator">Home</a></div>
+<h2>
+    <%= profile.fullName %>
+</h2>
+
+<div> <img width="100" height="150" src="<%= '/coordinator/profile/' + profile._id + '/avatar' %>"></div>
+<div> Gender: <%= profile.gender==null ? 'None' : profile.gender %>
+</div>
+<div> Date of Birth: <%= profile.dob==null ? '' : profile.dob.toISOString().split('T')[0]%>
+</div>
+<div> Email: <%= profile.email %>
+</div>
+<div> Introduction: <%= profile.introduction %>
+</div>
+
+<a href="/coordinator/profile/<%= profile.id %>/edit">Edit</a>
+<a href="/coordinator/profile/<%= profile.id %>/changepassword">Change Password</a>

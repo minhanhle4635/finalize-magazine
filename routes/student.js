@@ -17,6 +17,8 @@ const fs = require('fs');
 
 const bcrypt = require('bcrypt')
 const Room = require('../models/Room')
+const nodemailer = require('nodemailer')
+// const messageRoom = require('../models/messageRoom')
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -105,6 +107,49 @@ router.post('/temp', isStudent, async (req, res) => {
         return res.redirect('back')
     }
 })
+
+// router.get('/message', isStudent, async(req,res)=>{
+//     const rooms = await messageRoom.find({sender: req.session.userId}).populate('recevier').exec()
+//     res.render('student/message', {
+//         rooms: rooms
+//     })
+// })
+
+// router.get('/newmessage', isStudent, async(req,res)=>{
+//     const room = await messageRoom.findOne({sender: req.session.userId})
+//     res.render('student/newmessage',{
+//         room: room
+//     })
+// })
+
+// router.post('/newmessage', isStudent, async (req, res) => {
+
+//     const sender = await User.findById(req.session.userId);
+//     const receiver = null;//await User.find({role: 'admin'});
+//     const message = req.body.message;
+
+//     if (!message) {
+//         req.flash('errorMessage', 'Cant send empty message')
+//         return res.redirect('back')
+//     }
+
+//     const newMessageRoom = new messageRoom({
+//         sender: sender,
+//         receiver: receiver
+//     })
+//     try {
+//         await newMessageRoom.save()
+//         console.log(newMessageRoom)
+//         newMessageRoom.messageLog.push(message)
+//         console.log(newMessageRoom)
+//         req.flash('errorMessage', 'Sent Successfully')
+//         return res.redirect('back')
+//     } catch (e) {
+//         console.log(e)
+//         req.flash('errorMessage', 'Cant be sent')
+//         return res.redirect('back')
+//     }
+// })
 
 //get topic index page 
 router.get('/topic', isStudent, async (req, res) => {
@@ -329,6 +374,8 @@ router.get('/newarticle', isStudent, async (req, res) => {
     })
 })
 
+
+
 //create new Article
 router.post('/newarticle', isStudent, upload.single('file'), async (req, res) => {
     const topic = await Topic.findOne({ _id: req.body.topic })
@@ -366,6 +413,42 @@ router.post('/newarticle', isStudent, upload.single('file'), async (req, res) =>
             // const deadline = topic.expiredDate
             if (dateNow.getTime() <= deadline.getTime()) {
                 await article.save();
+                //send email
+                // create reusable transporter object using the default SMTP transport
+                let transporter = nodemailer.createTransport({
+                    host: "smtp.ethereal.email",
+                    port: 587,
+                    secure: false, // true for 465, false for other ports
+                    auth: {
+                        user: process.env.USER, // generated ethereal user
+                        pass: process.env.SECRET, // generated ethereal password
+                    },
+                });
+                const student = await User.findOne({ id: req.session.userId })
+                const profile = await Profile.findOne({ user: student.id })
+                console.log(profile)
+                const senderEmail = profile.email
+                const receiver = await User.find({ role: 'coordinator' })
+                for (var i = 0; i < receiver.length; i++) {
+                    const receiverId = receiver[i].id;
+                    const receiverProfile = await Profile.findOne({ user: receiverId })
+                    if (receiverProfile.email) {
+                        const receiverEmail = receiverProfile.email
+                        return receiverEmail
+                    }
+                }
+                async function run(req, res, next) {
+                    let sendResult = await transporter.sendMail({
+                        from: senderEmail,
+                        to: receiverEmail,
+                        subject: 'new submission',
+                        text: 'New submission needs permission',
+                        html: '<body><h3>New Submission</h3><p>New submission needs permission, pls go check it</p></body>'
+                    })
+
+                    console.log(sendResult)
+                }
+                run().catch(err => console.error(err))
                 req.flash('errorMessage', 'Wait for permision')
                 res.redirect('/student/poster')
             } else {
@@ -509,7 +592,7 @@ router.get('/profile/:id/changepassword', isStudent, async (req, res) => {
 
 })
 
-router.get('/profile/:id/avatar', async (req, res) => {
+router.get('/profile/:id/avatar', isStudent, async (req, res) => {
     const defaultPath = path.join(__dirname, '../public/uploads/avatar');
     const profileId = req.params.id;
     if (!profileId) {

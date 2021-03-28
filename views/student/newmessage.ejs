@@ -1,0 +1,16 @@
+<h2>Message Log</h2>
+
+<div>
+    Send Message to Coordinator
+
+    <form action="/student/message" method="POST">
+        <input type="text" name="message">
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<div>
+    <% for(var i = 0; i < room.messageLog.length; i++) { %>
+        <%= room.messageLog[i] %>
+    <% } %>
+</div>

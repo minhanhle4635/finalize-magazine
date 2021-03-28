@@ -1,16 +1,11 @@
-<!-- <h1>Hello Coordinator <%= user.name %></h1>
-<h2>Faculty assigned: <%= user.faculty.name %></h2>
-
-<a href="/coordinator/topic">Topic</a>
-<a href="/coordinator/article">Article</a>
-<a href="/coordinator/allArticle">All Article</a>
-<a href="/coordinator/logout">Logout</a> -->
 <header class="header-img">
     <nav class="row">
         <img src="resources/img/logo.jpg" alt="missing picture" class="logo">
         <ul class="main-nav">
+            <li><a href="/coordinator/profile/<%= profile.id %>">Hello Coordinator <%= profile.fullName %></a></li>
             <li> <a href="/coordinator/topic">Topic </a> </li>
             <li> <a href="/coordinator/allArticle">Article </a> </li>
+            <!-- <li><a href="/coordinator/message">Message</a></li> -->
             <li> <a href="/coordinator/logout">Sign Out </a> </li>
         </ul>
     </nav>

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const roomSchema = mongoose.Schema({
+const messageRoomSchema = mongoose.Schema({
     sender:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
@@ -8,11 +8,6 @@ const roomSchema = mongoose.Schema({
     receiver:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
-    },
-    message:{
-        // type: mongoose.Schema.Types.ObjectId,
-        // ref: 'Message'
-        type: String
     },
     messageLog:{
         type: [String]
@@ -23,12 +18,7 @@ const roomSchema = mongoose.Schema({
     },
     receivedAt:{
         type: Date
-    },
-    status:{
-        type: String,
-        enum: ['unread','read'],
-        default: 'unread'
     }
 })
 
-module.exports = mongoose.model('Room', roomSchema)
+module.exports = mongoose.model('messageRoom', messageRoomSchema)

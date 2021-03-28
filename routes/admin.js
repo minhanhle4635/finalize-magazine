@@ -46,51 +46,51 @@ router.get('/', isAdmin, async (req, res) => {
 })
 
 //Message
-router.get('/message',isAdmin,async(req,res)=>{
-    const rooms = await Room.find({status: 'unread'}).populate('sender').exec()
-    res.render('admin/message',{
+router.get('/message', isAdmin, async (req, res) => {
+    const rooms = await Room.find({ status: 'unread' }).populate('sender').exec()
+    res.render('admin/message', {
         rooms: rooms
     })
 })
 
-router.get('/message/read',isAdmin,async(req,res)=>{
-    const rooms = await Room.find({status: 'read'}).populate(['sender','receiver']).exec()
-    return res.render('admin/readMessage',{
+router.get('/message/read', isAdmin, async (req, res) => {
+    const rooms = await Room.find({ status: 'read' }).populate(['sender', 'receiver']).exec()
+    return res.render('admin/readMessage', {
         rooms: rooms
     })
 })
 
-router.get('/message/read/:id',isAdmin, async(req,res)=>{
-    const room = await Room.findById(req.params.id).populate(['sender','receiver']).exec()
-    res.render('admin/showReadMessage',{
+router.get('/message/read/:id', isAdmin, async (req, res) => {
+    const room = await Room.findById(req.params.id).populate(['sender', 'receiver']).exec()
+    res.render('admin/showReadMessage', {
         room: room
     })
 })
 
-router.get('/message/unread',isAdmin,async(req,res)=>{
-    const rooms = await Room.find({status: 'unread'}).populate('sender').exec()
-    return res.render('admin/message',{
+router.get('/message/unread', isAdmin, async (req, res) => {
+    const rooms = await Room.find({ status: 'unread' }).populate('sender').exec()
+    return res.render('admin/message', {
         rooms: rooms
     })
 })
 
-router.get('/message/:id',isAdmin, async(req,res)=>{
+router.get('/message/:id', isAdmin, async (req, res) => {
     const room = await Room.findById(req.params.id).populate('sender').exec()
-    res.render('admin/showMessage',{
+    res.render('admin/showMessage', {
         room: room
     })
 })
 
-router.post('/message/:id',isAdmin, async(req,res)=>{
+router.post('/message/:id', isAdmin, async (req, res) => {
     const room = await Room.findById(req.params.id)
     const receiver = await User.findById(req.session.userId)
     const isDone = req.body.status
-    if(isDone === 'done'){
+    if (isDone === 'done') {
         room.receiver = receiver.id
         room.status = 'read'
         room.receivedAt = Date.now()
         await room.save()
-        req.flash('errorMessage','Action is done successfully ')
+        req.flash('errorMessage', 'Action is done successfully ')
         return res.redirect('/admin/message')
     }
 })
@@ -115,7 +115,7 @@ router.get('/user', async (req, res) => {
 })
 
 router.get('/user/admin', async (req, res) => {
-    let query = User.find({role: 'admin'})
+    let query = User.find({ role: 'admin' })
     if (req.query.name != null && req.query.name != '') {
         query = query.regex('name', new RegExp(req.query.name, 'i'))
     }
@@ -132,7 +132,7 @@ router.get('/user/admin', async (req, res) => {
 })
 
 router.get('/user/manager', async (req, res) => {
-    let query = User.find({role: 'manager'})
+    let query = User.find({ role: 'manager' })
     if (req.query.name != null && req.query.name != '') {
         query = query.regex('name', new RegExp(req.query.name, 'i'))
     }
@@ -149,7 +149,7 @@ router.get('/user/manager', async (req, res) => {
 })
 
 router.get('/user/coordinator', async (req, res) => {
-    let query = User.find({role: 'coordinator'})
+    let query = User.find({ role: 'coordinator' })
     if (req.query.name != null && req.query.name != '') {
         query = query.regex('name', new RegExp(req.query.name, 'i'))
     }
@@ -166,7 +166,7 @@ router.get('/user/coordinator', async (req, res) => {
 })
 
 router.get('/user/student', async (req, res) => {
-    let query = User.find({role: 'student'})
+    let query = User.find({ role: 'student' })
     if (req.query.name != null && req.query.name != '') {
         query = query.regex('name', new RegExp(req.query.name, 'i'))
     }
@@ -183,7 +183,7 @@ router.get('/user/student', async (req, res) => {
 })
 
 router.get('/user/guest', async (req, res) => {
-    let query = User.find({role: 'guest'})
+    let query = User.find({ role: 'guest' })
     if (req.query.name != null && req.query.name != '') {
         query = query.regex('name', new RegExp(req.query.name, 'i'))
     }
@@ -216,21 +216,31 @@ router.post('/user/new', isAdmin, async (req, res) => {
     } else {
         faculty = null
     }
-    const newUser = new User({
-        name: req.body.name,
-        username: req.body.username,
-        password: hashedPassword,
-        role: req.body.role,
-        faculty: faculty
-    })
     try {
+        const newUser = new User({
+            name: req.body.name,
+            username: req.body.username,
+            password: hashedPassword,
+            role: req.body.role,
+            faculty: faculty
+        })
+
         if (!ExistedUser) {
             await newUser.save()
+
+            const newProfile = new Profile({
+                fullName: req.body.name,
+                user: newUser.id
+            })
+            await newProfile.save()
+
             res.redirect('/admin')
         } else {
             req.flash('errorMessage', 'Username already used')
             req.redirect('back')
         }
+
+        
     } catch (err) {
         console.log(err)
         res.redirect('/admin/user/new')
