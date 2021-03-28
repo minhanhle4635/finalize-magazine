@@ -68,6 +68,7 @@
                 </tr>
             </thead>
             <% articles.forEach(article=>{ %>
+
                 <tbody>
                     <tr>
                         <td><img height="100" width="150" src="<%= article.coverImagePath %>"></td>
@@ -98,8 +99,9 @@
                         </td>
                     </tr>
                 </tbody>
+                <% }) %>
         </table>
-        <% }) %>
+
     </div>
 </section>
 

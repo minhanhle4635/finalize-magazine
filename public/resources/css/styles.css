@@ -788,8 +788,8 @@ footer p {
 }
 
 .filepondcover {
-    max-width: 1280px;
-    max-height: 600px;
+    max-width: 600px;
+    max-height: 1280px;
 }
 
 .search-std {
