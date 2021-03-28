@@ -1,39 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../students/css/normalize.css">
-    <link rel="stylesheet" href="../students/css/Grid.css">
-    <link rel="stylesheet" href="../students/css/ionicons.min.css">
-    <link rel="stylesheet" href="../resources/css/styles.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../Coordinator css/style.css">
-    <link rel="preconnect" href="../https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;1,300&display=swap"
-        rel="stylesheet">
-    <title>Marketing Coordinator</title>
-</head>
+
 
 <body>
 
-    <div class="p-4">
-        <a href="/coordinator"><img src="../resources/img/logo.jpg" alt="missing picture" class="logo"></a>
-        <ul class="nav m-4 ">
-            <li class="nav-item"> <a class="nav-link active" href="/coordinator/topic">Topic </a> </li>
-            <li class="nav-item"> <a class="nav-link disabled" href="/coordinator/allArticle">All Article </a> </li>
-            <li class="nav-item"> <a class="nav-link active" href="/coordinator/article">Article </a> </li>
-            <li class="nav-item"> <a class="nav-link active" href="/coordinator/logout">Sign Out </a> </li>
-        </ul>
-    </div>
-    <div>
-        <h1 class="text-dark text-center">All articles</h1>
+    <nav class="bg-nav pb-2">
+        <div class="row text-dark">
+            <a href="/coordinator"><img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
+                <img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black"></a>
+            <ul class="main-nav " id="navi">
+                <li>
+                    <a href="javascript:void(0);" class="icon-rp" onclick="myFunction()">
+                        <i class="ion-ios-information-circle"></i>
+                    </a>
+                </li>
+                <li> <a href="/coordinator/topic">Topic </a> </li>
+                <li> <a href="/coordinator/allArticle">All Article </a> </li>
+                <li> <a href="/coordinator/article">Article </a> </li>
+                <li> <a href="/coordinator/logout">Sign Out </a> </li>
+    
+            </ul>
+        </div>
+    </nav>
+    <div class="p-5">
+        <h2 class="text-dark text-center">All articles</h2>
     </div>
     <div class="p-5 mt-5">
-        <div class="search"><input class="search" type="text" placeholder="Search.."></div>
-
+        <form action="/coordinator/article" method="GET">
+            <div class="boxs">
+                <div class="container-2">
+                    <span class="icon"><i class="fa fa-search"></i></span>
+                    <input type="search" value="<%= searchOptions.name %>" id="search" placeholder="Search..." />
+                </div>
+              </div>
+        </form>
         <table class="table">
             <thead>
                 <tr>
