@@ -50,9 +50,11 @@
                         </td>
                         <td class="p-2">
                             <form action="/student/article/download/<%= article._id %>" method="GET">
+                                <a class="btn btn-ghost" href="/student/article/<%= article._id %>">View</a>
+
                                 <input type="submit" value="Download">
                             </form>
-                            <a class="btn btn-ghost" href="/student/article/<%= article._id %>">View</a>
+                            <br>
                         </td>
                     </tr>
                 </tbody>
