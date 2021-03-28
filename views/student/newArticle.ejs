@@ -15,45 +15,55 @@
 
 <section class="p-5">
 
-    <h2>Create new Article</h2>
-    <form action="/student/newarticle" method="POST" enctype="multipart/form-data">
-        <div>
-            <label class="fw-bold" for="name">Name</label>
-            <input type="text" id="name" name="name" required>
-        </div>
-        <div class="mgt1">
-            <label class="fw-bold" for="author">Author</label>
-            <input type="text" name="author">
-        </div>
-        <div class="mgt1">
-            <label class="fw-bold" for="description">Description</label>
-            <textarea name="description"></textarea>
-        </div>
-        <div class="mgt1">
-            <label class="fw-bold " for="topic">Topic</label>
-            <select name="topic">
-                <% topics.forEach(topic=> { %>
-                    <option label="<%= topic.name %>" value="<%= topic._id %>">
-                        <% }) %>
-            </select>
-        </div>
-        <div class="mgt1">
-            <label class="fw-bold">Cover: </label>
-            <input type="file" name="cover" class="filepond filepondcover">
-        </div>
-        <div class="mgt1">
-            <label class="fw-bold" for="file">File: </label>
-            <input type="file" name="file" required>
+
+    <div class="mgb50">
+        <h2>Create new Article</h2>
+        <form action="/student/newarticle" method="POST" enctype="multipart/form-data">
+            <div class="l50">
+                <div>
+                    <label class="fw-bold" for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="mgt1">
+                    <label class="fw-bold " for="topic">Topic</label>
+                    <select name="topic">
+                        <% topics.forEach(topic=> { %>
+                            <option label="<%= topic.name %>" value="<%= topic._id %>">
+                                <% }) %>
+                    </select>
+                </div>
+                <div class="mgt1">
+                    <label class="fw-bold">Cover: </label>
+                    <input type="file" name="cover" class="filepond filepondcover">
+                </div>
+            </div>
+            <div class="r50">
+                <div>
+                    <label class="fw-bold" for="author">Author</label>
+                    <input type="text" name="author">
+                </div>
+                <div class="mgt5">
+                    <label class="fw-bold" for="file">File: </label>
+                    <input type="file" name="file" required>
+                </div>
+                <div class="mgt1">
+                    <label class="fw-bold" for="description">Description</label>
+                    <textarea name="description"></textarea>
+                </div>
+                <div class="mgt1 ">
+                    <input type="checkbox" id="isTermAccepted" name="isTermAccepted" />
+                    <label for="isTermAccepted" class="fw-bold "> Accept term</label><br>
+                    <div style="float: right; ">
+                        <a class="btn btn-ghost" href="/student/poster">Cancel</a>
+                        <button class="btn btn-full" type="submit">Add New Article</button>
+                    </div>
+                </div>
+        </form>
+
         </div>
 
-        <div class="mgt1">
-            <input type="checkbox" id="isTermAccepted" name="isTermAccepted" />
-            <label for="isTermAccepted" class="fw-bold"> Accept term</label><br>
-            <div class="d-e">
-                <a class="btn btn-ghost" href="/student/poster">Cancel</a>
-                <button class="btn btn-full" type="submit">Add New Article</button>
-            </div>
-    </form>
+
+
 </section>
 
 <footer>

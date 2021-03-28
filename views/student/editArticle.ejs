@@ -15,41 +15,49 @@
 <section class="p-5">
 
     <h2>Edit Article</h2>
-    <form action="/student/poster/<%= article.id %>/edit?_method=PUT" method="POST" enctype="multipart/form-data">
-        <div>
-            <label class="fw-bold" for="name">Name</label>
-            <input type="text" id="name" name="name" value="<%= article.name %>" required>
-        </div>
-        <div class="mgt1">
-            <label class="fw-bold" for="author">Author</label>
-            <input type="text" name="author" value="<%= article.author %>">
-        </div>
-        <div class="mgt1">
-            <label class="fw-bold" for="description">Description</label>
-            <textarea name="description"><%= article.description %></textarea>
-        </div>
-        <div class="mgt1">
-            <label class="fw-bold" for="topic">Topic</label>
-            <select name="topic">
-                <% topics.forEach(topic=> { %>
-                    <option label="<%= topic.name %>" value="<%= topic._id %>">
-                        <% }) %>
-            </select>
-        </div>
-        <div class="mgt1">
-            <label class="fw-bold" for="cover">Cover</label>
-            <input type="file" name="cover" class="filepond filepondcover">
-        </div>
-        <div class="mgt1">
-            <label class="fw-bold" for="file">File</label>
-            <input type="file" name="file">
-        </div>
-        <div class="d-e mgt1">
-            <a class="btn btn-ghost" href="/student">Cancel</a>
-            <button class="btn btn-full" type="submit">Submit</button>
-        </div>
+    <div class="mgb50">
+        <form action="/student/poster/<%= article.id %>/edit?_method=PUT" method="POST" enctype="multipart/form-data">
+            <div class="l50">
+                <div>
+                    <label class="fw-bold" for="name">Name</label>
+                    <input type="text" id="name" name="name" value="<%= article.name %>" required>
+                </div>
+                <div class="mgt1">
+                    <label class="fw-bold" for="topic">Topic</label>
+                    <select name="topic">
+                        <% topics.forEach(topic=> { %>
+                            <option label="<%= topic.name %>" value="<%= topic._id %>">
+                                <% }) %>
+                    </select>
+                </div>
+                <div class="mgt1">
+                    <label class="fw-bold" for="cover">Cover</label>
+                    <input type="file" name="cover" class="filepond filepondcover">
+                </div>
+            </div>
+            <div class="r50">
+                <div class="mgt1">
+                    <label class="fw-bold" for="author">Author</label>
+                    <input type="text" name="author" value="<%= article.author %>">
+                </div>
+                <div class="mgt5">
+                    <label class="fw-bold" for="file">File</label>
+                    <input type="file" name="file">
+                </div>
+                <div class="mgt1">
+                    <label class="fw-bold" for="description">Description</label>
+                    <textarea name="description"><%= article.description %></textarea>
+                </div>
+                <div style="float: right; margin-top: 2%;">
+                    <a class="btn btn-ghost" href="/student">Cancel</a>
+                    <button class="btn btn-full" type="submit">Submit</button>
+                </div>
+            </div>
 
-    </form>
+
+        </form>
+    </div>
+
 </section>
 
 

@@ -14,34 +14,40 @@
 <br></br>
 
 <section class="p-5">
-    <h2>
-        <%= profile.fullName %>
-    </h2>
 
-    <div>
-        <div style="text-align: center;">
-            <img width="300" height="400" src="<%= '/student/profile/' + profile._id + '/avatar' %>">
+    <div class="mgb50">
+        <h2>
+            <%= profile.fullName %>
+        </h2>
+
+        <div class="l25">
+            <div style="text-align: center;">
+                <img width="300px" height="400px" src="<%= '/student/profile/' + profile._id + '/avatar' %>">
+            </div>
         </div>
-        <ul class="list-group">
-            <li class="list-group-item"><b>Gender:</b>
-                <%= profile.gender==null ? 'None' : profile.gender %>
-            </li>
-            <li class="list-group-item"><b>Date of Birth:</b>
-                <%= profile.dob==null ? '' : profile.dob.toISOString().split('T')[0]%>
-            </li>
-            <li class="list-group-item"><b>Email:</b>
-                <%= profile.email %>
-            </li>
-            <li class="list-group-item li-area"><b>Introduction:</b>
-                <%= profile.introduction %>
-            </li>
-            <br></br>
-        </ul>
-        <div class="">
+        <div class="r75">
+            <ul class="list-group">
+                <li class="list-group-item"><b>Gender:</b>
+                    <%= profile.gender==null ? 'None' : profile.gender %>
+                </li>
+                <li class="list-group-item"><b>Date of Birth:</b>
+                    <%= profile.dob==null ? '' : profile.dob.toISOString().split('T')[0]%>
+                </li>
+                <li class="list-group-item"><b>Email:</b>
+                    <%= profile.email %>
+                </li>
+                <li class="list-group-item li-area"><b>Introduction:</b>
+                    <%= profile.introduction %>
+                </li>
+                <br></br>
+            </ul>
             <div style="float: right;">
                 <a class="btn btn-ghost" href="/student/profile/<%= profile.id %>/edit">Edit</a>
                 <a class="btn btn-full" href="/student/profile/<%= profile.id %>/changepassword">Change Password</a>
             </div>
+        </div>
+
+
 
 </section>
 

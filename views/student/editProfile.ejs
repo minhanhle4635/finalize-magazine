@@ -14,43 +14,57 @@
 <br></br>
 
 <section class="p-5">
-    <h2>Edit User</h2>
-    <form action="/student/profile/<%= profile.id %>/edit?_method=PUT" method="POST" enctype="multipart/form-data">
-        <div>
-            <label class="fw-bold" for="name">Name</label>
-            <input type="text" name="fullname" value="<%= profile.fullName %>">
-        </div>
-        <div class="mgt1">
-            <label class="fw-bold" for="gender">Gender </label>
-            <input type="radio" name="gender" value="male" style="margin-left: 15px;"> <label id="male" style="margin-left: 5px;">Male</label>
-            <input type="radio" name="gender" value="female" style="margin-left: 15px;"> <label id="female" style="margin-left: 5px;">Female</label>
-            <input type="radio" name="gender" value="other" style="margin-left: 15px;"> <label id="other" style="margin-left: 5px;">Other</label>
-        </div>
-        <div class="mgt1">
-            <label class="fw-bold" for="dob">Date of Birth</label>
-            <input style="margin-left: 15px; border-radius: 5px ; border : solid 0.5px gray" type="date" name="dob" value="<%= profile.dob.toISOString().split('T')[0] %>">
-        </div>
+    <div class="mgb50">
+        <h2>Edit User</h2>
+        <form action="/student/profile/<%= profile.id %>/edit?_method=PUT" method="POST" enctype="multipart/form-data">
+            <div class="l50">
+                <div>
+                    <label class="fw-bold" for="name">Name</label>
+                    <input type="text" name="fullname" value="<%= profile.fullName %>">
+                </div>
+                <div class="mgt1">
+                    <label class="fw-bold" for="email">Email </label>
+                    <input type="text" name="email" value="<%= profile.email== null? '' : profile.email %>">
+                </div>
+                <div class="mgt1">
+                    <label class="fw-bold">Avartar: </label>
+                    <input type="file" name="avartar" class="filepond filepondcover">
+                </div>
+            </div>
+            <div class="r50">
+                <div class="mgt4">
+                    <label class="fw-bold" for="gender">Gender </label>
+                    <input type="radio" name="gender" value="male" style="margin-left: 15px;"> <label id="male" style="margin-left: 5px;">Male</label>
+                    <input type="radio" name="gender" value="female" style="margin-left: 15px;"> <label id="female" style="margin-left: 5px;">Female</label>
+                    <input type="radio" name="gender" value="other" style="margin-left: 15px;"> <label id="other" style="margin-left: 5px;">Other</label>
+                </div>
+                <div class="mgt5">
+                    <label class="fw-bold" for="dob">Date of Birth</label>
+                    <input style="margin-left: 15px; border-radius: 5px ; border : solid 0.5px gray" type="date" name="dob" value="<%= profile.dob.toISOString().split('T')[0] %>">
+                </div>
+                <div class="mgt1">
+                    <label class="fw-bold" for="intro">Introduction </label>
+                    <textarea name="intro"><%= profile.introduction %></textarea>
+                </div>
+                <div style="float: right; margin-top: 2%;">
+                    <a class="btn btn-ghost" href="/student/profile/<%= profile.id %>">Cancel</a>
+                    <button class="btn btn-full" type="submit">Update</button>
+                </div>
+            </div>
 
-        <div class="mgt1">
-            <label class="fw-bold" for="email">Email </label>
-            <input type="text" name="email" value="<%= profile.email== null? '' : profile.email %>">
-        </div>
-        <div class="mgt1">
-            <label class="fw-bold" for="intro">Introduction </label>
-            <textarea name="intro"><%= profile.introduction %></textarea>
-        </div>
-        <div class="mgt1">
-            <label class="fw-bold">Avartar: </label>
-            <input type="file" name="avartar" class="filepond filepondava">
-        </div>
-        <br></br>
-        <div class="d-e">
-            <a class="btn btn-ghost" href="/student/profile/<%= profile.id %>">Cancel</a>
-            <button class="btn btn-full" type="submit">Update</button>
-        </div>
 
 
-    </form>
+
+
+
+
+
+
+
+
+        </form>
+    </div>
+
 
 </section>
 
