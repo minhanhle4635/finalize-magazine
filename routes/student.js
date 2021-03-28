@@ -366,45 +366,7 @@ router.post('/newarticle', isStudent, upload.single('file'), async(req, res) => 
             const dateNow = new Date();
             // const deadline = topic.expiredDate
             if (dateNow.getTime() <= deadline.getTime()) {
-                await article.save();
-                // const transporter = nodemailer.createTransport({
-                //     host: 'smtp.ethereal.email',
-                //     port: 587,
-                //     auth: {
-                //         user: 'van.kilback@ethereal.email',
-                //         pass: 'zWtuhQc5eUT8yjtfKn'
-                //     }
-                // });
-                
-                // //get student email
-                // const student = await User.findById(req.session.userId)
-                // const profile = await Profile.findOne({user: student.id})
-                // let studentEmail
-                // if(profile.email){studentEmail = profile.email}
-                // else {studentEmail = 'anhlmgch190017@fpt.edu.vn'}
-                
-                // //get coordinator email
-                // const coordinator = await User.find({role: 'coordinator'})
-                // for(var i = 0; i < coordinator.length; i++){
-                //     const Cprofile = await Profile.findOne({user: coordinator[i].id})
-                //     return Cprofile
-                // }
-                // let coordinatorEmail
-                // if(Cprofile.email){
-                //     coordinatorEmail = Cprofile.email
-                // } else {
-                //     coordinatorEmail = 'mle4635@gmail.com'
-                // }
-                // const msg = {
-                //     from: 'Student <'+ studentEmail +'>',
-                //     to: coordinatorEmail,
-                //     subject: 'A pending article needs permission',
-                //     text: 'There is a new article waiting for permission, please provide permission as soon as possible',
-                //     html: '<body><h1>Test</h1><p>Testing email function</p></body>'
-                // }
-
-                // let info = await transporter.sendMail(msg)
-                // console.log(info)
+                await article.save()
                 req.flash('errorMessage', 'Wait for permision')
                 res.redirect('/student/poster')
             } else {
