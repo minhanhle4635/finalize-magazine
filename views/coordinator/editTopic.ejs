@@ -1,21 +1,45 @@
-<h2>Edit Topic</h2>
-<form action="/coordinator/topic/<%= topic.id %>/edit?_method=PUT" method="POST">
-    <div>
-        <label>Name</label>
-        <input type="next" name="name" value="<%= topic.name %>">
+<nav class="bg-nav pb-2">
+    <div class="row text-dark">
+        <a href="/coordinator"><img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
+            <img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black"></a>
+        <ul class="main-nav " id="navi">
+            <li>
+                <a href="javascript:void(0);" class="icon-rp" onclick="myFunction()">
+                    <i class="ion-ios-information-circle"></i>
+                </a>
+            </li>
+            <li> <a href="/coordinator/topic">Topic </a> </li>
+            <li> <a href="/coordinator/allArticle">All Article </a> </li>
+            <li> <a href="/coordinator/article">Article </a> </li>
+            <li> <a href="/coordinator/logout">Sign Out </a> </li>
+
+        </ul>
     </div>
-    <div>
-        <label>Expired Date</label>
-        <input type="date" name="expiredDate">
-    </div>
-    <div>
-        <label>Description</label>
-        <textarea name="description"><%= topic.description %></textarea>
-    </div>
-    
-    <button type="submit">Update</button>
-    <a href="/coordinator/topic/:id">Cancel</a>
-</form>
+</nav>
+<section class="p-5">
+    <h2>Edit Topic</h2>
+    <form action="/coordinator/topic/<%= topic.id %>/edit?_method=PUT" method="POST">
+        <div class="p-3">
+            <label class="strong">Name of topic: </label>
+            <input type="next" name="name" value="<%= topic.name %>">
+        </div>
+        <div class="p-3">
+            <label class="strong">Expired Date: </label>
+            <input type="date" name="expiredDate">
+        </div>
+        <div class="p-3">
+            <label for="finalExpiredDate" class="strong">Final Expired Date</label>
+            <input type="date" id="finalExpiredDate" name="finalExpiredDate">
+        </div>
+        <div class="p-3">
+            <label class="strong">Description : </label>
+            <textarea name="description" class="p-1"><%= topic.description %></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-success">Update</button>
+        <a href="/coordinator/topic/:id">Cancel</a>
+    </form>
+</section>
 <footer>
     <div class="row">
         <div class="col span-1-of-2">

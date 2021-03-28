@@ -1,31 +1,41 @@
-<div class="p-4">
-    <ul class="nav m-4 ">
-        <li class="nav-item"> <a class="nav-link active" href="/coordinator/topic">Topic </a> </li>
-        <li class="nav-item"> <a class="nav-link active" href="/coordinator/allArticle">All Article </a> </li>
-        <li class="nav-item"> <a class="nav-link active" href="/coordinator/article">Article </a> </li>
-        <li class="nav-item"> <a class="nav-link active" href="/coordinator/logout">Sign Out </a> </li>
-    </ul>
-</div>
+<nav class="bg-nav pb-2">
+    <div class="row text-dark">
+        <a href="/coordinator"><img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
+            <img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black"></a>
+        <ul class="main-nav " id="navi">
+            <li>
+                <a href="javascript:void(0);" class="icon-rp" onclick="myFunction()">
+                    <i class="ion-ios-information-circle"></i>
+                </a>
+            </li>
+            <li> <a href="/coordinator/topic">Topic </a> </li>
+            <li> <a href="/coordinator/allArticle">All Article </a> </li>
+            <li> <a href="/coordinator/article">Article </a> </li>
+            <li> <a href="/coordinator/logout">Sign Out </a> </li>
+
+        </ul>
+    </div>
+</nav>
 <div class="p-5">
-    <h1 class="text-danger text-center font-weight-bold">ADD NEW TOPIC</h1>
+    <h2 class="text-danger text-center font-weight-bold">ADD NEW TOPIC</h2>
 </div>
 
 <section class="p-5">
     <form action="/coordinator/topic/new" method="POST">
         <div class="p-3">
-            <label for="name" class="fw-bold">Name Of Topic</label>
+            <label for="name" class="strong">Name Of Topic</label>
             <input type="text" id="name" name="name" required>
         </div>
         <div class="p-3">
-            <label for="expiredDate">Expired Date</label>
+            <label for="expiredDate" class="strong">Expired Date</label>
             <input type="date" id="expiredDate" name="expiredDate">
         </div >
         <div class="p-3">
-            <label for="finalExpiredDate">Final Expired Date</label>
+            <label for="finalExpiredDate" class="strong">Final Expired Date</label>
             <input type="date" id="finalExpiredDate" name="finalExpiredDate">
         </div>
         <div class="p-3">
-            <label for="description">Description</label>
+            <label for="description" class="strong">Description</label>
             <textarea name="description"></textarea>
         </div>
         <button type="submit" class="btn btn-success">Add topic</button>
