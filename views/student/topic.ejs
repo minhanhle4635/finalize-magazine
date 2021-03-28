@@ -62,9 +62,10 @@
                         <td class="p-2">
                             <b> <%= faculties[facultyId].name %></b>
                         </td>
-                        <td>
+                        <td style="display: inline-flex;
+                        margin-left: 40%;">
                             <% faculties[facultyId].topics.forEach(topic => { %>
-                                <p style="padding-top: 10px;" class="p-2">
+                                <p style="padding-left: 10px;">
                                     <a class="btn btn-ghost" href="/student/topic/<%= topic.id %>">
                                         <%= topic.name %>
                                     </a>
