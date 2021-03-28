@@ -10,6 +10,17 @@
                 <li> <a href="/admin/faculty">Manage falcuty </a> </li>
                 <li> <a href="/admin">Home </a> </li>
                 <li> <a href="/admin/logout">logout </a> </li>
+                <li class="dropdown"> 
+                    <a href="#">Category </a>
+                    <div class="dropdown-content">
+                        <a href="/admin/user/admin">Admin Account</a>
+                        <a href="/admin/user/manager">Manager Account</a>
+                        <a href="/admin/user/coordinator">Coordinator Account</a>
+                        <a href="/admin/user/student">Student Account</a>
+                        <a href="/admin/user/guest">Guest Account</a>
+                        <a href="/admin/user">All account</a>
+                    </div>
+                </li>
             </ul>
         </div>
     </nav>
@@ -24,18 +35,10 @@
             <a class="btn btn-full" href="/admin/user/new">Add New User</a>
         </form>
     </section>
-
-    <div>
-        <a href="/admin/user/admin">Admin Account</a>
-        <a href="/admin/user/manager">Manager Account</a>
-        <a href="/admin/user/coordinator">Coordinator Account</a>
-        <a href="/admin/user/student">Student Account</a>
-        <a href="/admin/user/guest">Guest Account</a>
-    </div>
-
+          
     <div>
         <table class="content-table">
-            <thead>
+             <thead>
                 <tr>
                     <th>Name</th>
                     <th>Account</th>
@@ -43,69 +46,77 @@
                     <th>Falcuty</th>
                     <th>Created At</th>
                 </tr>
-            </thead>
-            <% user.forEach(user=>{ %>
-                <tbody>
-                    <tr>
-                        <td style="text-align: center;">
-                            <a class="btn" href="/admin/user/<%= user._id %>">
-                                <%= user.name %>
-                            </a>
-                        </td>
-                        <td>
-                            <%= user.username %>
-                        </td>
-                        <td>
-                            <%= user.role %>
-                        </td>
-                        <td>
-                            <% if(user.faculty) { %>
-                                <%= user.faculty.name %>
-                                    <% } %>
-                        </td>
-                        <td>
-                            <%= user.createdAt.toISOString().split('T')[0] %>
-                        </td>
-                    </tr>
-                </tbody>
-                <% }) %>
+                    </thead>
+                    <% user.forEach(user=>{ %>
+                        <tbody>
+                            <tr>
+                                <td style="text-align: center;">
+                                    <a class="btn" href="/admin/user/<%= user._id %>">
+                                        <%= user.name %>
+                                    </a>
+                                </td>
+                                <td>
+                                    <%= user.username %>
+                                </td>
+                                <td>
+                                    <%= user.role %>
+                                </td>
+                                <td>
+                                    <% if(user.faculty) { %>
+                                        <%= user.faculty.name %>
+                                            <% } %>
+                                </td>
+                                <td>
+                                    <%= user.createdAt.toISOString().split('T')[0] %>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <% }) %>
         </table>
     </div>
-
-    <footer>
-        <div class="row">
-            <div class="col span-1-of-2">
-                <ul class="nav-footer">
-                    <li> <a href="#">about us</a> </li>
-                    <li> <a href="#">blog</a> </li>
-                    <li> <a href="#">Press</a> </li>
-                    <li> <a href="#">IOS app</a> </li>
-                    <li> <a href="#">ANDROID app</a> </li>
-                </ul>
+    
+        <footer>
+            <div class="row">
+                <div class="col span-1-of-2">
+                    <ul class="nav-footer">
+                        <li> <a href="#">about us</a> </li>
+                        <li> <a href="#">blog</a> </li>
+                        <li> <a href="#">Press</a> </li>
+                        <li> <a href="#">IOS app</a> </li>
+                        <li> <a href="#">ANDROID app</a> </li>
+                    </ul>
+                </div>
+                <div class="col span-1-of-2">
+                    <ul class="social-link-footer">
+                        <li>
+                            <a href="#"> <i class="ion-logo-facebook"></i> </a>
+                        </li>
+                        <li>
+                            <a href="#"> <i class="ion-logo-twitter"></i> </a>
+                        </li>
+                        <li>
+                            <a href="#"> <i class="ion-logo-googleplus"></i> </a>
+                        </li>
+                        <li>
+                            <a href="#"> <i class="ion-logo-instagram"></i> </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div class="col span-1-of-2">
-                <ul class="social-link-footer">
-                    <li>
-                        <a href="#"> <i class="ion-logo-facebook"></i> </a>
-                    </li>
-                    <li>
-                        <a href="#"> <i class="ion-logo-twitter"></i> </a>
-                    </li>
-                    <li>
-                        <a href="#"> <i class="ion-logo-googleplus"></i> </a>
-                    </li>
-                    <li>
-                        <a href="#"> <i class="ion-logo-instagram"></i> </a>
-                    </li>
-                </ul>
+            <div class="row">
+                <p>
+                    Copyrighted &copy; 2020 by Unipara all rights reversed
+                </p>
             </div>
-        </div>
-        <div class="row">
-            <p>
-                Copyrighted &copy; 2020 by Unipara all rights reversed
-            </p>
-        </div>
-    </footer>
+        </footer>
 </body>
 
 </html>
+
+<!-- 
+    <li><a href="/admin/user/admin">Admin Account</a></li>
+                <li><a href="/admin/user/manager">Manager Account</a></li>
+                <li><a href="/admin/user/coordinator">Coordinator Account</a></li>
+                <li><a href="/admin/user/student">Student Account</a></li>
+                <li><a href="/admin/user/guest">Guest Account</a></li>
+-->
