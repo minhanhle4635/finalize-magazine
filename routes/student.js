@@ -211,7 +211,7 @@ router.get('/poster', isStudent, async (req, res) => {
         query = query.regex('name', new RegExp(req.query.name, 'i'))
     }
     try {
-        const status = req.body.status
+        const status = query.status
         const article = await query.exec()
         res.render('student/poster', {
             articles: article,
@@ -228,7 +228,7 @@ router.post('/poster', isStudent, async (req, res) => {
     const status = req.body.status
     try {
         if (status === 'all') {
-            let query = Article.find({ poster: req.session.userId }).limit(10)
+            let query = Article.find({ poster: req.session.userId })
             if (req.query.name != null && req.query.name != '') {
                 query = query.regex('name', new RegExp(req.query.name, 'i'))
             }
@@ -525,8 +525,10 @@ router.get('/profile/:id', isStudent, async (req, res) => {
 
 router.get('/profile/:id/edit', isStudent, async (req, res) => {
     const profile = await Profile.findById(req.params.id)
+    const gender = profile.gender
     res.render('student/editProfile', {
-        profile: profile
+        profile: profile,
+        gender: gender
     })
 })
 

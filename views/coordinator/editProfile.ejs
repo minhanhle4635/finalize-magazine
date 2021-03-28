@@ -1,4 +1,4 @@
-<h2>Edit User</h2>
+<h2>Edit Profile</h2>
 <form action="/coordinator/profile/<%= profile.id %>/edit?_method=PUT" method="POST" enctype="multipart/form-data">
     <div>
         <label>Name</label>
@@ -6,10 +6,23 @@
     </div>
     <div>
         <label>Gender</label>
-        <input type="radio" name="gender" value="male"> <label id="male">Male</label>
-        <input type="radio" name="gender" value="female"> <label id="female">Female</label>
-        <input type="radio" name="gender" value="other"> <label id="other">Other</label>
-    
+        <% if(!gender || gender ==='male') {%>
+            <input checked type="radio" name="gender" value="male" style="margin-left: 15px;" > <label id="male" style="margin-left: 5px;">Male</label>
+        <% } else { %>
+            <input type="radio" name="gender" value="male" style="margin-left: 15px;"> <label id="male" style="margin-left: 5px;">Male</label>
+        <% } %>
+
+        <% if(gender ==='female') {%>
+            <input checked type="radio" name="gender" value="female" style="margin-left: 15px;"> <label id="female" style="margin-left: 5px;">Female</label>
+        <% } else { %>
+            <input type="radio" name="gender" value="female" style="margin-left: 15px;"> <label id="female" style="margin-left: 5px;">Female</label>
+        <% } %>
+
+        <% if(gender ==='other') {%>
+            <input checked type="radio" name="gender" value="other" style="margin-left: 15px;"> <label id="other" style="margin-left: 5px;">Other</label>
+        <% } else { %>
+            <input type="radio" name="gender" value="other" style="margin-left: 15px;"> <label id="other" style="margin-left: 5px;">Other</label>
+        <% } %>
     </div>
     <div>
         <label>Date of Birth</label>

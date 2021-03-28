@@ -268,8 +268,8 @@ router.post('/article', isCoordinator, async (req, res) => {
         const article = await Article.findById(articleId)
         //can't comment after 14 days
         const today = Date.now()
-        const expiredDate = article.createdAt + 14
-        if(today < expiredDate){
+        const expiredDate = new Date(article.createdAt + 12096e5)
+        if(today.getTime() < expiredDate.getTime()){
         if (permission === 'accept') {
             article.status = 'accepted'
             article.comment = req.body.comment
@@ -325,8 +325,10 @@ router.get('/profile/:id', isCoordinator, async (req, res) => {
 
 router.get('/profile/:id/edit', isCoordinator, async (req, res) => {
     const profile = await Profile.findById(req.params.id)
+    const gender = profile.gender
     res.render('coordinator/editProfile', {
-        profile: profile
+        profile: profile,
+        gender: gender
     })
 })
 
