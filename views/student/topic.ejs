@@ -14,69 +14,72 @@
 
 
 <section>
-    <h2>Active Topic</h2>
-    <div class=" bdb p-5 mt-5">
-        <table class="table-std content-table">
-            <thead>
-                <tr>
-                    <th class="p-2">Faculty</th>
-                    <th class="p-2">Topic</th>
-                </tr>
-            </thead>
-            <% Object.keys(nonExpiredList).forEach(facultyId=>{ %>
-                <tbody>
+    <div class="">
+        <h2>Active Topic</h2>
+        <div class=" bdb p-5 mt-5">
+            <table class="table-std content-table">
+                <thead>
                     <tr>
-                        <td class="p-2">
-                            <b><%= nonExpiredList[facultyId].name %></b>
-                        </td>
-                        <td>
-                            <% nonExpiredList[facultyId].topics.forEach(topic => { %>
-                                <p style="padding-top: 10px;" class="p-2">
-                                    <a class="btn btn-ghost" href="/student/topic/<%= topic.id %>">
-                                        <%= topic.name %>
-                                    </a>
-                                </p>
-                                <% }) %>
-                        </td>
-
+                        <th class="p-2">Faculty</th>
+                        <th class="p-2">Topic</th>
                     </tr>
-                </tbody>
-                <% }) %>
-        </table>
+                </thead>
+                <% Object.keys(nonExpiredList).forEach(facultyId=>{ %>
+                    <tbody>
+                        <tr>
+                            <td class="p-2">
+                                <b><%= nonExpiredList[facultyId].name %></b>
+                            </td>
+                            <td>
+                                <% nonExpiredList[facultyId].topics.forEach(topic => { %>
+                                    <p style="padding-top: 10px;" class="p-2">
+                                        <a class="btn btn-ghost" href="/student/topic/<%= topic.id %>">
+                                            <%= topic.name %>
+                                        </a>
+                                    </p>
+                                    <% }) %>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                    <% }) %>
+            </table>
+        </div>
+
+        <br>
+        <h2>All Topic</h2>
+        <div class="p-5 mt-5">
+            <table class="table-std content-table">
+                <thead>
+                    <tr>
+                        <th class="p-2">Faculty</th>
+                        <th class="p-2">Topic</th>
+                    </tr>
+                </thead>
+                <% Object.keys(faculties).forEach(facultyId=>{ %>
+
+                    <tbody>
+                        <tr>
+                            <td class="p-2">
+                                <b> <%= faculties[facultyId].name %></b>
+                            </td>
+                            <td>
+                                <% faculties[facultyId].topics.forEach(topic => { %>
+                                    <p style="padding-top: 10px;" class="p-2">
+                                        <a class="btn btn-ghost" href="/student/topic/<%= topic.id %>">
+                                            <%= topic.name %>
+                                        </a>
+                                    </p>
+                                    <% }) %>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                    <% }) %>
+            </table>
+        </div>
     </div>
 
-    <br>
-    <h2>All Topic</h2>
-    <div class="p-5 mt-5">
-        <table class="table-std content-table">
-            <thead>
-                <tr>
-                    <th class="p-2">Faculty</th>
-                    <th class="p-2">Topic</th>
-                </tr>
-            </thead>
-            <% Object.keys(faculties).forEach(facultyId=>{ %>
-
-                <tbody>
-                    <tr>
-                        <td class="p-2">
-                            <b> <%= faculties[facultyId].name %></b>
-                        </td>
-                        <td>
-                            <% faculties[facultyId].topics.forEach(topic => { %>
-                                <p style="padding-top: 10px;" class="p-2">
-                                    <a class="btn btn-ghost" href="/student/topic/<%= topic.id %>">
-                                        <%= topic.name %>
-                                    </a>
-                                </p>
-                                <% }) %>
-                        </td>
-
-                    </tr>
-                </tbody>
-                <% }) %>
-        </table>
-    </div>
 </section>
 <footer>
     <div class="row">

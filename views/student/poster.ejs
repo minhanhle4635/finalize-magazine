@@ -12,16 +12,17 @@
     </div>
 </nav>
 <section>
-    <h2>Your Article</h2>
+    <div class="mgb50">
+        <h2>Your Article</h2>
 
-    <div class="p-5 mt-5">
-        <div>
-            <div class="filter">
-                <a class="btn btn-search" href="/student/newarticle">New </a>
-                <label style="padding: 10px 2px 2px;margin-left: 40%;
+        <div class="p-5 mt-5">
+            <div>
+                <div class="filter">
+                    <a class="btn btn-search" href="/student/newarticle">New </a>
+                    <label style="padding: 10px 2px 2px;margin-left: 40%;
                     "><b>Status:</b></label>
-                <form action="/student/poster" method="POST">
-                    <select name="status">
+                    <form action="/student/poster" method="POST">
+                        <select name="status">
                     <% if (!status || status==='all' ) { %>
                         <option selected value="all">All</option>
                     <% } else { %>
@@ -46,63 +47,65 @@
                         <option value="rejected">Rejected</option>
                     <% } %>
                 </select>
-                </form>
-                <button class="btn btn-search" type="submit">Submit</button>
+                    </form>
+                    <button class="btn btn-search" type="submit">Submit</button>
+                </div>
+                <div class="search-std">
+                    <input class="search" type="text" placeholder="Search Article...">
+                    <button class="btn btn-search" type="submit">Search</button>
+                    </input>
+                </div>
             </div>
-            <div class="search-std">
-                <input class="search" type="text" placeholder="Search Article...">
-                <button class="btn btn-search" type="submit">Search</button>
-                </input>
-            </div>
-        </div>
 
 
-        <table class="table-std content-table">
-            <thead>
-                <tr>
-                    <th class="table-id">Cover</th>
-                    <th class="table-name">Name</th>
-                    <th>Status</th>
-                    <th>Create At</th>
-                    <th style="padding-left: 10%;">Option</th>
-                </tr>
-            </thead>
-            <% articles.forEach(article=>{ %>
-
-                <tbody>
+            <table class="table-std content-table">
+                <thead>
                     <tr>
-                        <td><img height="100" width="150" src="<%= article.coverImagePath %>"></td>
-                        <td>
-
-                            <%= article.name %>
-
-                        </td>
-                        <td>
-                            <%= article.status %>
-                        </td>
-                        <td>
-                            <%= article.createdAt.toISOString().split('T')[0] %>
-                        </td>
-                        <td class="p-2">
-                            <div style="display: inline-flex;">
-                                <a class="btn btn-ghost" href="/student/poster/<%= article._id %>">View</a>
-                                <a class="btn btn-ghost" href="/student/poster/<%= article._id %>/edit">Edit</a>
-                                <a style="display: inline-flex;">
-                                    <%- include('../partials/deleteForm', {url: `/student/poster/${article._id}`}) %>
-                                </a>
-                                <form action="/student/article/download/<%= article._id %>" method="GET">
-                                    <input type="submit" value="Download">
-                                </form>
-                            </div>
-
-
-                        </td>
+                        <th class="table-id">Cover</th>
+                        <th class="table-name">Name</th>
+                        <th>Status</th>
+                        <th>Create At</th>
+                        <th style="padding-left: 10%;">Option</th>
                     </tr>
-                </tbody>
-                <% }) %>
-        </table>
+                </thead>
+                <% articles.forEach(article=>{ %>
 
+                    <tbody>
+                        <tr>
+                            <td><img height="100" width="150" src="<%= article.coverImagePath %>"></td>
+                            <td>
+
+                                <%= article.name %>
+
+                            </td>
+                            <td>
+                                <%= article.status %>
+                            </td>
+                            <td>
+                                <%= article.createdAt.toISOString().split('T')[0] %>
+                            </td>
+                            <td class="p-2">
+                                <div style="display: inline-flex;">
+                                    <a class="btn btn-ghost" href="/student/poster/<%= article._id %>">View</a>
+                                    <a class="btn btn-ghost" href="/student/poster/<%= article._id %>/edit">Edit</a>
+                                    <a style="display: inline-flex;">
+                                        <%- include('../partials/deleteForm', {url: `/student/poster/${article._id}`}) %>
+                                    </a>
+                                    <form action="/student/article/download/<%= article._id %>" method="GET">
+                                        <input type="submit" value="Download">
+                                    </form>
+                                </div>
+
+
+                            </td>
+                        </tr>
+                    </tbody>
+                    <% }) %>
+            </table>
+
+        </div>
     </div>
+
 </section>
 
 <footer>

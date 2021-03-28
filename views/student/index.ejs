@@ -13,39 +13,42 @@
     </div>
 </nav>
 <section>
-    <h2>Recently Added</h2>
-    <div class="p-5 mt-5">
-        <table class="table-std content-table">
-            <thead>
-                <tr>
-                    <th class="table-id">Cover</th>
-                    <th class="table-name">Name</th>
-                    <th class="p-2">Option</th>
-                </tr>
-            </thead>
-            <% articles.forEach(article=>{ %>
-                <tbody>
+    <div class="mgb50">
+        <h2>Recently Added</h2>
+        <div class="p-5 mt-5">
+            <table class="table-std content-table">
+                <thead>
                     <tr>
-                        <td>
-                            <img height="100" width="150" src="<%= article.coverImagePath %>">
-                        </td>
-                        <td>
-                            <%= article.name %>
-                        </td>
-                        <td class="p-2">
-                            <form action="/student/article/download/<%= article._id %>" method="GET">
-                                <a class="btn btn-ghost" href="/student/article/<%= article.id %>">View</a>
-
-                                <input type="submit" value="Download">
-
-                            </form>
-                            <br>
-                        </td>
+                        <th class="table-id">Cover</th>
+                        <th class="table-name">Name</th>
+                        <th class="p-2">Option</th>
                     </tr>
-                </tbody>
-                <% }) %>
-        </table>
+                </thead>
+                <% articles.forEach(article=>{ %>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <img height="100" width="150" src="<%= article.coverImagePath %>">
+                            </td>
+                            <td>
+                                <%= article.name %>
+                            </td>
+                            <td class="p-2">
+                                <form action="/student/article/download/<%= article._id %>" method="GET">
+                                    <a class="btn btn-ghost" href="/student/article/<%= article.id %>">View</a>
+
+                                    <input type="submit" value="Download">
+
+                                </form>
+                                <br>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <% }) %>
+            </table>
+        </div>
     </div>
+
 </section>
 <footer>
     <div class="row">
