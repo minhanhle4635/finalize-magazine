@@ -12,17 +12,18 @@
     </div>
 </nav>
 <section>
-    <div class="mgb50">
+    <div class="">
         <h2>Your Article</h2>
 
         <div class="p-5 mt-5">
             <div>
                 <div class="filter">
                     <a class="btn btn-search" href="/student/newarticle">New </a>
-                    <label style="padding: 10px 2px 2px;margin-left: 40%;
-                    "><b>Status:</b></label>
+                    <label style="padding: 10px 2px 2px;margin-left: 40%;">
+                        <b> Status: </b>
+                    </label>
                     <form action="/student/poster" method="POST">
-                        <select name="status">
+                        <select name="status" style="height:100%">
                     <% if (!status || status==='all' ) { %>
                         <option selected value="all">All</option>
                     <% } else { %>
@@ -51,10 +52,16 @@
                     <button class="btn btn-search" type="submit">Submit</button>
                 </div>
                 <div class="search-std">
-                    <input class="search" type="text" placeholder="Search Article...">
-                    <button class="btn btn-search" type="submit">Search</button>
-                    </input>
+
+                    <form action="/student/poster" method="GET">
+                        <div style="display: inline-flex;">
+                            <input class="search" type="text" value="<%= searchOptions.name %>" placeholder="Search Article...">
+                            <button class="btn btn-search" type="submit">Search</button>
+                        </div>
+
+                    </form>
                 </div>
+
             </div>
 
 
@@ -86,13 +93,21 @@
                             </td>
                             <td class="p-2">
                                 <div style="display: inline-flex;">
-                                    <a class="btn btn-ghost" href="/student/poster/<%= article._id %>">View</a>
-                                    <a class="btn btn-ghost" href="/student/poster/<%= article._id %>/edit">Edit</a>
-                                    <a style="display: inline-flex;">
-                                        <%- include('../partials/deleteForm', {url: `/student/poster/${article._id}`}) %>
-                                    </a>
+
                                     <form action="/student/article/download/<%= article._id %>" method="GET">
-                                        <input type="submit" value="Download">
+                                        <button class="btn btn-ghost">
+                                            <a href="/student/poster/<%= article._id %>">View</a>
+        
+                                            </button>
+                                        <button class="btn btn-ghost">
+                                            <a href="/student/poster/<%= article._id %>/edit">Edit</a>
+                                                
+                                            </button>
+                                        <a>
+                                            <%- include('../partials/deleteForm', {url: `/student/poster/${article._id}`}) %>
+                                        </a>
+                                        <!-- <input type="submit" value="Download"> -->
+                                        <button class="btn btn-full mgl5">DownLoad</button>
                                     </form>
                                 </div>
 

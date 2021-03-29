@@ -34,12 +34,16 @@
                                 <%= article.name %>
                             </td>
                             <td class="p-2">
-                                <form action="/student/article/download/<%= article._id %>" method="GET">
-                                    <a class="btn btn-ghost" href="/student/article/<%= article.id %>">View</a>
+                                <div style="display: inline-flex;">
 
-                                    <input type="submit" value="Download">
+                                    <form action="/student/article/download/<%= article._id %>" method="GET">
+                                        <button class="btn btn-ghost"><a href="/student/article/<%= article.id %>">View</a></button>
 
-                                </form>
+                                        <button class="btn btn-full ">Download</button>
+
+                                    </form>
+                                </div>
+
                                 <br>
                             </td>
                         </tr>
