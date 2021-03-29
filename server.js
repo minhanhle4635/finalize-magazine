@@ -80,6 +80,7 @@ const managerRoute = require('./routes/manager')
 const coorRoute = require('./routes/coordinator')
 const studentRoute = require('./routes/student')
 const guestRoute = require('./routes/guest')
+const noRoleRoute = require('./routes/noRole')
 
 //Route
 
@@ -88,7 +89,8 @@ app.use('/manager',managerRoute)
 app.use('/coordinator', coorRoute)
 app.use('/student', studentRoute)
 app.use('/guest', guestRoute)
+app.use('/norole', noRoleRoute)
 app.use('/', indexRoute)
 
-const port = process.env.PORT || 80 
+const port = process.env.PORT
 app.listen(port)

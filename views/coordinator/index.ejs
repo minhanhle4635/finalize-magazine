@@ -1,20 +1,25 @@
-<!-- <h1>Hello Coordinator <%= user.name %></h1>
-<h2>Faculty assigned: <%= user.faculty.name %></h2>
-
-<a href="/coordinator/topic">Topic</a>
-<a href="/coordinator/article">Article</a>
-<a href="/coordinator/allArticle">All Article</a>
-<a href="/coordinator/logout">Logout</a> -->
 <header class="header-img">
-    <nav class="sticky">
-        <img src="resources/img/logo.jpg" alt="missing picture" class="logo">
-        <ul class="main-nav">
-            <li> <a href="/coordinator/profile/<%= profile.id %>"><%= profile.fullName %></a></li>
-            <li> <a href="/coordinator/topic">Topic </a> </li>
-            <li> <a href="/coordinator/allArticle">Article </a> </li>
-            <li> <a href="/coordinator/logout">Sign Out </a> </li>
-        </ul>
-    </nav>
+    <section class="pb-3">
+        <nav class=" sticky pb-2">
+            <div class="row text-dark">
+                <a href="/coordinator"><img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
+                    <img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black"></a>
+                <ul class="main-nav " id="navi">
+                    <li>
+                        <a href="javascript:void(0);" class="icon-rp" onclick="myFunction()">
+                            <i class="ion-ios-information-circle"></i>
+                        </a>
+                    </li>
+                    <li> <a href="/coordinator/profile/<%= profile.id %>">Hello <%= profile.fullName %></a></li>
+                    <li> <a href="/coordinator/topic">Topic </a> </li>
+                    <li> <a href="/coordinator/allArticle">All Article </a> </li>
+                    <li> <a href="/coordinator/article">Article </a> </li>
+                    <li> <a href="/coordinator/logout">Sign Out </a> </li>
+
+                </ul>
+            </div>
+        </nav>
+    </section>
     <div class="header-text-box">
         <h1>
             Welcome, Coordinator :<%= user.name %>
@@ -78,8 +83,10 @@
                             <form action="/coordinator/article" method="POST">
                                 <textarea name="comment"><%= article.comment %></textarea>
                                 <p>
-                                    <button type="submit" name="permission" value="accept" class="btn btn-success">Accept</button>
-                                    <button type="submit" name="permission" value="refuse" class="btn btn-danger">Refuse</button>
+                                    <button type="submit" name="permission" value="accept"
+                                        class="btn btn-success">Accept</button>
+                                    <button type="submit" name="permission" value="refuse"
+                                        class="btn btn-danger">Refuse</button>
                                 </p>
 
                             </form>

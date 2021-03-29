@@ -3,7 +3,7 @@ const Article = require('../models/Article')
 
 
 const userSchema = mongoose.Schema({
-    name:{
+    name: {
         type: String,
         required: true,
         min: 1
@@ -19,15 +19,15 @@ const userSchema = mongoose.Schema({
         min: 1,
         select: false
     },
-    createdAt:{
+    createdAt: {
         type: Date,
         required: true,
         default: Date.now()
     },
-    role:{
+    role: {
         type: String,
-        enum: ['admin','coordinator','student','manager','guest'],
-        default: 'student'
+        enum: ['admin', 'coordinator', 'student', 'manager', 'guest', null],
+        default: null
     },
     faculty: {
         type: mongoose.Schema.Types.ObjectId || String,
@@ -41,16 +41,16 @@ const userSchema = mongoose.Schema({
     }
 })
 
-userSchema.pre('remove', function(next){
-    const articles = Article.find({poster: this.id})
-    if(err){
-        next(err)
-    } else if( articles.length > 0){
-        req.flash('errorMessage', 'This faculty can not be deleted')
-        next(new Error('This user has article still'))
-    } else {
-        next()
-    }
+userSchema.pre('remove', function (next) {
+    Article.find({ poster: this.id }, (err, articles) => {
+        if (err) {
+            next(err)
+        } else if (articles.length > 0) {
+            next(new Error('This user has article still'))
+        } else {
+            next()
+        }
+    })
 })
 
-module.exports = mongoose.model( 'User', userSchema )
+module.exports = mongoose.model('User', userSchema)

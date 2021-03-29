@@ -1,4 +1,4 @@
-<nav class="sticky sticky-admin">
+<div><nav class="sticky sticky-admin">
     <div class="row">
         <img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
         <a href="/student"><img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black"></a>
@@ -21,6 +21,10 @@
     <div style="overflow: auto;">
 
         <div class="l25">
+<<<<<<< HEAD
+            <div>
+                <img width="300px" height="400px" src="<%= '/student/profile/' + profile._id + '/avatar' %>">
+=======
 
             <div style=" overflow: hidden;">
                 <img width="300px" class="img-center" height="400px" src="<%= '/student/profile/' + profile._id + '/avatar' %>">
@@ -29,6 +33,7 @@
             <div style="text-align: center; margin-top: 2%;">
                 <button class="btn btn-ghost"><a  href="/student/profile/<%= profile.id %>/edit">Edit</a></button>
                 <button class="btn btn-ghost"><a  href="/student/profile/<%= profile.id %>/changepassword">Change Password</a></button>
+>>>>>>> 17b4f57d1b4c6473d1a526079f9f911121a38cc4
             </div>
         </div>
         <div class="r75">
@@ -49,13 +54,26 @@
 
                 <br></br>
             </ul>
+<<<<<<< HEAD
+<<<<<<< HEAD
+            <div>
+                <a class="btn btn-ghost" href="/student/profile/<%= profile.id %>/edit">Edit</a>
+                <a class="btn btn-full" href="/student/profile/<%= profile.id %>/changepassword">Change Password</a>
+=======
+            <div style="float: right;">
+                <button class="btn btn-ghost"><a  href="/student/profile/<%= profile.id %>/edit">Edit</a></button>
+                <button class="btn btn-ghost"><a  href="/student/profile/<%= profile.id %>/changepassword">Change Password</a></button>
+>>>>>>> 4f8d1430ef73392d8a3e23f77f1fb16ba7d25a35
+            </div>
+=======
 
 
+>>>>>>> 17b4f57d1b4c6473d1a526079f9f911121a38cc4
         </div>
 
 
 
-</section>
+</section></div>
 
 <footer id="footer">
 
