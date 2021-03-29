@@ -12,7 +12,7 @@ const path = require('path')
 const uploadPath = path.join('public', Article.fileBasePath)
 const uploadAvatarPath = path.join('public', Profile.avatarBasePath)
 const fileMimeTypes = require('../helper/mime-file')
-const imageMimeTypes = ['image/jpeg', 'image/png', 'images/gif']
+const imageMimeTypes = require('../helper/mime-file')
 const fs = require('fs');
 
 const bcrypt = require('bcrypt')
@@ -303,7 +303,8 @@ router.delete('/poster/:id', isStudent, async(req, res) => {
         article = await Article.findById(req.params.id)
         console.log(article)
         await article.remove()
-        res.redirect('/student/article')
+        req.flash('errorMessage','Deleted Successfully')
+        res.redirect('/student/poster')
     } catch {
         if (article != null) {
             res.render('student/showArticleIndex', {
@@ -365,7 +366,7 @@ router.post('/newarticle', isStudent, upload.single('file'), async(req, res) => 
             const dateNow = new Date();
             // const deadline = topic.expiredDate
             if (dateNow.getTime() <= deadline.getTime()) {
-                await article.save();
+                await article.save()
                 req.flash('errorMessage', 'Wait for permision')
                 res.redirect('/student/poster')
             } else {
@@ -436,9 +437,12 @@ router.get('/profile/:id', isStudent, async(req, res) => {
 })
 
 router.get('/profile/:id/edit', isStudent, async(req, res) => {
+    
     const profile = await Profile.findById(req.params.id)
+    const gender = profile.gender
     res.render('student/editProfile', {
-        profile: profile
+        profile: profile,
+        gender: gender
     })
 })
 

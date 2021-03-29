@@ -34,9 +34,23 @@
             <div class="r50">
                 <div class="mgt4">
                     <label class="fw-bold" for="gender">Gender </label>
-                    <input type="radio" name="gender" value="male" style="margin-left: 15px;"> <label id="male" style="margin-left: 5px;">Male</label>
-                    <input type="radio" name="gender" value="female" style="margin-left: 15px;"> <label id="female" style="margin-left: 5px;">Female</label>
-                    <input type="radio" name="gender" value="other" style="margin-left: 15px;"> <label id="other" style="margin-left: 5px;">Other</label>
+                    <% if(!gender || gender ==='male') {%>
+                        <input checked type="radio" name="gender" value="male" style="margin-left: 15px;" > <label id="male" style="margin-left: 5px;">Male</label>
+                    <% } else { %>
+                        <input type="radio" name="gender" value="male" style="margin-left: 15px;"> <label id="male" style="margin-left: 5px;">Male</label>
+                    <% } %>
+        
+                    <% if(gender ==='female') {%>
+                        <input checked type="radio" name="gender" value="female" style="margin-left: 15px;"> <label id="female" style="margin-left: 5px;">Female</label>
+                    <% } else { %>
+                        <input type="radio" name="gender" value="female" style="margin-left: 15px;"> <label id="female" style="margin-left: 5px;">Female</label>
+                    <% } %>
+        
+                    <% if(gender ==='other') {%>
+                        <input checked type="radio" name="gender" value="other" style="margin-left: 15px;"> <label id="other" style="margin-left: 5px;">Other</label>
+                    <% } else { %>
+                        <input type="radio" name="gender" value="other" style="margin-left: 15px;"> <label id="other" style="margin-left: 5px;">Other</label>
+                    <% } %>
                 </div>
                 <div class="mgt5">
                     <label class="fw-bold" for="dob">Date of Birth</label>
@@ -51,17 +65,6 @@
                     <button class="btn btn-full" type="submit">Update</button>
                 </div>
             </div>
-
-
-
-
-
-
-
-
-
-
-
         </form>
     </div>
 
