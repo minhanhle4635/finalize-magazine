@@ -16,7 +16,7 @@
     <h2>
         <%= article.name %>
     </h2>
-    <div style="overflow: auto;">
+    <div>
         <div class="l25">
             <div style="overflow: hidden;">
                 <img width="300" height="400" class="img-center" src="<%= article.coverImagePath %>">
@@ -32,7 +32,7 @@
                 </a>
             </div>
         </div>
-        <div class="r75">
+        <div class="r75" style="height: 600px; overflow: auto;">
             <ul class="list-group ">
                 <li class="list-group-item li-area"><b>Author:</b>
                     <%= article.author %>
@@ -57,7 +57,7 @@
 
         </div>
 
-
+    </div>
 
 </section>
 <footer id="footer">

@@ -32,9 +32,19 @@
                                 <% }) %>
                     </select>
                 </div>
+
                 <div class="mgt1">
-                    <label class="fw-bold">Cover: </label>
-                    <input type="file" name="cover" class="filepond filepondcover">
+                    <label class="fw-bold" for="description">Description</label>
+                    <textarea name="description"></textarea>
+                </div>
+                <div class="mgt1">
+                    <input type="checkbox" id="isTermAccepted" name="isTermAccepted" />
+                    <label for="isTermAccepted" class="fw-bold "> Accept term</label><br>
+
+                </div>
+                <div>
+                    <button class="btn btn-ghost"><a  href="/student/poster">Cancel</a></button>
+                    <button class="btn btn-full" type="submit">Add New Article</button>
                 </div>
             </div>
             <div class="r50">
@@ -46,17 +56,11 @@
                     <label class="fw-bold" for="file">File: </label>
                     <input type="file" name="file" required>
                 </div>
-                <div class="mgt1">
-                    <label class="fw-bold" for="description">Description</label>
-                    <textarea name="description"></textarea>
-                </div>
+
                 <div class="mgt1 ">
-                    <input type="checkbox" id="isTermAccepted" name="isTermAccepted" />
-                    <label for="isTermAccepted" class="fw-bold "> Accept term</label><br>
-                    <div style="float: right; ">
-                        <button class="btn btn-ghost"><a  href="/student/poster">Cancel</a></button>
-                        <button class="btn btn-full" type="submit">Add New Article</button>
-                    </div>
+
+                    <label class="fw-bold">Cover: </label>
+                    <input type="file" name="cover" class="filepond filepondcover">
                 </div>
         </form>
 

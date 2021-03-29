@@ -31,8 +31,12 @@
                     </select>
                 </div>
                 <div class="mgt1">
-                    <label class="fw-bold" for="cover">Cover</label>
-                    <input type="file" name="cover" class="filepond filepondcover">
+                    <label class="fw-bold" for="description">Description</label>
+                    <textarea name="description"><%= article.description %></textarea>
+                </div>
+                <div style=" margin-top: 2%;">
+                    <button class="btn btn-ghost"><a  href="/student">Cancel</a></button>
+                    <button class="btn btn-full" type="submit">Submit</button>
                 </div>
             </div>
             <div class="r50">
@@ -44,13 +48,10 @@
                     <label class="fw-bold" for="file">File</label>
                     <input type="file" name="file">
                 </div>
+
                 <div class="mgt1">
-                    <label class="fw-bold" for="description">Description</label>
-                    <textarea name="description"><%= article.description %></textarea>
-                </div>
-                <div style="float: right; margin-top: 2%;">
-                    <button class="btn btn-ghost"><a  href="/student">Cancel</a></button>
-                    <button class="btn btn-full" type="submit">Submit</button>
+                    <label class="fw-bold" for="cover">Cover</label>
+                    <input type="file" name="cover" class="filepond filepondcover">
                 </div>
             </div>
 
