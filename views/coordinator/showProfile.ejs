@@ -1,17 +1,95 @@
-<div><a href="/coordinator">Home</a></div>
-<h2>
-    <%= profile.fullName %>
-</h2>
+<section class="pb-3">
+    <nav class=" sticky pb-2">
+        <div class="row text-dark">
+            <a href="/coordinator"><img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
+                <img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black"></a>
+            <ul class="main-nav " id="navi">
+                <li>
+                    <a href="javascript:void(0);" class="icon-rp" onclick="myFunction()">
+                        <i class="ion-ios-information-circle"></i>
+                    </a>
+                </li>
+                <li><a href="/coordinator">Home</a></li>
+                <li> <a href="/coordinator/topic">Topic </a> </li>
+                <li> <a href="/coordinator/allArticle">All Article </a> </li>
+                <li> <a href="/coordinator/article">Article </a> </li>
+                <li> <a href="/coordinator/logout">Sign Out </a> </li>
 
-<div> <img width="100" height="150" src="<%= '/coordinator/profile/' + profile._id + '/avatar' %>"></div>
-<div> Gender: <%= profile.gender==null ? 'None' : profile.gender %>
-</div>
-<div> Date of Birth: <%= profile.dob==null ? '' : profile.dob.toISOString().split('T')[0]%>
-</div>
-<div> Email: <%= profile.email %>
-</div>
-<div> Introduction: <%= profile.introduction %>
-</div>
+            </ul>
+        </div>
+    </nav>
+</section>
+<div class="card">
+    <h2>
+        <%= profile.fullName %>
+    </h2>
 
-<a href="/coordinator/profile/<%= profile.id %>/edit">Edit</a>
-<a href="/coordinator/profile/<%= profile.id %>/changepassword">Change Password</a>
+    <div class="p-5"> <img class="border" width="150" height="200"
+            src="<%= '/coordinator/profile/' + profile._id + '/avatar' %>">
+    </div>
+    <table class="table-card">
+        <tr>
+            <th class="pb-3">Gender: </th>
+            <td class="pb-3">
+                <%= profile.gender==null ? 'None' : profile.gender %>
+            </td>
+        </tr>
+
+        <tr>
+            <th class="pb-3">Date of Birth: </th>
+            <td class="pb-3">
+                <%= profile.dob==null ? '' : profile.dob.toISOString().split('T')[0]%>
+            </td>
+        </tr>
+        <tr>
+            <th class="pb-3">Email: </th>
+            <td class="pb-3">
+                <%= profile.email %>
+            </td>
+        </tr>
+        <tr>
+            <th class="pb-3">Introduction: </th>
+            <td class="pb-3">
+                <%= profile.introduction %>
+            </td>
+        </tr>
+    </table>
+    <button class="btn btn-warning pb-2"> <a href="/coordinator/profile/<%= profile.id %>/edit" class="text-white">Edit profile</a>
+    </button>
+    <button class="btn btn-warning"><a href="/coordinator/profile/<%= profile.id %>/changepassword" class="text-white">Change
+            Password</a></button>
+</div>
+<footer>
+    <div class="row">
+        <div class="col span-1-of-2">
+            <ul class="nav-footer">
+                <li> <a href="#">about us</a> </li>
+                <li> <a href="#">blog</a> </li>
+                <li> <a href="#">Press</a> </li>
+                <li> <a href="#">IOS app</a> </li>
+                <li> <a href="#">ANDROID app</a> </li>
+            </ul>
+        </div>
+        <div class="col span-1-of-2">
+            <ul class="social-link-footer">
+                <li>
+                    <a href="#"> <i class="ion-logo-facebook"></i> </a>
+                </li>
+                <li>
+                    <a href="#"> <i class="ion-logo-twitter"></i> </a>
+                </li>
+                <li>
+                    <a href="#"> <i class="ion-logo-googleplus"></i> </a>
+                </li>
+                <li>
+                    <a href="#"> <i class="ion-logo-instagram"></i> </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <p>
+            Copyrighted &copy; 2020 by Unipara all rights reversed
+        </p>
+    </div>
+</footer>

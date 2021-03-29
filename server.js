@@ -90,5 +90,5 @@ app.use('/student', studentRoute)
 app.use('/guest', guestRoute)
 app.use('/', indexRoute)
 
-const port = process.env.PORT || 80 
+const port = process.env.PORT
 app.listen(port)

@@ -40,8 +40,6 @@ router.post('/register', async (req, res) => {
 
         await newUser.save()
         
-        // const defaultMaleImage = path.join(avatarPath, 'male.jpg')
-        // const defaultFemaleImage = path.join(avatarPath, 'female.jpg')
         const newProfile = new Profile({
             fullName: req.body.name,
             // avatar: defaultMaleImage,
