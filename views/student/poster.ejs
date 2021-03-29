@@ -47,13 +47,15 @@
                         <option value="rejected">Rejected</option>
                     <% } %>
                 </select>
+                <button class="btn btn-search" type="submit">Submit</button>
                     </form>
-                    <button class="btn btn-search" type="submit">Submit</button>
+                    
                 </div>
                 <div class="search-std">
-                    <input class="search" type="text" placeholder="Search Article...">
-                    <button class="btn btn-search" type="submit">Search</button>
-                    </input>
+                    <form action="/student/poster" method="GET">
+                        <input class="search" name="name" type="text"  placeholder="Search Article...">
+                        <button class="btn btn-search" type="submit">Search</button>
+                    </form>
                 </div>
             </div>
 

@@ -7,6 +7,7 @@ const Article = require('../models/Article')
 const { Login, Logout } = require('../Login')
 const path = require('path')
 const Profile = require('../models/Profile')
+const Room = require('../models/Room')
 const uploadPath = path.join('public', Article.fileBasePath)
 // const avatarPath = path.join('public',Profile.avatarBasePath)
 
@@ -40,60 +41,24 @@ router.post('/register', async (req, res) => {
 
         await newUser.save()
         
-        // const defaultMaleImage = path.join(avatarPath, 'male.jpg')
-        // const defaultFemaleImage = path.join(avatarPath, 'female.jpg')
         const newProfile = new Profile({
             fullName: req.body.name,
-            // avatar: defaultMaleImage,
             user: newUser.id
         })
 
         await newProfile.save()
-        res.redirect('/')
+        req.flash('errorMessage','Register Successfully')
+        return res.redirect('/login')
     } catch (err) {
         console.log(err)
-        res.redirect('/register')
+        return res.redirect('/register')
     }
 })
 
-// router.get('/download/:id', async (req, res) => {
-//     try {
-//         const article = await Article.findById(req.params.id)
-//         const pathToFile = path.join(uploadPath, article.fileName);
-//         res.download(pathToFile, article.fileName)
-//     } catch (error) {
-//         console.log(error)
-//         res.redirect('/')
-//     }
-// })
 
-// router.get('/:id', async (req, res) => {
-//     try {
-//         const article = await Article.findById(req.params.id)
-//         res.render('showArticle', {
-//             article: article
-//         })
-//     } catch (error) {
-//         console.log(error)
-//         res.redirect('/')
-//     }
-// })
 
 router.get('/', async (req, res) => {
-    let article
-    try {
-        article = await Article.find({
-            status: 'accepted'
-        })
-            .sort({ createdAt: 'desc' })
-            .limit(8)
-            .exec()
-        res.render('index', {
-            articles: article
-        })
-    } catch (error) {
-        articles = []
-    }
+    return res.render('index')
 })
 
 module.exports = router

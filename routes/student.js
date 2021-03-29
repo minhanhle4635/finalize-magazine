@@ -17,7 +17,6 @@ const imageMimeTypes = require('../helper/mime-file').imageMimeTypes
 const fs = require('fs');
 
 const bcrypt = require('bcrypt')
-const Room = require('../models/Room')
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -74,38 +73,6 @@ const avatarStorage = multer.diskStorage({
 })
 
 const uploadAvatar = multer({ storage: avatarStorage })
-
-//Student Account without Faculty
-router.get('/temp', isStudent, async (req, res) => {
-    res.render('student/temp')
-})
-
-router.post('/temp', isStudent, async (req, res) => {
-
-    const sender = await User.findById(req.session.userId);
-    const receiver = null; //await User.find({role: 'admin'});
-    const message = req.body.message;
-
-    if (!message) {
-        req.flash('errorMessage', 'Cant send empty message')
-        return res.redirect('back')
-    }
-
-    const newRoom = new Room({
-        sender: sender,
-        receiver: receiver,
-        message: message
-    })
-    try {
-        await newRoom.save()
-        req.flash('errorMessage', 'Sent Successfully')
-        return res.redirect('back')
-    } catch (e) {
-        console.log(e)
-        req.flash('errorMessage', 'Cant be sent')
-        return res.redirect('back')
-    }
-})
 
 //get topic index page 
 router.get('/topic', isStudent, async (req, res) => {
@@ -184,7 +151,7 @@ router.post('/poster', isStudent, async (req, res) => {
     const status = req.body.status
     try {
         if (status === 'all') {
-            let query = Article.find({ poster: req.session.userId }).limit(10)
+            let query = Article.find({ poster: req.session.userId })
             if (req.query.name != null && req.query.name != '') {
                 query = query.regex('name', new RegExp(req.query.name, 'i'))
             }
@@ -281,7 +248,7 @@ router.put('/poster/:id/edit', isStudent, upload.single('file'), async (req, res
                 if (article.fileName) {
                     removefile(article.fileName)
                 }
-                article.file = file.originalname
+                article.filename = file.filename
             }
             
             saveCover(article, req.body.cover)
@@ -346,12 +313,29 @@ router.post('/newarticle', isStudent, upload.single('file'), async (req, res) =>
     //validation
     const isTermAccepted = req.body.isTermAccepted
     const newName = req.body.name
-    const description = req.body.description
+    let description = req.body.description
     const newAuthor = req.body.author
     const file = req.file
-    if (!newName) return req.flash('errorMessage', 'Name must be added')
-    if (!newAuthor) return req.flash('errorMessage', 'Author must be added')
-    if (!description) return req.flash('errorMessage', 'Description must be added')
+
+    const cover = req.body.cover
+
+    if(!cover){
+        req.flash('errorMessage', 'Cover must be added')
+        return res.redirect('back')
+    }
+
+    if (!newName) {
+        req.flash('errorMessage', 'Name must be added')
+        return res.redirect('back')
+
+    }
+    if (!newAuthor) {
+        req.flash('errorMessage', 'Author must be added')
+        return res.redirect('back')
+    }
+    if (!description) {
+        description = 'This will be updated later'
+    }
     if (!file) {
         req.flash('errorMessage', 'File must be added')
         return res.redirect('back')
@@ -369,7 +353,7 @@ router.post('/newarticle', isStudent, upload.single('file'), async (req, res) =>
                 faculty: faculty,
                 fileName: file.filename
             })
-            saveCover(article, req.body.cover)
+            saveCover(article, cover)
             //compare deadline
             const dateNow = new Date();
             // const deadline = topic.expiredDate

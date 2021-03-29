@@ -32,7 +32,6 @@ topicSchema.pre('remove', function(next){
         if(err){
             next(err)
         } else if( articles.length > 0){
-            req.flash('errorMessage','This topic cant be deleted')
             next(new Error('This topic has article still'))
         } else {
             next()
