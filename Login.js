@@ -29,6 +29,7 @@ const Login = async (req, res, next) => {
                 req.session.isCoordinator = user.role === 'coordinator';
                 req.session.isStudent = user.role === 'student';
                 req.session.isGuest = user.role === 'guest';
+                req.session.isTemp = user.role === null;
 
                 if (user.role === "admin") {
                     return res.redirect('/admin')
@@ -37,14 +38,11 @@ const Login = async (req, res, next) => {
                 } else if (user.role === "coordinator") {
                     return res.redirect('/coordinator')
                 } else if (user.role === "student") {
-                    if (user.faculty === null) {
-                        req.session.isTemp = true
-                        return res.redirect('/student/temp')
-                    } else {
-                        return res.redirect('/student')
-                    }
+                    return res.redirect('/student')
                 } else if (user.role === "guest") {
                     return res.redirect('/guest')
+                } else if(user.role === null){
+                    return res.redirect('/norole')
                 }
             } else {
                 return res.redirect('/')

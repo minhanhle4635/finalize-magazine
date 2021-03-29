@@ -25,45 +25,41 @@
                         </label>
                     <form style="display: inline-flex;" action="/student/poster" method="POST">
                         <select name="status">
-                        <% if (!status || status==='all' ) { %>
-                            <option selected value="all">All</option>
-                        <% } else { %>
-                            <option value="all">All</option>
-                        <% } %>
-            
-                        <% if (status && status==='pending' ) { %>
-                            <option selected value="pending">Pending</option>
-                        <% } else { %>
-                            <option value="pending">Pending</option>
-                        <% } %>
-            
-                        <% if (status && status==='accepted' ) { %>
-                            <option selected value="accepted">Accepted</option>
-                        <% } else { %>
-                            <option value="accepted">Accepted</option>
-                        <% } %>
-            
-                        <% if (status && status==='rejected' ) { %>
-                            <option selected value="rejected">Rejected</option>
-                        <% } else { %>
-                            <option value="rejected">Rejected</option>
-                        <% } %>
-                    </select>
-                        <button class="btn btn-search" type="submit">Submit</button>
 
-
+                    <% if (!status || status==='all' ) { %>
+                        <option selected value="all">All</option>
+                    <% } else { %>
+                        <option value="all">All</option>
+                    <% } %>
+        
+                    <% if (status && status==='pending' ) { %>
+                        <option selected value="pending">Pending</option>
+                    <% } else { %>
+                        <option value="pending">Pending</option>
+                    <% } %>
+        
+                    <% if (status && status==='accepted' ) { %>
+                        <option selected value="accepted">Accepted</option>
+                    <% } else { %>
+                        <option value="accepted">Accepted</option>
+                    <% } %>
+        
+                    <% if (status && status==='rejected' ) { %>
+                        <option selected value="rejected">Rejected</option>
+                    <% } else { %>
+                        <option value="rejected">Rejected</option>
+                    <% } %>
+                </select>
+                <button class="btn btn-search" type="submit">Submit</button>
                     </form>
-
+                    
                 </div>
                 <div class="search-std">
-                    <form style="display: inline-flex;" action="/student/poster" method="GET">
-                        <input type="text" value="<%= searchOptions.name %>" placeholder="Search Article...">
+                    <form action="/student/poster" method="GET">
+                        <input class="search" value="<%= searchOptions.name %>" name="name" type="text"  placeholder="Search Article...">
                         <button class="btn btn-search" type="submit">Search</button>
-
                     </form>
-
                 </div>
-
             </div>
 
 

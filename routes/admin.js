@@ -7,12 +7,8 @@ const Topic = require('../models/Topic')
 const Article = require('../models/Article')
 const RequestLog = require('../analytics_service')
 const { Logout } = require('../Login')
-
-const fs = require("fs");
-const path = require("path");
-const AdmZip = require('adm-zip');
 const Room = require('../models/Room')
-const articleFilePath = path.join('public', Article.fileBasePath)
+const Profile = require('../models/Profile')
 
 //view statistical data
 router.get('/', isAdmin, async (req, res) => {
@@ -233,7 +229,7 @@ router.post('/user/new', isAdmin, async (req, res) => {
                 user: newUser.id
             })
             await newProfile.save()
-            
+
             res.redirect('/admin')
         } else {
             req.flash('errorMessage', 'Username already used')
@@ -274,36 +270,22 @@ router.get('/user/:id/edit', isAdmin, async (req, res) => {
 })
 
 router.put('/user/:id/edit', isAdmin, async (req, res) => {
-    const newName = req.body.name;
-    const newUserName = req.body.username;
-    const newPassword = req.body.password;
-    const newRole = req.body.role;
-    const newFaculty = req.body.faculty
-
-    if (newRole === 'coordinator' || newRole === 'student' || newRole === 'guest') {
-        faculty = req.body.faculty
-    } else {
-        faculty = null
-    }
-
     try {
+        const newRole = req.body.role;
+        let newFaculty = req.body.faculty
+
+        if (newRole === 'coordinator' || newRole === 'student' || newRole === 'guest') {
+            newFaculty = req.body.faculty
+        } else {
+            newFaculty = null
+        }
+
+
         const user = await User.findById(req.params.id)
-        if (!!newName) {
-            user.name = newName;
-        }
-        if (!!newUserName) {
-            user.username = newUserName;
-        }
-        if (!!newRole) {
+        if (newRole) {
             user.role = newRole;
         }
-        if (!!newFaculty) {
-            user.faculty = newFaculty;
-        }
-        if (!!newPassword) {
-            const hashedPassword = await bcrypt.hash(newPassword, 10)
-            user.password = hashedPassword
-        }
+        user.faculty = newFaculty;
         await user.save()
         return res.redirect(`/admin/user/${user._id}`)
     } catch (err) {
@@ -325,9 +307,10 @@ router.delete('/user/:id', isAdmin, async (req, res) => {
             req.flash('errorMessage', 'You can not delete yourself')
             res.redirect('back')
         } else {
-            user = await User.findByIdAndRemove(req.params.id)
-            profile = await Profile.findOne({ user: user.id })
-            await profile.remove()
+            user = await User.findById(req.params.id)
+            // profile = await Profile.findOne({ user: user.id })
+            await user.remove()
+            // await profile.remove()
         }
         res.redirect('/admin/user')
     } catch (err) {
@@ -438,7 +421,7 @@ router.put('/faculty/:id/edit', isAdmin, async (req, res) => {
 router.delete('/faculty/:id', isAdmin, async (req, res) => {
     let faculty
     try {
-        faculty = await Faculty.findByIdAndRemove(req.params.id)
+        faculty = await Faculty.findById(req.params.id)
         await faculty.remove()
         res.redirect('/admin/faculty')
     } catch {

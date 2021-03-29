@@ -63,39 +63,3 @@
         </div>
 </form>
 </div>
-
-<!-- 
-    <h2>Edit User</h2>
-<form action="/admin/user/<%= user._id %>/edit?_method=PUT" method="POST">
-    <div>
-        <label>Name</label>
-        <input type="text" name="name" value="<%= user.name %>">
-    </div>
-    <div>
-        <label>Username</label>
-        <input type="next" name="username" value="<%= user.username %>">
-    </div>
-    <div>
-        <label>Password</label>
-        <input type="password" name="password">
-    </div>
-    <div>
-        <label>Role</label>
-        <select name="role" aria-valuenow="<%= user.role %>">
-            <option value="admin">Admin</option>
-            <option value="coordinator">Coordinator</option>
-            <option value="user">User</option>
-        </select>
-    </div>
-    <div>
-        <label for="faculty">Faculty</label>
-        <select name="faculty">
-            <% faculty.forEach(faculty => { %>
-                <option label="<%= faculty.name %>" value="<%= faculty._id %>">
-            <% }) %>
-        </select>
-    </div>
-    <button type="submit">Update</button>
-</form>
-<a href="/admin/user/:id">Cancel</a>
--->
