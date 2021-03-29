@@ -634,6 +634,16 @@ footer {
     font-size: 80%;
 }
 
+#footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding-top: 0;
+    height: auto;
+    /* Height of the footer */
+    background: #302f2f;
+}
+
 .nav-footer {
     list-style: none;
     float: left;
@@ -832,7 +842,7 @@ footer p {
 }
 
 .filepondcover {
-    max-height: 150px;
+    max-height: 100%;
     max-width: 300px;
 }
 
