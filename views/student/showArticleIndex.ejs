@@ -17,11 +17,16 @@
     <h2>
         <%= article.name %>
     </h2>
-    <div class="mgb50">
-        <div class="l25">
-            <img width="300" height="200" class="img-center" src="<%= article.coverImagePath %>">
+    <div style="overflow: auto; ">
+        <div class="l25 ">
+            <div style=" overflow: hidden;">
+                <img width="300" height="400" class="img-center" src="<%= article.coverImagePath %>">
+            </div>
+            <div style=" text-align: center; margin-top: 5%;">
+                <button class="btn btn-ghost"><a  href="/student/article">Back</a></button>
+            </div>
         </div>
-        <div class="r75">
+        <div class="r75 ">
             <ul class="list-group ">
                 <li class="list-group-item li-area"><b>Author:</b>
                     <%= article.author %>
@@ -40,9 +45,7 @@
                 </li>
 
             </ul>
-            <div style="float: right; margin-top: 2%;">
-                <button class="btn btn-ghost"><a  href="/student">Back To Home</a></button>
-            </div>
+
         </div>
 
 
@@ -53,7 +56,7 @@
 </section>
 
 
-<footer>
+<footer id="footer">
     <div class="row">
         <div class="col span-1-of-2">
             <ul class="nav-footer">

@@ -16,10 +16,21 @@
     <h2>
         <%= article.name %>
     </h2>
-    <div class="mgb50">
+    <div style="overflow: auto;">
         <div class="l25">
-            <img width="300" height="200" class="img-center" src="<%= article.coverImagePath %>">
+            <div style="overflow: hidden;">
+                <img width="300" height="400" class="img-center" src="<%= article.coverImagePath %>">
 
+            </div>
+            <div style=" text-align: center; margin-top: 2%;">
+                <button class="btn btn-ghost">
+                    <a  href="/student/poster">Back</a>
+                </button>
+                <button class="btn btn-ghost"><a  href="/student/poster/<%= article._id %>/edit">Edit</a></button>
+                <a style="display: inline-flex;">
+                    <%- include('../partials/deleteForm', {url: `/student/poster/${article._id}`}) %>
+                </a>
+            </div>
         </div>
         <div class="r75">
             <ul class="list-group ">
@@ -41,22 +52,15 @@
                 </li>
 
             </ul>
-            <div style="float: right; margin-top: 2%;">
-                <button class="btn btn-ghost">
-                    <a  href="/student/poster">Back</a>
-                </button>
-                <button class="btn btn-ghost"><a  href="/student/poster/<%= article._id %>/edit">Edit</a></button>
-                <a style="display: inline-flex;">
-                    <%- include('../partials/deleteForm', {url: `/student/poster/${article._id}`}) %>
-                </a>
-            </div>
+
 
 
         </div>
 
 
+
 </section>
-<footer>
+<footer id="footer">
     <div class="row">
         <div class="col span-1-of-2">
             <ul class="nav-footer">
@@ -89,4 +93,4 @@
             Copyrighted &copy; 2020 by Unipara all rights reversed
         </p>
     </div>
-</footer>
+    </section>

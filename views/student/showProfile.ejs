@@ -13,20 +13,31 @@
 </nav>
 <br></br>
 
-<section class="p-5">
+<section class="p-5 ">
 
-    <div class="mgb50">
-        <h2>
-            <%= profile.fullName %>
-        </h2>
+    <h2>
+        <%= profile.fullName %>
+    </h2>
+    <div style="overflow: auto;">
 
         <div class="l25">
+<<<<<<< HEAD
             <div>
                 <img width="300px" height="400px" src="<%= '/student/profile/' + profile._id + '/avatar' %>">
+=======
+
+            <div style=" overflow: hidden;">
+                <img width="300px" class="img-center" height="400px" src="<%= '/student/profile/' + profile._id + '/avatar' %>">
+
+            </div>
+            <div style="text-align: center; margin-top: 2%;">
+                <button class="btn btn-ghost"><a  href="/student/profile/<%= profile.id %>/edit">Edit</a></button>
+                <button class="btn btn-ghost"><a  href="/student/profile/<%= profile.id %>/changepassword">Change Password</a></button>
+>>>>>>> 17b4f57d1b4c6473d1a526079f9f911121a38cc4
             </div>
         </div>
         <div class="r75">
-            <ul class="list-group">
+            <ul>
                 <li class="list-group-item li-area"><b>Gender:</b>
                     <%= profile.gender==null ? 'None' : profile.gender %>
                 </li>
@@ -39,8 +50,11 @@
                 <li class="list-group-item li-area"><b>Introduction:</b>
                     <%= profile.introduction %>
                 </li>
+
+
                 <br></br>
             </ul>
+<<<<<<< HEAD
 <<<<<<< HEAD
             <div>
                 <a class="btn btn-ghost" href="/student/profile/<%= profile.id %>/edit">Edit</a>
@@ -51,13 +65,18 @@
                 <button class="btn btn-ghost"><a  href="/student/profile/<%= profile.id %>/changepassword">Change Password</a></button>
 >>>>>>> 4f8d1430ef73392d8a3e23f77f1fb16ba7d25a35
             </div>
+=======
+
+
+>>>>>>> 17b4f57d1b4c6473d1a526079f9f911121a38cc4
         </div>
 
 
 
 </section></div>
 
-<footer>
+<footer id="footer">
+
     <div class="row">
         <div class="col span-1-of-2">
             <ul class="nav-footer">
@@ -84,10 +103,12 @@
                 </li>
             </ul>
         </div>
+
     </div>
     <div class="row">
         <p>
             Copyrighted &copy; 2020 by Unipara all rights reversed
+
         </p>
     </div>
 </footer>
