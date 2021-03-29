@@ -1,7 +1,7 @@
 <nav class="sticky sticky-admin">
     <div class="row">
         <img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
-        <img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black">
+        <a href="/student"><img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black"></a>
         <ul class="main-nav">
             <li> <a href="/student">Home</a> </li>
             <li> <a href="/student/topic">Topic</a> </li>
@@ -12,17 +12,20 @@
     </div>
 </nav>
 <section>
-    <div class="mgb50">
+    <div style="overflow: auto;">
         <h2>Your Article</h2>
 
         <div class="p-5 mt-5">
             <div>
                 <div class="filter">
                     <a class="btn btn-search" href="/student/newarticle">New </a>
-                    <label style="padding: 10px 2px 2px;margin-left: 40%;
-                    "><b>Status:</b></label>
-                    <form action="/student/poster" method="POST">
+
+                    <label style="padding: 10px 2px 2px;margin-left: 40%;">
+                            <b> Status: </b>
+                        </label>
+                    <form style="display: inline-flex;" action="/student/poster" method="POST">
                         <select name="status">
+
                     <% if (!status || status==='all' ) { %>
                         <option selected value="all">All</option>
                     <% } else { %>
@@ -53,7 +56,7 @@
                 </div>
                 <div class="search-std">
                     <form action="/student/poster" method="GET">
-                        <input class="search" name="name" type="text"  placeholder="Search Article...">
+                        <input class="search" value="<%= searchOptions.name %>" name="name" type="text"  placeholder="Search Article...">
                         <button class="btn btn-search" type="submit">Search</button>
                     </form>
                 </div>
@@ -66,7 +69,7 @@
                         <th class="table-id">Cover</th>
                         <th class="table-name">Name</th>
                         <th>Status</th>
-                        <th>Create At</th>
+                        <th style="padding-left: 4%;">Create At</th>
                         <th style="padding-left: 10%;">Option</th>
                     </tr>
                 </thead>
@@ -83,18 +86,26 @@
                             <td>
                                 <%= article.status %>
                             </td>
-                            <td>
+                            <td style="padding-left: 4%;">
                                 <%= article.createdAt.toISOString().split('T')[0] %>
                             </td>
                             <td class="p-2">
                                 <div style="display: inline-flex;">
-                                    <a class="btn btn-ghost" href="/student/poster/<%= article._id %>">View</a>
-                                    <a class="btn btn-ghost" href="/student/poster/<%= article._id %>/edit">Edit</a>
-                                    <a style="display: inline-flex;">
+                                    <button class="btn btn-ghost mgl5">
+                                        <a href="/student/poster/<%= article._id %>">View</a>
+    
+                                        </button>
+                                    <button class="btn btn-ghost mgl5">
+                                        <a href="/student/poster/<%= article._id %>/edit">Edit</a>
+                                            
+                                        </button>
+                                    <a class="mgl5">
                                         <%- include('../partials/deleteForm', {url: `/student/poster/${article._id}`}) %>
                                     </a>
                                     <form action="/student/article/download/<%= article._id %>" method="GET">
-                                        <input type="submit" value="Download">
+
+                                        <!-- <input type="submit" value="Download"> -->
+                                        <button class="btn btn-full mgl5">Download</button>
                                     </form>
                                 </div>
 

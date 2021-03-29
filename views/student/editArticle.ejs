@@ -1,7 +1,7 @@
 <nav class="sticky sticky-admin">
     <div class="row">
         <img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
-        <img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black">
+        <a href="/student"><img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black"></a>
         <ul class="main-nav">
             <li> <a href="/student">Home</a> </li>
             <li> <a href="/student/topic">Topic</a> </li>
@@ -15,7 +15,7 @@
 <section class="p-5">
 
     <h2>Edit Article</h2>
-    <div class="mgb50">
+    <div style="overflow: auto;">
         <form action="/student/poster/<%= article.id %>/edit?_method=PUT" method="POST" enctype="multipart/form-data">
             <div class="l50">
                 <div>
@@ -49,7 +49,7 @@
                     <textarea name="description"><%= article.description %></textarea>
                 </div>
                 <div style="float: right; margin-top: 2%;">
-                    <a class="btn btn-ghost" href="/student">Cancel</a>
+                    <button class="btn btn-ghost"><a  href="/student">Cancel</a></button>
                     <button class="btn btn-full" type="submit">Submit</button>
                 </div>
             </div>
@@ -62,7 +62,7 @@
 
 
 
-<footer>
+<footer id="footer">
     <div class="row">
         <div class="col span-1-of-2">
             <ul class="nav-footer">

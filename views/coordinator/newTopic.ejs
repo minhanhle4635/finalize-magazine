@@ -1,21 +1,25 @@
-<nav class="bg-nav pb-2">
-    <div class="row text-dark">
-        <a href="/coordinator"><img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
-            <img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black"></a>
-        <ul class="main-nav " id="navi">
-            <li>
-                <a href="javascript:void(0);" class="icon-rp" onclick="myFunction()">
-                    <i class="ion-ios-information-circle"></i>
-                </a>
-            </li>
-            <li> <a href="/coordinator/topic">Topic </a> </li>
-            <li> <a href="/coordinator/allArticle">All Article </a> </li>
-            <li> <a href="/coordinator/article">Article </a> </li>
-            <li> <a href="/coordinator/logout">Sign Out </a> </li>
+<section class="pb-3">
+    <nav class=" sticky pb-2">
+        <div class="row text-dark">
+            <a href="/coordinator"><img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
+                <img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black"></a>
+            <ul class="main-nav " id="navi">
+                <li>
+                    <a href="javascript:void(0);" class="icon-rp" onclick="myFunction()">
+                        <i class="ion-ios-information-circle"></i>
+                    </a>
+                </li>
+                <li><a href="/coordinator">Home</a></li>
+                <li> <a href="/coordinator/topic">Topic </a> </li>
+                <li> <a href="/coordinator/allArticle">All Article </a> </li>
+                <li> <a href="/coordinator/article">Article </a> </li>
+                <li> <a href="/coordinator/logout">Sign Out </a> </li>
 
-        </ul>
-    </div>
-</nav>
+            </ul>
+        </div>
+    </nav>
+</section>
+
 <div class="p-5">
     <h2 class="text-danger text-center font-weight-bold">ADD NEW TOPIC</h2>
 </div>
@@ -29,7 +33,7 @@
         <div class="p-3">
             <label for="expiredDate" class="strong">Expired Date</label>
             <input type="date" id="expiredDate" name="expiredDate">
-        </div >
+        </div>
         <div class="p-3">
             <label for="finalExpiredDate" class="strong">Final Expired Date</label>
             <input type="date" id="finalExpiredDate" name="finalExpiredDate">

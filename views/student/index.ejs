@@ -1,9 +1,13 @@
 <nav class="sticky sticky-admin">
     <div class="row">
         <img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
-        <img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black">
+        <a href="/student"><img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black"></a>
         <ul class="main-nav ">
-            <li> <a href="/student/profile/<%= profile.id %>">Hello <%= profile.fullName %> </a></li>
+            <li>
+                <a href="/student/profile/<%= profile.id %>">
+                    <%= profile.fullName %>
+                </a>
+            </li>
             <li> <a href="/student">Home</a> </li>
             <li> <a href="/student/topic">Topic</a> </li>
             <li> <a href="/student/article">All Article</a> </li>
@@ -12,8 +16,9 @@
         </ul>
     </div>
 </nav>
+
 <section>
-    <div class="mgb50">
+    <div style="overflow: auto;">
         <h2>Recently Added</h2>
         <div class="p-5 mt-5">
             <table class="table-std content-table">
@@ -34,12 +39,16 @@
                                 <%= article.name %>
                             </td>
                             <td class="p-2">
-                                <form action="/student/article/download/<%= article._id %>" method="GET">
-                                    <a class="btn btn-ghost" href="/student/article/<%= article.id %>">View</a>
+                                <div style="display: inline-flex;">
+                                    <button class="btn btn-ghost"><a href="/student/article/<%= article.id %>">View</a></button>
 
-                                    <input type="submit" value="Download">
+                                    <form action="/student/article/download/<%= article._id %>" method="GET">
 
-                                </form>
+                                        <button class="btn btn-full mgl5 ">Download</button>
+
+                                    </form>
+                                </div>
+
                                 <br>
                             </td>
                         </tr>

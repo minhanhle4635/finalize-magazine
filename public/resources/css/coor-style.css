@@ -1,5 +1,5 @@
 .text-white{
-    color: white;
+    color: white  !important;
 }
 .text-dark{
     color: black;
@@ -559,7 +559,7 @@ th {
   }
   
   .btn-info {
-    color: #fff;
+    color: #fff !important;
     background-color: #17a2b8;
     border-color: #17a2b8;
   }
@@ -1252,4 +1252,21 @@ width: 300px;
 }
 .border {
   border: 1px solid #dee2e6 !important;
+}
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 600px;
+  margin: auto;
+  text-align: center;
+  padding: 5em;
+  width: 50%;
+  margin-bottom: 10px;
+}
+.table-card{
+  width: 100%;
+  border-collapse: collapse;
+  padding: 10px;
+}
+.float-left{
+  float: left;
 }

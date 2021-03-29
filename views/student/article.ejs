@@ -1,7 +1,7 @@
 <nav class="sticky sticky-admin">
     <div class="row">
         <img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
-        <img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black">
+        <a href="/student"><img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black"></a>
         <ul class="main-nav">
             <li> <a href="/student">Home</a> </li>
             <li> <a href="/student/topic">Topic</a> </li>
@@ -13,51 +13,60 @@
 </nav>
 
 <section>
-    <div class="mgb50">
+    <div style="overflow: auto;">
         <h2>All Article</h2>
-        <form class="search-art" action="/student/article" method="GET">
-            <div class="search-std">
-                <input type="text" name="name" value="<%= searchOptions.name %>" placeholder="Search Article...">
-                <button style="margin-left: 10px;" class="btn btn-full" type="submit">Search</button>
-
-            </div>
-        </form>
-
-        <br>
-
         <div class="p-5 mt-5">
-            <table class="table-std content-table">
-                <thead>
-                    <tr>
-                        <th class="table-id">Cover</th>
-                        <th class="table-name">Name</th>
-                        <th>Author</th>
-                        <th class="p-2">Option</th>
-                    </tr>
-                </thead>
-                <% articles.forEach(article=>{ %>
-                    <tbody>
-                        <tr>
-                            <td><img height="150" width="100" src="<%= article.coverImagePath %>"></td>
-                            <td>
-                                <%= article.name %>
-                            </td>
-                            <td>
-                                <%= article.status %>
-                            </td>
-                            <td class="p-2">
-                                <form action="/student/article/download/<%= article._id %>" method="GET">
-                                    <a class="btn btn-ghost" href="/student/article/<%= article._id %>">View</a>
+            <div style="padding-bottom: 3%;">
+                <form action="/student/article" method="GET">
+                    <div class="search-std">
+                        <input type="text" name="name" value="<%= searchOptions.name %>" placeholder="Search Article...">
+                        <button style="margin-left: 10px;" class="btn btn-search" type="submit">Search</button>
 
-                                    <input type="submit" value="Download">
-                                </form>
-                                <br>
-                            </td>
+                    </div>
+
+                </form>
+            </div>
+
+
+
+            <div>
+                <table class="table-std content-table">
+                    <thead>
+                        <tr>
+                            <th class="table-id">Cover</th>
+                            <th class="table-name">Name</th>
+                            <th>Author</th>
+                            <th class="p-2">Option</th>
                         </tr>
-                    </tbody>
-                    <% }) %>
-            </table>
+                    </thead>
+                    <% articles.forEach(article=>{ %>
+                        <tbody>
+                            <tr>
+                                <td><img height="150" width="100" src="<%= article.coverImagePath %>"></td>
+                                <td>
+                                    <%= article.name %>
+                                </td>
+                                <td>
+                                    <%= article.status %>
+                                </td>
+                                <td class="p-2">
+                                    <div style="display: inline-flex;">
+                                        <button class="btn btn-ghost"><a href="/student/article/<%= article._id %>">View</a></button>
+
+                                        <form action="/student/article/download/<%= article._id %>" method="GET">
+
+                                            <button class="btn btn-full mgl5">Download</button>
+                                        </form>
+                                    </div>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                        <% }) %>
+                </table>
+            </div>
         </div>
+
     </div>
 
 

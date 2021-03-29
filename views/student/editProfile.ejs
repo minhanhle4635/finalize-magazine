@@ -1,7 +1,7 @@
 <nav class="sticky sticky-admin">
     <div class="row">
         <img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
-        <img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black">
+        <a href="/student"><img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black"></a>
         <ul class="main-nav">
             <li> <a href="/student">Home</a> </li>
             <li> <a href="/student/topic">Topic</a> </li>
@@ -14,8 +14,8 @@
 <br></br>
 
 <section class="p-5">
-    <div class="mgb50">
-        <h2>Edit User</h2>
+    <div style="overflow: auto;">
+        <h2>Edit Profile</h2>
         <form action="/student/profile/<%= profile.id %>/edit?_method=PUT" method="POST" enctype="multipart/form-data">
             <div class="l50">
                 <div>
@@ -35,22 +35,22 @@
                 <div class="mgt4">
                     <label class="fw-bold" for="gender">Gender </label>
                     <% if(!gender || gender ==='male') {%>
-                        <input checked type="radio" name="gender" value="male" style="margin-left: 15px;" > <label id="male" style="margin-left: 5px;">Male</label>
-                    <% } else { %>
-                        <input type="radio" name="gender" value="male" style="margin-left: 15px;"> <label id="male" style="margin-left: 5px;">Male</label>
-                    <% } %>
-        
-                    <% if(gender ==='female') {%>
-                        <input checked type="radio" name="gender" value="female" style="margin-left: 15px;"> <label id="female" style="margin-left: 5px;">Female</label>
-                    <% } else { %>
-                        <input type="radio" name="gender" value="female" style="margin-left: 15px;"> <label id="female" style="margin-left: 5px;">Female</label>
-                    <% } %>
-        
-                    <% if(gender ==='other') {%>
-                        <input checked type="radio" name="gender" value="other" style="margin-left: 15px;"> <label id="other" style="margin-left: 5px;">Other</label>
-                    <% } else { %>
-                        <input type="radio" name="gender" value="other" style="margin-left: 15px;"> <label id="other" style="margin-left: 5px;">Other</label>
-                    <% } %>
+                        <input checked type="radio" name="gender" value="male" style="margin-left: 15px;"> <label id="male" style="margin-left: 5px;">Male</label>
+                        <% } else { %>
+                            <input type="radio" name="gender" value="male" style="margin-left: 15px;"> <label id="male" style="margin-left: 5px;">Male</label>
+                            <% } %>
+
+                                <% if(gender ==='female') {%>
+                                    <input checked type="radio" name="gender" value="female" style="margin-left: 15px;"> <label id="female" style="margin-left: 5px;">Female</label>
+                                    <% } else { %>
+                                        <input type="radio" name="gender" value="female" style="margin-left: 15px;"> <label id="female" style="margin-left: 5px;">Female</label>
+                                        <% } %>
+
+                                            <% if(gender ==='other') {%>
+                                                <input checked type="radio" name="gender" value="other" style="margin-left: 15px;"> <label id="other" style="margin-left: 5px;">Other</label>
+                                                <% } else { %>
+                                                    <input type="radio" name="gender" value="other" style="margin-left: 15px;"> <label id="other" style="margin-left: 5px;">Other</label>
+                                                    <% } %>
                 </div>
                 <div class="mgt5">
                     <label class="fw-bold" for="dob">Date of Birth</label>
@@ -61,7 +61,7 @@
                     <textarea name="intro"><%= profile.introduction %></textarea>
                 </div>
                 <div style="float: right; margin-top: 2%;">
-                    <a class="btn btn-ghost" href="/student/profile/<%= profile.id %>">Cancel</a>
+                    <button class="btn btn-ghost"><a href="/student/profile/<%= profile.id %>">Cancel</a></button>
                     <button class="btn btn-full" type="submit">Update</button>
                 </div>
             </div>
@@ -70,8 +70,7 @@
 
 
 </section>
-
-<footer>
+<footer id="footer">
     <div class="row">
         <div class="col span-1-of-2">
             <ul class="nav-footer">
@@ -104,4 +103,5 @@
             Copyrighted &copy; 2020 by Unipara all rights reversed
         </p>
     </div>
+
 </footer>
