@@ -374,6 +374,7 @@ router.post('/newarticle', isStudent, upload.single('file'), async (req, res) =>
             const dateNow = new Date();
             // const deadline = topic.expiredDate
             if (dateNow.getTime() <= deadline.getTime()) {
+
                 await article.save();
                 const transporter = nodemailer.createTransport({
                     name: 'smtp.ethereal.email',
