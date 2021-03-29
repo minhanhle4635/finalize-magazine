@@ -376,11 +376,12 @@ router.post('/newarticle', isStudent, upload.single('file'), async (req, res) =>
             if (dateNow.getTime() <= deadline.getTime()) {
                 await article.save();
                 const transporter = nodemailer.createTransport({
+                    name: 'smtp.ethereal.email',
                     host: 'smtp.ethereal.email',
                     port: 587,
                     auth: {
-                        user: 'van.kilback@ethereal.email',
-                        pass: 'zWtuhQc5eUT8yjtfKn'
+                        user: process.env.GMAIL,
+                        pass: process.env.PASS
                     }
                 });
 
