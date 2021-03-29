@@ -24,6 +24,7 @@
     <div class=" pt-5">
         <h2 class="text-dark text-center">All articles</h2>
     </div>
+<<<<<<< HEAD
     <div class="p-5 mt-5">
         <form action="/coordinator/article" method="GET">
             <div class="boxs">
@@ -32,7 +33,20 @@
                     <input type="search" value="<%= searchOptions.name %>" id="search" placeholder="Search..." />
                 </div>
             </div>
+=======
+
+    <section class="centered-search">
+        <h3>Search Topic</h3>
+        <form action="/coordinator/allArticle" method="GET">
+            <div class="search-css">
+                <input type="text" name="name" value="<%= searchOptions.name %>">
+            </div>
+            <button class="btn btn-full" type="submit">Search</button>
+>>>>>>> 4f8d1430ef73392d8a3e23f77f1fb16ba7d25a35
         </form>
+    </section>
+
+    <div class="p-5 mt-5">
         <table class="table">
             <thead>
                 <tr>

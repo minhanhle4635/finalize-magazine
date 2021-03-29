@@ -11,7 +11,7 @@ const fs = require('fs')
 const path = require('path')
 const uploadAvatarPath = path.join('public', Profile.avatarBasePath)
 
-const imageMimeTypes = require('../helper/mime-file')
+const imageMimeTypes = require('../helper/mime-file').imageMimeTypes
 
 const avatarStorage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -45,7 +45,7 @@ const uploadAvatar = multer({ storage: avatarStorage })
 router.get('/', isCoordinator, async (req, res) => {
     const user = await User.findById(req.session.userId).populate("faculty").exec()
     const article = await Article.find({ faculty: user.faculty, status: 'pending' }).limit(5)
-    const profile = await Profile.findOne({user: user.id})
+    const profile = await Profile.findOne({user: req.session.userId})
     const allArticle = await Article.find({}).countDocuments()
     const totalPendingArticle = await Article.find({ status: 'pending' }).countDocuments()
     const totalRejectedArticle = await Article.find({ status: 'refused' }).countDocuments()
@@ -62,22 +62,22 @@ router.get('/', isCoordinator, async (req, res) => {
 })
 
 router.get('/topic', isCoordinator, async (req, res) => {
-    let query = Topic.find()
-    if (req.query.name != null && req.query.name != '') {
+    const user = await User.findById(req.session.userId)
+    let query = Topic.find({faculty: user.faculty})
+    if(req.query.name != null && req.query.name != ''){
         query = query.regex('name', new RegExp(req.query.name, 'i'))
     }
-    try {
-        const user = await User.findById(req.session.userId)
-        const topic = await Topic.find({ faculty: user.faculty })
 
-        res.render('coordinator/topic', {
-            topic: topic,
+    try{
+        
+        const topics = await query.exec()
+        return res.render('coordinator/topic',{
+            topics: topics,
             searchOptions: req.query
         })
-    } catch (error) {
-        console.log(error)
-        res.redirect('/coordinator')
-
+    }catch(e){
+        console.log(e)
+        return res.redirect('/coordinator/topic')
     }
 })
 
@@ -175,7 +175,8 @@ router.delete('/topic/:id', isCoordinator, async (req, res) => {
 
 //show all Article
 router.get('/allArticle', isCoordinator, async (req, res) => {
-    const query = Article.find()
+    const user = await User.findById(req.session.userId)
+    let query = Article.find({faculty: user.faculty})
     if (req.query.name != null && req.query.name != '') {
         query = query.regex('name', new RegExp(req.query.name, 'i'))
     }
@@ -220,13 +221,13 @@ router.post('/allArticle', isCoordinator, async (req, res) => {
 
 //article permission
 router.get('/article', isCoordinator, async (req, res) => {
-    let query = Article.find()
+    const user = await User.findById(req.session.userId)
+    let query = Article.find({ faculty: user.faculty, status: 'pending' })
     if (req.query.name != null && req.query.name != '') {
         query = query.regex('name', new RegExp(req.query.name, 'i'))
     }
-    try {
-        const user = await User.findById(req.session.userId)
-        const article = await Article.find({ faculty: user.faculty, status: 'pending' })
+    try {  
+        const article = await query.exec()
 
         res.render('coordinator/article', {
             articles: article,
@@ -245,8 +246,8 @@ router.post('/article', isCoordinator, async (req, res) => {
         const article = await Article.findById(articleId)
         //can't comment after 14 days
         const today = new Date()
-        const expiredDate = new Date(article.createdAt + 12096e5)
-        if (today.getTime() <= expiredDate.getTime()) {
+        const expiredDate = new Date(article.createdAt.getTime() + 12096e5)
+        // if (today.getTime() <= expiredDate.getTime()) {
             if (permission === 'accept') {
                 article.status = 'accepted'
                 article.comment = req.body.comment
@@ -258,10 +259,10 @@ router.post('/article', isCoordinator, async (req, res) => {
                 await article.save()
                 res.redirect('back')
             }
-        } else {
-            article.status = 'refused'
-            await article.save()
-        }
+        // } else {
+        //     article.status = 'refused'
+        //     await article.save()
+        // }
     } catch (error) {
         req.flash('errorMessage', 'Cannot permit this article')
         res.redirect('back')

@@ -20,15 +20,18 @@
 </section>
 
 <h2 class="p-5">Pending Article</h2>
-<div class="p-5">
+
+<section class="centered-search">
+    <h3>Search Topic</h3>
     <form action="/coordinator/article" method="GET">
-        <div class="boxs">
-            <div class="container-2">
-                <span class="icon"><i class="fa fa-search"></i></span>
-                <input type="search" value="<%= searchOptions.name %>" id="search" placeholder="Search..." />
-            </div>
-          </div>
+        <div class="search-css">
+            <input type="text" name="name" value="<%= searchOptions.name %>">
+        </div>
+        <button class="btn btn-full" type="submit">Search</button>
     </form>
+</section>
+
+<div class="p-5">
     <% articles.forEach(article=>{ %>
         <form action="/coordinator/article" method="POST">
             <input type="text" hidden name="articleId" value="<%= article._id %>">

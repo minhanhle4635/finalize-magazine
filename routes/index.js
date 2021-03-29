@@ -56,16 +56,16 @@ router.post('/register', async (req, res) => {
     }
 })
 
-router.get('/download/:id', async (req, res) => {
-    try {
-        const article = await Article.findById(req.params.id)
-        const pathToFile = path.join(uploadPath, article.fileName);
-        res.download(pathToFile, article.fileName)
-    } catch (error) {
-        console.log(error)
-        res.redirect('/')
-    }
-})
+// router.get('/download/:id', async (req, res) => {
+//     try {
+//         const article = await Article.findById(req.params.id)
+//         const pathToFile = path.join(uploadPath, article.fileName);
+//         res.download(pathToFile, article.fileName)
+//     } catch (error) {
+//         console.log(error)
+//         res.redirect('/')
+//     }
+// })
 
 // router.get('/:id', async (req, res) => {
 //     try {

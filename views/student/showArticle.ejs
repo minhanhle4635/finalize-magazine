@@ -1,7 +1,7 @@
 <nav class="sticky sticky-admin">
     <div class="row">
         <img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
-        <img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black">
+        <a href="/student"><img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black"></a>
         <ul class="main-nav">
             <li> <a href="/student">Home</a> </li>
             <li> <a href="/student/topic">Topic</a> </li>
@@ -18,31 +18,34 @@
     </h2>
     <div class="mgb50">
         <div class="l25">
-            <img width="400px" height="280px" class="img-center" src="<%= article.coverImagePath %>">
+            <img width="300" height="200" class="img-center" src="<%= article.coverImagePath %>">
 
         </div>
         <div class="r75">
             <ul class="list-group ">
-                <li class="list-group-item"><b>Author:</b>
+                <li class="list-group-item li-area"><b>Author:</b>
                     <%= article.author %>
                 </li>
-                <li class="list-group-item"><b>Created At:</b>
-                    <%= article.createdAt %>
+                <li class="list-group-item li-area"><b>Created At:</b>
+                    <%= article.createdAt.toISOString().split('T')[0] %>
                 </li>
-                <li class="list-group-item"><b>Description:</b>
+                <li class="list-group-item li-area"><b>Description:</b>
                     <%= article.description %>
                 </li>
-                <li class="list-group-item"><b>File:</b>
+                <li class="list-group-item li-area"><b>File:</b>
                     <%= article.fileName %>
                 </li>
 
-                <li class="list-group-item"><b>Comment from Coordinator:</b>
+                <li class="list-group-item li-area"><b>Comment from Coordinator:</b>
                     <%= article.comment %>
                 </li>
 
             </ul>
             <div style="float: right; margin-top: 2%;">
-                <a class="btn btn-ghost" href="/student/poster/<%= article._id %>/edit">Edit</a>
+                <button class="btn btn-ghost">
+                    <a  href="/student/poster">Back</a>
+                </button>
+                <button class="btn btn-ghost"><a  href="/student/poster/<%= article._id %>/edit">Edit</a></button>
                 <a style="display: inline-flex;">
                     <%- include('../partials/deleteForm', {url: `/student/poster/${article._id}`}) %>
                 </a>
