@@ -1,7 +1,7 @@
 <nav class="sticky sticky-admin">
     <div class="row">
         <img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
-        <img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black">
+        <a href="/student"><img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black"></a>
         <ul class="main-nav">
             <li> <a href="/student">Home</a> </li>
             <li> <a href="/student/topic">Topic</a> </li>
@@ -50,12 +50,15 @@
                                     <%= article.status %>
                                 </td>
                                 <td class="p-2">
-                                    <form action="/student/article/download/<%= article._id %>" method="GET">
+                                    <div style="display: inline-flex;">
                                         <button class="btn btn-ghost"><a href="/student/article/<%= article._id %>">View</a></button>
 
-                                        <button class="btn btn-full">Download</button>
-                                    </form>
-                                    <br>
+                                        <form action="/student/article/download/<%= article._id %>" method="GET">
+
+                                            <button class="btn btn-full mgl5">Download</button>
+                                        </form>
+                                    </div>
+
                                 </td>
                             </tr>
                         </tbody>

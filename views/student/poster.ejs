@@ -1,7 +1,7 @@
 <nav class="sticky sticky-admin">
     <div class="row">
         <img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
-        <img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black">
+        <a href="/student"><img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black"></a>
         <ul class="main-nav">
             <li> <a href="/student">Home</a> </li>
             <li> <a href="/student/topic">Topic</a> </li>
@@ -19,47 +19,49 @@
             <div>
                 <div class="filter">
                     <a class="btn btn-search" href="/student/newarticle">New </a>
+
                     <label style="padding: 10px 2px 2px;margin-left: 40%;">
-                        <b> Status: </b>
-                    </label>
-                    <form action="/student/poster" method="POST">
-                        <select name="status" style="height:100%">
-                    <% if (!status || status==='all' ) { %>
-                        <option selected value="all">All</option>
-                    <% } else { %>
-                        <option value="all">All</option>
-                    <% } %>
-        
-                    <% if (status && status==='pending' ) { %>
-                        <option selected value="pending">Pending</option>
-                    <% } else { %>
-                        <option value="pending">Pending</option>
-                    <% } %>
-        
-                    <% if (status && status==='accepted' ) { %>
-                        <option selected value="accepted">Accepted</option>
-                    <% } else { %>
-                        <option value="accepted">Accepted</option>
-                    <% } %>
-        
-                    <% if (status && status==='rejected' ) { %>
-                        <option selected value="rejected">Rejected</option>
-                    <% } else { %>
-                        <option value="rejected">Rejected</option>
-                    <% } %>
-                </select>
+                            <b> Status: </b>
+                        </label>
+                    <form style="display: inline-flex;" action="/student/poster" method="POST">
+                        <select name="status">
+                        <% if (!status || status==='all' ) { %>
+                            <option selected value="all">All</option>
+                        <% } else { %>
+                            <option value="all">All</option>
+                        <% } %>
+            
+                        <% if (status && status==='pending' ) { %>
+                            <option selected value="pending">Pending</option>
+                        <% } else { %>
+                            <option value="pending">Pending</option>
+                        <% } %>
+            
+                        <% if (status && status==='accepted' ) { %>
+                            <option selected value="accepted">Accepted</option>
+                        <% } else { %>
+                            <option value="accepted">Accepted</option>
+                        <% } %>
+            
+                        <% if (status && status==='rejected' ) { %>
+                            <option selected value="rejected">Rejected</option>
+                        <% } else { %>
+                            <option value="rejected">Rejected</option>
+                        <% } %>
+                    </select>
+                        <button class="btn btn-search" type="submit">Submit</button>
+
+
                     </form>
-                    <button class="btn btn-search" type="submit">Submit</button>
+
                 </div>
                 <div class="search-std">
-
-                    <form action="/student/poster" method="GET">
-                        <div style="display: inline-flex;">
-                            <input class="search" type="text" value="<%= searchOptions.name %>" placeholder="Search Article...">
-                            <button class="btn btn-search" type="submit">Search</button>
-                        </div>
+                    <form style="display: inline-flex;" action="/student/poster" method="GET">
+                        <input type="text" value="<%= searchOptions.name %>" placeholder="Search Article...">
+                        <button class="btn btn-search" type="submit">Search</button>
 
                     </form>
+
                 </div>
 
             </div>
@@ -71,7 +73,7 @@
                         <th class="table-id">Cover</th>
                         <th class="table-name">Name</th>
                         <th>Status</th>
-                        <th>Create At</th>
+                        <th style="padding-left: 4%;">Create At</th>
                         <th style="padding-left: 10%;">Option</th>
                     </tr>
                 </thead>
@@ -88,26 +90,26 @@
                             <td>
                                 <%= article.status %>
                             </td>
-                            <td>
+                            <td style="padding-left: 4%;">
                                 <%= article.createdAt.toISOString().split('T')[0] %>
                             </td>
                             <td class="p-2">
                                 <div style="display: inline-flex;">
-
+                                    <button class="btn btn-ghost mgl5">
+                                        <a href="/student/poster/<%= article._id %>">View</a>
+    
+                                        </button>
+                                    <button class="btn btn-ghost mgl5">
+                                        <a href="/student/poster/<%= article._id %>/edit">Edit</a>
+                                            
+                                        </button>
+                                    <a class="mgl5">
+                                        <%- include('../partials/deleteForm', {url: `/student/poster/${article._id}`}) %>
+                                    </a>
                                     <form action="/student/article/download/<%= article._id %>" method="GET">
-                                        <button class="btn btn-ghost">
-                                            <a href="/student/poster/<%= article._id %>">View</a>
-        
-                                            </button>
-                                        <button class="btn btn-ghost">
-                                            <a href="/student/poster/<%= article._id %>/edit">Edit</a>
-                                                
-                                            </button>
-                                        <a>
-                                            <%- include('../partials/deleteForm', {url: `/student/poster/${article._id}`}) %>
-                                        </a>
+
                                         <!-- <input type="submit" value="Download"> -->
-                                        <button class="btn btn-full mgl5">DownLoad</button>
+                                        <button class="btn btn-full mgl5">Download</button>
                                     </form>
                                 </div>
 

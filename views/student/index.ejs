@@ -1,7 +1,7 @@
 <nav class="sticky sticky-admin">
     <div class="row">
         <img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
-        <img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black">
+        <a href="/student"><img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black"></a>
         <ul class="main-nav ">
             <li> <a href="/student/profile/<%= profile.id %>">Hello <%= profile.fullName %> </a></li>
             <li> <a href="/student">Home</a> </li>
@@ -13,7 +13,7 @@
     </div>
 </nav>
 <section>
-    <div class="mgb50">
+    <div class="">
         <h2>Recently Added</h2>
         <div class="p-5 mt-5">
             <table class="table-std content-table">
@@ -35,11 +35,11 @@
                             </td>
                             <td class="p-2">
                                 <div style="display: inline-flex;">
+                                    <button class="btn btn-ghost"><a href="/student/article/<%= article.id %>">View</a></button>
 
                                     <form action="/student/article/download/<%= article._id %>" method="GET">
-                                        <button class="btn btn-ghost"><a href="/student/article/<%= article.id %>">View</a></button>
 
-                                        <button class="btn btn-full ">Download</button>
+                                        <button class="btn btn-full mgl5 ">Download</button>
 
                                     </form>
                                 </div>

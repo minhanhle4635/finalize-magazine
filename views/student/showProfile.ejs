@@ -1,7 +1,7 @@
 <nav class="sticky sticky-admin">
     <div class="row">
         <img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
-        <img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black">
+        <a href="/student"><img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black"></a>
         <ul class="main-nav">
             <li> <a href="/student">Home</a> </li>
             <li> <a href="/student/topic">Topic</a> </li>
@@ -27,13 +27,13 @@
         </div>
         <div class="r75">
             <ul class="list-group">
-                <li class="list-group-item"><b>Gender:</b>
+                <li class="list-group-item li-area"><b>Gender:</b>
                     <%= profile.gender==null ? 'None' : profile.gender %>
                 </li>
-                <li class="list-group-item"><b>Date of Birth:</b>
+                <li class="list-group-item li-area"><b>Date of Birth:</b>
                     <%= profile.dob==null ? '' : profile.dob.toISOString().split('T')[0]%>
                 </li>
-                <li class="list-group-item"><b>Email:</b>
+                <li class="list-group-item li-area"><b>Email:</b>
                     <%= profile.email %>
                 </li>
                 <li class="list-group-item li-area"><b>Introduction:</b>
@@ -42,8 +42,8 @@
                 <br></br>
             </ul>
             <div style="float: right;">
-                <a class="btn btn-ghost" href="/student/profile/<%= profile.id %>/edit">Edit</a>
-                <a class="btn btn-full" href="/student/profile/<%= profile.id %>/changepassword">Change Password</a>
+                <button class="btn btn-ghost"><a  href="/student/profile/<%= profile.id %>/edit">Edit</a></button>
+                <button class="btn btn-ghost"><a  href="/student/profile/<%= profile.id %>/changepassword">Change Password</a></button>
             </div>
         </div>
 

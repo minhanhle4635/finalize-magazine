@@ -1,7 +1,7 @@
 <nav class="sticky sticky-admin">
     <div class="row">
         <img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
-        <img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black">
+        <a href="/student"><img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black"></a>
         <ul class="main-nav">
             <li> <a href="/student">Home</a> </li>
             <li> <a href="/student/topic">Topic</a> </li>
@@ -32,12 +32,14 @@
                     <%= topic.description %>
                 </li>
             </ul>
-            </div>
-            <div class="d-e mgt1">
-                <a class="btn btn-ghost" href="/student/topic">Back</a>
-
-            </div>
         </div>
+        <div class="d-e mgt1">
+            <button class="btn btn-ghost">
+                    <a  href="/student/topic">Back</a>
+                </button>
+
+        </div>
+    </div>
 
 </section>
 
