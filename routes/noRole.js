@@ -5,6 +5,10 @@ const Room = require('../models/Room')
 const User = require('../models/User')
 const {Logout} = require('../Login')
 
+
+router.get('/logout', Logout)
+
+
 //Student Account without Faculty
 router.get('/', isTemp,async (req, res) => {
     return res.render('noRole/noRole')
@@ -37,7 +41,6 @@ router.post('/', isTemp,async (req, res) => {
     }
 })
 
-router.get('/logout', Logout)
 
 function isTemp(req,res,next){
     if(req.session.isTemp === true){
