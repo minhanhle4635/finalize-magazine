@@ -246,7 +246,7 @@ router.post('/article', isCoordinator, async (req, res) => {
         const article = await Article.findById(articleId)
         //can't comment after 14 days
         const today = new Date()
-        const expiredDate = new Date(article.createdAt + 12096e5)
+        const expiredDate = new Date(article.createdAt.getTime() + 12096e5)
         // if (today.getTime() <= expiredDate.getTime()) {
             if (permission === 'accept') {
                 article.status = 'accepted'
