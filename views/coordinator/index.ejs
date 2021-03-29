@@ -7,11 +7,11 @@
 <a href="/coordinator/logout">Logout</a> -->
 <header class="header-img">
     <nav class="sticky">
-        <img src="resources/img/logo.jpg" alt="missing picture" class="logo">
-        <ul class="main-nav">
-            <li> <a href="/coordinator/profile/<%= profile.id %>"><%= profile.fullName %></a></li>
+        <img src="/public/resources/img/logo.jpg" alt="missing picture" class="logo">
+        <ul class="main-nav p-3">
             <li> <a href="/coordinator/topic">Topic </a> </li>
             <li> <a href="/coordinator/allArticle">Article </a> </li>
+            <li> <a href="/coordinator/profile/<%= profile.id %>"><%= profile.fullName %></a></li>
             <li> <a href="/coordinator/logout">Sign Out </a> </li>
         </ul>
     </nav>
