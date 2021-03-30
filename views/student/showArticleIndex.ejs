@@ -2,12 +2,7 @@
     <div class="row">
         <img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
         <a href="/student"><img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black"></a>
-        <ul class="main-nav" id="navi">
-            <li>
-                <a href="javascript:void(0);" class="icon-rp" onclick="myFunction()">
-                    <i class="ion-ios-information-circle"></i>
-                </a>
-            </li>
+        <ul class="main-nav">
             <li> <a href="/student">Home</a> </li>
             <li> <a href="/student/topic">Topic</a> </li>
             <li> <a href="/student/article">All Article</a> </li>
@@ -22,34 +17,42 @@
     <h2>
         <%= article.name %>
     </h2>
-    <div style="overflow: auto; ">
+    <div class="row" style="overflow: auto; ">
         <div class="l25 ">
             <div style=" overflow: hidden;">
                 <img width="300" height="400" class="img-center" src="<%= article.coverImagePath %>">
             </div>
             <div style=" text-align: center; margin-top: 5%;">
                 <button class="btn btn-ghost"><a  href="/student/article">Back</a></button>
+                <form style="display: inline-block;" action="/student/article/download/<%= article._id %>" method="GET">
+
+                    <!-- <input type="submit" value="Download"> -->
+                    <button class="btn btn-full mgl5">Download</button>
+                </form>
             </div>
+
         </div>
-        <div class="r75 " style="height: 600px; overflow: auto;">
-            <ul class="list-group ">
-                <li class="list-group-item li-area"><b>Author:</b>
+        <div class="r75 " style="height: 450px; overflow: auto;">
+            <div class="list-group ">
+                <div class=" li-area"><b>Author:</b>
                     <%= article.author %>
-                </li>
-                <li class="list-group-item li-area"><b>Created At:</b>
+                </div>
+                <div class="mgt2 li-area"><b>Created At:</b>
                     <%= article.createdAt.toISOString().split('T')[0] %>
-                </li>
-                <li class="list-group-item li-area"><b>Description:</b>
+                </div>
+                <div class="mgt2 li-area"><b>Description:</b>
                     <%= article.description %>
-                </li>
-                <li class="list-group-item li-area"><b>File:</b>
+                </div>
+                <div class="mgt2 li-area"><b>File:</b>
                     <%= article.fileName %>
-                </li>
-                <li class="list-group-item li-area"><b>Comment from Coordinator:</b>
+                </div>
+                <div class="mgt2 li-area"><b>Comment from Coordinator:</b>
+                    <%= article.comment %>
 
-                </li>
 
-            </ul>
+                </div>
+
+            </div>
 
         </div>
 

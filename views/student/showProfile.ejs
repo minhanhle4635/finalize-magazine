@@ -23,7 +23,7 @@
     <h2>
         <%= profile.fullName %>
     </h2>
-    <div>
+    <div class="row">
 
         <div class="l25">
 
@@ -36,35 +36,37 @@
                 <button class="btn btn-ghost"><a  href="/student/profile/<%= profile.id %>/changepassword">Change Password</a></button>
             </div>
         </div>
-        <div class="r75">
-            <ul>
-                <li class="list-group-item li-area"><b>Gender:</b>
+        <div class="r75" style="overflow: auto; height: 450px;">
+            <div>
+                <div class=" li-area"><b>Gender:</b>
                     <%= profile.gender==null ? 'None' : profile.gender %>
-                </li>
-                <li class="list-group-item li-area"><b>Date of Birth:</b>
+                </div>
+                <div class="mgt2 li-area"><b>Date of Birth:</b>
                     <%= profile.dob==null ? '' : profile.dob.toISOString().split('T')[0]%>
-                </li>
-                <li class="list-group-item li-area"><b>Email:</b>
+                </div>
+                <div class="mgt2 li-area"><b>Email:</b>
                     <%= profile.email %>
-                </li>
-                <li class="list-group-item li-area"><b>Introduction:</b>
+                </div>
+                <div class="mgt2 li-area"><b>Introduction:</b>
                     <%= profile.introduction %>
-                </li>
+                </div>
 
 
                 <br></br>
-            </ul>
+            </div>
 
         </div>
 
     </div>
-
-
-
 </section>
 </div>
+<br></br>
+<br></br>
+<br></br>
 
-<footer>
+
+
+<footer id="footer">
 
     <div class="row">
         <div class="col span-1-of-2">

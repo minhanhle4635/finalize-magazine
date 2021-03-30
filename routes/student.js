@@ -6,7 +6,7 @@ const Faculty = require('../models/Faculty')
 const Topic = require('../models/Topic')
 const User = require('../models/User')
 const Profile = require('../models/Profile')
-// const Comment = require('../models/Comment')
+    // const Comment = require('../models/Comment')
 const multer = require('multer')
 const path = require('path')
 const nodemailer = require('nodemailer')
@@ -19,7 +19,7 @@ const fs = require('fs');
 const bcrypt = require('bcrypt')
 
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
+    destination: function(req, file, cb) {
         cb(null, uploadPath)
     },
     fileFilter: (req, file, callback) => {
@@ -47,7 +47,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage })
 
 const avatarStorage = multer.diskStorage({
-    destination: function (req, file, cb) {
+    destination: function(req, file, cb) {
         cb(null, uploadAvatarPath)
     },
     fileFilter: (req, file, callback) => {
@@ -75,7 +75,7 @@ const avatarStorage = multer.diskStorage({
 const uploadAvatar = multer({ storage: avatarStorage })
 
 //get topic index page 
-router.get('/topic', isStudent, async (req, res) => {
+router.get('/topic', isStudent, async(req, res) => {
     try {
         const topics = await Topic.find({}).populate('faculty')
         const facultyList = {}
@@ -114,7 +114,7 @@ router.get('/topic', isStudent, async (req, res) => {
 
 
 //show topic
-router.get('/topic/:id', isStudent, async (req, res) => {
+router.get('/topic/:id', isStudent, async(req, res) => {
     try {
         const topic = await Topic.findById(req.params.id)
         console.log(req.params.id)
@@ -128,7 +128,7 @@ router.get('/topic/:id', isStudent, async (req, res) => {
 })
 
 //get page article index
-router.get('/poster', isStudent, async (req, res) => {
+router.get('/poster', isStudent, async(req, res) => {
     let query = Article.find({ poster: req.session.userId })
     if (req.query.name != null && req.query.name != '') {
         query = query.regex('name', new RegExp(req.query.name, 'i'))
@@ -147,7 +147,7 @@ router.get('/poster', isStudent, async (req, res) => {
     }
 })
 
-router.post('/poster', isStudent, async (req, res) => {
+router.post('/poster', isStudent, async(req, res) => {
     const status = req.body.status
     try {
         if (status === 'all') {
@@ -201,7 +201,7 @@ router.post('/poster', isStudent, async (req, res) => {
     }
 })
 
-router.get('/poster/:id', isStudent, async (req, res) => {
+router.get('/poster/:id', isStudent, async(req, res) => {
     try {
         const article = await Article.findById(req.params.id).populate("topic").exec()
         res.render('student/showArticle', { article: article })
@@ -212,7 +212,7 @@ router.get('/poster/:id', isStudent, async (req, res) => {
 })
 
 //get article edit page
-router.get('/poster/:id/edit', isStudent, async (req, res) => {
+router.get('/poster/:id/edit', isStudent, async(req, res) => {
     try {
         const article = await Article.findById(req.params.id)
         const topic = await Topic.find({})
@@ -228,7 +228,7 @@ router.get('/poster/:id/edit', isStudent, async (req, res) => {
 })
 
 //edit article
-router.put('/poster/:id/edit', isStudent, upload.single('file'), async (req, res) => {
+router.put('/poster/:id/edit', isStudent, upload.single('file'), async(req, res) => {
     let article
     try {
         article = await Article.findById(req.params.id)
@@ -250,11 +250,11 @@ router.put('/poster/:id/edit', isStudent, upload.single('file'), async (req, res
                 }
                 article.filename = file.filename
             }
-            
+
             saveCover(article, req.body.cover)
 
             await article.save()
-            req.flash('errorMessage','Updated Successfully')
+            req.flash('errorMessage', 'Updated Successfully')
             res.redirect(`/student/poster/${article._id}`)
         } else {
             req.flash('errorMessage', 'Cant edit this article because final deadline has expire')
@@ -272,7 +272,7 @@ router.put('/poster/:id/edit', isStudent, upload.single('file'), async (req, res
 })
 
 //delete article
-router.delete('/poster/:id', isStudent, async (req, res) => {
+router.delete('/poster/:id', isStudent, async(req, res) => {
     let article
     try {
         article = await Article.findById(req.params.id)
@@ -295,7 +295,7 @@ router.delete('/poster/:id', isStudent, async (req, res) => {
 
 
 // get page new Article
-router.get('/newarticle', isStudent, async (req, res) => {
+router.get('/newarticle', isStudent, async(req, res) => {
     const user = await User.findById(req.session.userId)
     const faculty = await Faculty.findById(user.faculty)
     const topic = await Topic.find({ faculty: faculty })
@@ -306,11 +306,11 @@ router.get('/newarticle', isStudent, async (req, res) => {
 })
 
 //create new Article
-router.post('/newarticle', isStudent, upload.single('file'), async (req, res) => {
+router.post('/newarticle', isStudent, upload.single('file'), async(req, res) => {
     const topic = await Topic.findOne({ _id: req.body.topic })
     const deadline = new Date(topic.expiredDate);
     const faculty = topic.faculty
-    //validation
+        //validation
     const isTermAccepted = req.body.isTermAccepted
     const newName = req.body.name
     let description = req.body.description
@@ -319,7 +319,7 @@ router.post('/newarticle', isStudent, upload.single('file'), async (req, res) =>
 
     const cover = req.body.cover
 
-    if(!cover){
+    if (!cover) {
         req.flash('errorMessage', 'Cover must be added')
         return res.redirect('back')
     }
@@ -354,7 +354,7 @@ router.post('/newarticle', isStudent, upload.single('file'), async (req, res) =>
                 fileName: file.filename
             })
             saveCover(article, cover)
-            //compare deadline
+                //compare deadline
             const dateNow = new Date();
             // const deadline = topic.expiredDate
             if (dateNow.getTime() <= deadline.getTime()) {
@@ -373,8 +373,7 @@ router.post('/newarticle', isStudent, upload.single('file'), async (req, res) =>
                 //get student email
                 const Sprofile = await Profile.findOne({ user: req.session.userId })
                 let studentEmail
-                if (Sprofile.email) { studentEmail = Sprofile.email }
-                else { studentEmail = 'anhlmgch190017@fpt.edu.vn' }
+                if (Sprofile.email) { studentEmail = Sprofile.email } else { studentEmail = 'anhlmgch190017@fpt.edu.vn' }
 
                 //get coordinator email
                 const coordinator = await User.find({ role: 'coordinator' })
@@ -413,7 +412,7 @@ router.post('/newarticle', isStudent, upload.single('file'), async (req, res) =>
 })
 
 //download article
-router.get('/article/download/:id', async (req, res) => {
+router.get('/article/download/:id', async(req, res) => {
     try {
         const article = await Article.findById(req.params.id)
         const pathToFile = path.join(uploadPath, article.fileName);
@@ -426,7 +425,7 @@ router.get('/article/download/:id', async (req, res) => {
 
 
 //get all article
-router.get('/article', async (req, res) => {
+router.get('/article', async(req, res) => {
     try {
         let query = Article.find({ status: 'accepted' })
         if (req.query.name != null && req.query.name != '') {
@@ -443,7 +442,7 @@ router.get('/article', async (req, res) => {
 })
 
 //show specific Article
-router.get('/article/:id', isStudent, async (req, res) => {
+router.get('/article/:id', isStudent, async(req, res) => {
     try {
         const article = await Article.findById(req.params.id).populate("topic").exec()
         res.render('student/showArticleIndex', { article: article })
@@ -455,7 +454,7 @@ router.get('/article/:id', isStudent, async (req, res) => {
 
 //PROFILE SECTION
 
-router.get('/profile/:id', isStudent, async (req, res) => {
+router.get('/profile/:id', isStudent, async(req, res) => {
     const user = await User.findById(req.session.userId)
     const profile = await Profile.findOne({ user: user._id })
     res.render('student/showProfile', {
@@ -463,7 +462,7 @@ router.get('/profile/:id', isStudent, async (req, res) => {
     })
 })
 
-router.get('/profile/:id/edit', isStudent, async (req, res) => {
+router.get('/profile/:id/edit', isStudent, async(req, res) => {
 
     const profile = await Profile.findById(req.params.id)
     const gender = profile.gender
@@ -473,13 +472,13 @@ router.get('/profile/:id/edit', isStudent, async (req, res) => {
     })
 })
 
-router.put('/profile/:id/edit', [isStudent, uploadAvatar.single('avatar')], async (req, res) => {
+router.put('/profile/:id/edit', [isStudent, uploadAvatar.single('avatar')], async(req, res) => {
     let profile = await Profile.findById(req.params.id)
 
     const newName = req.body.fullname
     const newGender = req.body.gender
     const newDob = req.body.dob
-    const newIntro = req.body.introduction
+    const newIntro = req.body.intro
     const newEmail = req.body.email
     const avatar = req.file;
 
@@ -525,7 +524,7 @@ router.put('/profile/:id/edit', [isStudent, uploadAvatar.single('avatar')], asyn
     }
 })
 
-router.get('/profile/:id/changepassword', isStudent, async (req, res) => {
+router.get('/profile/:id/changepassword', isStudent, async(req, res) => {
     try {
         const user = await User.findById(req.session.userId)
         const profile = await Profile.findOne({ user: user.id })
@@ -540,7 +539,7 @@ router.get('/profile/:id/changepassword', isStudent, async (req, res) => {
 
 })
 
-router.get('/profile/:id/avatar', async (req, res) => {
+router.get('/profile/:id/avatar', async(req, res) => {
     const defaultPath = path.join(__dirname, '../public/uploads/avatar');
     const profileId = req.params.id;
     if (!profileId) {
@@ -565,7 +564,7 @@ router.get('/profile/:id/avatar', async (req, res) => {
 });
 
 
-router.put('/profile/:id/changepassword', isStudent, async (req, res) => {
+router.put('/profile/:id/changepassword', isStudent, async(req, res) => {
     const password = req.body.password
     const verifyPassword = req.body.verifyPassword
 
@@ -596,7 +595,7 @@ router.put('/profile/:id/changepassword', isStudent, async (req, res) => {
 
 router.get('/logout', Logout)
 
-router.get('/', isStudent, async (req, res) => {
+router.get('/', isStudent, async(req, res) => {
     try {
         const articles = await Article.find({ status: 'accepted' })
         const profile = await Profile.findOne({ user: req.session.userId })
