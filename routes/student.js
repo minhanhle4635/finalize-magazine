@@ -253,6 +253,10 @@ router.put('/poster/:id/edit', isStudent, upload.single('file'), async (req, res
             
             saveCover(article, req.body.cover)
 
+            if(article.status === 'refused'){
+                article.status = 'pending'
+            }
+
             await article.save()
             req.flash('errorMessage','Updated Successfully')
             res.redirect(`/student/poster/${article._id}`)
