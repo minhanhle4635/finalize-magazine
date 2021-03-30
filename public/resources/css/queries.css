@@ -1,272 +1,271 @@
-    /*very large device 1024-1200px*/
-
-@media only screen and (max-width: 1200px) {
-    .header-text-box {
-        width: 100%;
-        padding: 0 2%;
-    }
-    .row {
-        padding: 0 2%;
-    }
-}
-
-
-/*large phone/tablet 768-1023px*/
-
-@media only screen and (max-width: 1023px) {
-    body {
-        font-size: 18px;
-    }
-    section {
-        padding: 60px 0;
-    }
-    .long-text {
-        width: 80%;
-        margin-left: 10%;
-    }
-    .step-bx {
-        margin-top: 10px;
-    }
-    .step-bx:last-child {
-        margin-top: 10px;
-    }
-    .post-guide-step {
-        margin-bottom: 40px;
-    }
-    .post-guide-step:last-of-type {
-        margin-bottom: 60px;
-    }
-    .guide-screen {
-        width: 50%;
-    }
-    .icon-sm {
-        width: 17px;
-        margin-right: 10px;
-    }
-    .city-feats {
-        font-size: 90%;
-    }
-    .reward-box {
-        width: 100%;
-        margin-left: 0%;
-    }
-    .rewards {
-        font-size: 250%;
-    }
-    .signup-form {
-        width: 80%;
-    }
-}
-
-
-/*medium phone 481-767px*/
-
-@media only screen and (max-width: 767px) {
-    body {
-        font-size: 16px;
-    }
-    section {
-        padding: 30px 0;
-    }
-    .row,
-    .header-text-box {
-        padding: 0 4%;
-    }
-    .col {
-        width: 100%;
-        margin: 0 0 1% 1.6%;
-    }
-    nav .logo,
-    nav .logo-black {
-        display: none;
-    }
-    .sticky .logo-black {
-        display: none;
-    }
-    .posts-showcase li {
-        display: block;
-        float: left;
-        height: 100%;
-        width: 100%;
-    }
-    ul li,
-    ul .dropdown {
-        padding: 5px 10px;
-        margin: 5px;
-        font-weight: 100;
-        text-decoration: none;
-        border-radius: 10px;
-        background-color: #dbdbdb;
-        border: 1px solid #dbdbdb;
-        display: block;
-    }
-    ul li:hover {
-        background-color: #e67e22;
-    }
-    ul li .icon-rp i {
-        color: black;
-    }
-    ul li a:visited {
-        color: black;
-    }
-    ul li a:visited,
-    ul li a:hover {
-        color: black;
-        text-decoration: none;
-    }
-    .main-nav li:not(:first-child) {
-        display: none;
-    }
-    .main-nav .icon-rp i {
-        font-size: 200%;
-    }
-    .main-nav li .icon-rp {
-        float: right;
-        display: block;
-    }
-    h1 {
-        font-size: 180%;
-    }
-    h2 {
-        font-size: 150%;
-    }
-    .long-text {
-        width: 100%;
-        margin-left: 0%;
-    }
-    .post-guide-step {
-        margin-bottom: 40px;
-    }
-    .post-guide-step:last-of-type {
-        margin-bottom: 20px;
-    }
-    .post-guide-step div {
-        height: 40px;
-        width: 40px;
-        margin-right: 15px;
-        padding: 4px;
-        font-size: 120%;
-    }
-    .step-bx:first-child {
-        text-align: center;
-    }
-    .guide-screen {
-        width: 40%;
-    }
-    .col-cat {
-        display: block;
-        width: 100%;
-    }
-    @media only screen and (max-width: 767px) {
-        body {
-            font-size: 16px;
+        /*very large device 1024-1200px*/
+        
+        @media only screen and (max-width: 1200px) {
+            .header-text-box {
+                width: 100%;
+                padding: 0 2%;
+            }
+            .row {
+                padding: 0 2%;
+            }
         }
-        section {
-            padding: 30px 0;
+        /*large phone/tablet 768-1023px*/
+        
+        @media only screen and (max-width: 1023px) {
+            body {
+                font-size: 18px;
+            }
+            section {
+                padding: 60px 0;
+            }
+            .long-text {
+                width: 80%;
+                margin-left: 10%;
+            }
+            .step-bx {
+                margin-top: 10px;
+            }
+            .step-bx:last-child {
+                margin-top: 10px;
+            }
+            .post-guide-step {
+                margin-bottom: 40px;
+            }
+            .post-guide-step:last-of-type {
+                margin-bottom: 60px;
+            }
+            .guide-screen {
+                width: 50%;
+            }
+            .icon-sm {
+                width: 17px;
+                margin-right: 10px;
+            }
+            .city-feats {
+                font-size: 90%;
+            }
+            .reward-box {
+                width: 100%;
+                margin-left: 0%;
+            }
+            .rewards {
+                font-size: 250%;
+            }
+            .signup-form {
+                width: 80%;
+            }
         }
-        .row,
-        .header-text-box {
-            padding: 0 4%;
+        /*medium phone 481-767px*/
+        
+        @media only screen and (max-width: 767px) {
+            body {
+                font-size: 16px;
+            }
+            section {
+                padding: 30px 0;
+            }
+            .row,
+            .header-text-box {
+                padding: 0 4%;
+            }
+            .col {
+                width: 100%;
+                margin: 0 0 1% 1.6%;
+            }
+            nav .logo,
+            nav .logo-black {
+                display: none;
+            }
+            .sticky .logo-black {
+                display: none;
+            }
+            .posts-showcase li {
+                display: block;
+                float: left;
+                height: 100%;
+                width: 100%;
+            }
+            ul li,
+            ul .dropdown {
+                padding: 5px 10px;
+                margin: 5px;
+                font-weight: 100;
+                text-decoration: none;
+                border-radius: 10px;
+                background-color: #dbdbdb;
+                border: 1px solid #dbdbdb;
+                display: block;
+            }
+            ul li:hover {
+                background-color: #e67e22;
+            }
+            ul li .icon-rp i {
+                color: black;
+            }
+            ul li a:visited {
+                color: black;
+            }
+            ul li a:visited,
+            ul li a:hover {
+                color: black;
+                text-decoration: none;
+            }
+            .main-nav li:not(:first-child) {
+                display: none;
+            }
+            .main-nav .icon-rp i {
+                font-size: 200%;
+            }
+            .main-nav li .icon-rp {
+                float: right;
+                display: block;
+            }
+            h1 {
+                font-size: 180%;
+            }
+            h2 {
+                font-size: 150%;
+            }
+            .long-text {
+                width: 100%;
+                margin-left: 0%;
+            }
+            .post-guide-step {
+                margin-bottom: 40px;
+            }
+            .post-guide-step:last-of-type {
+                margin-bottom: 20px;
+            }
+            .post-guide-step div {
+                height: 40px;
+                width: 40px;
+                margin-right: 15px;
+                padding: 4px;
+                font-size: 120%;
+            }
+            .step-bx:first-child {
+                text-align: center;
+            }
+            .guide-screen {
+                width: 40%;
+            }
+            .col-cat {
+                display: block;
+                width: 100%;
+            }
         }
-        .col {
-            width: 100%;
-            margin: 0 0 1% 1.6%;
+        
+        @media only screen and (max-width: 767px) {
+            body {
+                font-size: 16px;
+            }
+            section {
+                padding: 30px 0;
+            }
+            .row,
+            .header-text-box {
+                padding: 0 4%;
+            }
+            .col {
+                width: 100%;
+                margin: 0 0 1% 1.6%;
+            }
+            nav .logo,
+            nav .logo-black {
+                display: none;
+            }
+            .sticky .logo-black {
+                display: none;
+            }
+            ul {
+                float: right;
+                list-style: none;
+                text-align: center;
+            }
+            .posts-showcase li {
+                display: block;
+                float: left;
+                height: 100%;
+                width: 100%;
+            }
+            ul li {
+                padding: 5px 10px;
+                margin: 5px;
+                font-weight: 100;
+                text-decoration: none;
+                border-radius: 10px;
+                background-color: #dbdbdb;
+                border: 1px solid #dbdbdb;
+                display: block;
+            }
+            ul li:hover {
+                background-color: #e67e22;
+            }
+            ul li .icon-rp i {
+                color: black;
+            }
+            ul li a:visited {
+                color: black;
+            }
+            ul li a:visited,
+            ul li a:hover {
+                color: black;
+                text-decoration: none;
+            }
+            .main-nav li:not(:first-child) {
+                display: none;
+            }
+            .main-nav .icon-rp i {
+                font-size: 200%;
+            }
+            .main-nav li .icon-rp {
+                float: right;
+                display: block;
+            }
+            h1 {
+                font-size: 180%;
+            }
+            h2 {
+                font-size: 150%;
+            }
+            .long-text {
+                width: 100%;
+                margin-left: 0%;
+            }
+            .post-guide-step {
+                margin-bottom: 40px;
+            }
+            .post-guide-step:last-of-type {
+                margin-bottom: 20px;
+            }
+            .post-guide-step div {
+                height: 40px;
+                width: 40px;
+                margin-right: 15px;
+                padding: 4px;
+                font-size: 120%;
+            }
+            .step-bx:first-child {
+                text-align: center;
+            }
+            .guide-screen {
+                width: 40%;
+            }
+            .col-cat {
+                display: block;
+                width: 100%;
+            }
+            .content-table {
+                overflow-x: auto;
+            }
         }
-        nav .logo,
-        nav .logo-black {
-            display: none;
+        /*small phone 0-480px*/
+        
+        @media only screen and (max-width: 480px) {
+            section {
+                padding: 25px 0;
+            }
+            .signup-form {
+                width: 100%;
+            }
         }
-        .sticky .logo-black {
-            display: none;
-        }
-        ul {
-            float: right;
-            list-style: none;
-            text-align: center;
-        }
-        .posts-showcase li {
-            display: block;
-            float: left;
-            height: 100%;
-            width: 100%;
-        }
-        ul li {
-            padding: 5px 10px;
-            margin: 5px;
-            font-weight: 100;
-            text-decoration: none;
-            border-radius: 10px;
-            background-color: #dbdbdb;
-            border: 1px solid #dbdbdb;
-            display: block;
-        }
-        ul li:hover {
-            background-color: #e67e22;
-        }
-        ul li .icon-rp i {
-            color: black;
-        }
-        ul li a:visited {
-            color: black;
-        }
-        ul li a:visited,
-        ul li a:hover {
-            color: black;
-            text-decoration: none;
-        }
-        .main-nav li:not(:first-child) {
-            display: none;
-        }
-        .main-nav .icon-rp i {
-            font-size: 200%;
-        }
-        .main-nav li .icon-rp {
-            float: right;
-            display: block;
-        }
-        h1 {
-            font-size: 180%;
-        }
-        h2 {
-            font-size: 150%;
-        }
-        .long-text {
-            width: 100%;
-            margin-left: 0%;
-        }
-        .post-guide-step {
-            margin-bottom: 40px;
-        }
-        .post-guide-step:last-of-type {
-            margin-bottom: 20px;
-        }
-        .post-guide-step div {
-            height: 40px;
-            width: 40px;
-            margin-right: 15px;
-            padding: 4px;
-            font-size: 120%;
-        }
-        .step-bx:first-child {
-            text-align: center;
-        }
-        .guide-screen {
-            width: 40%;
-        }
-        .col-cat {
-            display: block;
-            width: 100%;
-        }
-        .content-table {
-            overflow-x: auto;
-        }
-    }
-    /*small phone 0-480px*/
-    @media only screen and (max-width: 480px) {
-        section {
-            padding: 25px 0;
-        }
-        .signup-form {
-            width: 100%;
-        }
-    }
