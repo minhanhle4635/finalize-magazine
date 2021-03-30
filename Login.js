@@ -32,24 +32,24 @@ const Login = async (req, res, next) => {
                 req.session.isTemp = user.role === null;
 
                 if (user.role === "admin") {
-                    return res.redirect('/admin')
+                    return res.redirect('/admin');
                 } else if (user.role === "manager") {
-                    return res.redirect('/manager')
+                    return res.redirect('/manager');
                 } else if (user.role === "coordinator") {
-                    return res.redirect('/coordinator')
+                    return res.redirect('/coordinator');
                 } else if (user.role === "student") {
-                    return res.redirect('/student')
+                    return res.redirect('/student');
                 } else if (user.role === "guest") {
-                    return res.redirect('/guest')
+                    return res.redirect('/guest');
                 } else if(user.role === null){
-                    return res.redirect('/norole')
+                    return res.redirect('/norole');
                 }
             } else {
-                return res.redirect('/')
+                return res.redirect('/');
             }
         })
     } else {
-        return res.redirect('/')
+        return res.redirect('/');
     }
 }
 
