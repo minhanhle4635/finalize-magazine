@@ -89,18 +89,13 @@
     display: none;
   }
 
-  ul {
-    float: right;
-    list-style: none;
-    text-align: center;
-  }
-
   .posts-showcase li {
     display: block;
     float: left;
     height: 100%;
     width: 100%;
   }
+
   ul li {
     padding: 5px 10px;
     margin: 5px;
@@ -129,6 +124,7 @@
     color: black;
     text-decoration: none;
   }
+
   .main-nav li:not(:first-child) {
     display: none;
   }
