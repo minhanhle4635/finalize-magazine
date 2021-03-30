@@ -96,7 +96,8 @@
     width: 100%;
   }
 
-  ul li {
+  ul li,
+  ul .dropdown {
     padding: 5px 10px;
     margin: 5px;
     font-weight: 100;
