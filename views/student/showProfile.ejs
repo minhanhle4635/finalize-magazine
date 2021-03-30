@@ -1,8 +1,13 @@
-<div><nav class="sticky sticky-admin">
+<nav class="sticky sticky-admin">
     <div class="row">
         <img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
         <a href="/student"><img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black"></a>
-        <ul class="main-nav">
+        <ul class="main-nav" id="navi">
+            <li>
+                <a href="javascript:void(0);" class="icon-rp" onclick="myFunction()">
+                    <i class="ion-ios-information-circle"></i>
+                </a>
+            </li>
             <li> <a href="/student">Home</a> </li>
             <li> <a href="/student/topic">Topic</a> </li>
             <li> <a href="/student/article">All Article</a> </li>
@@ -18,7 +23,7 @@
     <h2>
         <%= profile.fullName %>
     </h2>
-    <div style="overflow: auto;">
+    <div>
 
         <div class="l25">
 
@@ -26,7 +31,10 @@
                 <img width="300px" class="img-center" height="400px" src="<%= '/student/profile/' + profile._id + '/avatar' %>">
 
             </div>
-            
+            <div style="text-align: center; margin-top: 2%;">
+                <button class="btn btn-ghost"><a  href="/student/profile/<%= profile.id %>/edit">Edit</a></button>
+                <button class="btn btn-ghost"><a  href="/student/profile/<%= profile.id %>/changepassword">Change Password</a></button>
+            </div>
         </div>
         <div class="r75">
             <ul>
@@ -47,21 +55,16 @@
                 <br></br>
             </ul>
 
-            <div>
-
-            <div style="float: right;">
-                <button class="btn btn-ghost"><a  href="/student/profile/<%= profile.id %>/edit">Edit</a></button>
-                <button class="btn btn-ghost"><a  href="/student/profile/<%= profile.id %>/changepassword">Change Password</a></button>
-
-            </div>
-
         </div>
 
+    </div>
 
 
-</section></div>
 
-<footer id="footer">
+</section>
+</div>
+
+<footer>
 
     <div class="row">
         <div class="col span-1-of-2">
