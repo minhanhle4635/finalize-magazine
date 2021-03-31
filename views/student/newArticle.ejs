@@ -2,7 +2,12 @@
     <div class="row">
         <img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
         <a href="/student"><img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black"></a>
-        <ul class="main-nav">
+        <ul class="main-nav" id="navi">
+            <li>
+                <a href="javascript:void(0);" class="icon-rp" onclick="myFunction()">
+                    <i class="ion-ios-information-circle"></i>
+                </a>
+            </li>
             <li> <a href="/student">Home</a> </li>
             <li> <a href="/student/topic">Topic</a> </li>
             <li> <a href="/student/article">All Article</a> </li>
@@ -32,17 +37,20 @@
                                 <% }) %>
                     </select>
                 </div>
+
                 <div class="mgt1">
                     <label class="fw-bold" for="description">Description</label>
                     <textarea name="description"></textarea>
                 </div>
-                <div class="mgt1 ">
+
+                <div class="mgt1">
                     <input type="checkbox" id="isTermAccepted" name="isTermAccepted" />
                     <label for="isTermAccepted" class="fw-bold "> Accept term</label><br>
-                    <div >
-                        <button class="btn btn-ghost"><a  href="/student/poster">Cancel</a></button>
-                        <button class="btn btn-full" type="submit">Add New Article</button>
-                    </div>
+
+                </div>
+                <div>
+                    <button class="btn btn-ghost"><a  href="/student/poster">Cancel</a></button>
+                    <button class="btn btn-full" type="submit">Add New Article</button>
                 </div>
             </div>
             <div class="r50">
@@ -54,8 +62,9 @@
                     <label class="fw-bold" for="file">File: </label>
                     <input type="file" name="file" multiple>
                 </div>
-                
-                <div class="mgt1">
+
+
+                <div class="mgt1 ">
                     <label class="fw-bold">Cover: </label>
                     <input type="file" name="cover" class="filepond filepondcover">
                 </div>

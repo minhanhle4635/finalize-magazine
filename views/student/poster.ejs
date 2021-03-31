@@ -2,7 +2,12 @@
     <div class="row">
         <img src="/resources/img/logo.jpg" alt="missing picture" class="logo">
         <a href="/student"><img src="/resources/img/logo.jpg" alt="missing picture" class="logo-black"></a>
-        <ul class="main-nav">
+        <ul class="main-nav" id="navi">
+            <li>
+                <a href="javascript:void(0);" class="icon-rp" onclick="myFunction()">
+                    <i class="ion-ios-information-circle"></i>
+                </a>
+            </li>
             <li> <a href="/student">Home</a> </li>
             <li> <a href="/student/topic">Topic</a> </li>
             <li> <a href="/student/article">All Article</a> </li>
@@ -51,13 +56,15 @@
                         <option value="rejected">Rejected</option>
                     <% } %>
                 </select>
-                <button class="btn btn-search" type="submit">Submit</button>
+                        <button class="btn btn-search" type="submit">Submit</button>
                     </form>
-                    
+
                 </div>
+
                 <div class="search-std" >
                     <form style="display: inline-flex;" action="/student/poster" method="GET">
                         <input class="search" value="<%= searchOptions.name %>" name="name" type="text"  placeholder="Search Article...">
+
                         <button class="btn btn-search" type="submit">Search</button>
                     </form>
                 </div>
