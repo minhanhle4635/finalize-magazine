@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const {Logout} = require('../Login')
+const { Logout } = require('../Login')
 const Article = require('../models/Article')
 const Faculty = require('../models/Faculty')
 const Topic = require('../models/Topic')
@@ -44,7 +44,7 @@ const storage = multer.diskStorage({
     }
 })
 
-const upload = multer({storage: storage})
+const upload = multer({ storage: storage })
 
 const avatarStorage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -72,7 +72,7 @@ const avatarStorage = multer.diskStorage({
     }
 })
 
-const uploadAvatar = multer({storage: avatarStorage})
+const uploadAvatar = multer({ storage: avatarStorage })
 
 //get topic index page 
 router.get('/topic', isStudent, async (req, res) => {
@@ -128,7 +128,7 @@ router.get('/topic/:id', isStudent, async (req, res) => {
 
 //get page article index
 router.get('/poster', isStudent, async (req, res) => {
-    let query = Article.find({poster: req.session.userId})
+    let query = Article.find({ poster: req.session.userId })
     if (req.query.name != null && req.query.name != '') {
         query = query.regex('name', new RegExp(req.query.name, 'i'))
     }
@@ -150,7 +150,7 @@ router.post('/poster', isStudent, async (req, res) => {
     const status = req.body.status
     try {
         if (status === 'all') {
-            let query = Article.find({poster: req.session.userId})
+            let query = Article.find({ poster: req.session.userId })
             if (req.query.name != null && req.query.name != '') {
                 query = query.regex('name', new RegExp(req.query.name, 'i'))
             }
@@ -161,7 +161,7 @@ router.post('/poster', isStudent, async (req, res) => {
                 status: status
             })
         } else if (status === 'pending') {
-            let query = Article.find({status: 'pending', poster: req.session.userId})
+            let query = Article.find({ status: 'pending', poster: req.session.userId })
             if (req.query.name != null && req.query.name != '') {
                 query = query.regex('name', new RegExp(req.query.name, 'i'))
             }
@@ -172,7 +172,7 @@ router.post('/poster', isStudent, async (req, res) => {
                 status: status
             })
         } else if (status === 'accepted') {
-            let query = Article.find({status: 'accepted', poster: req.session.userId})
+            let query = Article.find({ status: 'accepted', poster: req.session.userId })
             if (req.query.name != null && req.query.name != '') {
                 query = query.regex('name', new RegExp(req.query.name, 'i'))
             }
@@ -183,7 +183,7 @@ router.post('/poster', isStudent, async (req, res) => {
                 status: status
             })
         } else if (status === 'rejected') {
-            let query = Article.find({status: 'refused', poster: req.session.userId})
+            let query = Article.find({ status: 'refused', poster: req.session.userId })
             if (req.query.name != null && req.query.name != '') {
                 query = query.regex('name', new RegExp(req.query.name, 'i'))
             }
@@ -203,7 +203,7 @@ router.post('/poster', isStudent, async (req, res) => {
 router.get('/poster/:id', isStudent, async (req, res) => {
     try {
         const article = await Article.findById(req.params.id).populate("topic").exec()
-        res.render('student/showArticle', {article: article})
+        res.render('student/showArticle', { article: article })
     } catch (error) {
         console.log(error)
         res.redirect('/user')
@@ -300,7 +300,7 @@ router.delete('/poster/:id', isStudent, async (req, res) => {
 router.get('/newarticle', isStudent, async (req, res) => {
     const user = await User.findById(req.session.userId)
     const faculty = await Faculty.findById(user.faculty)
-    const topic = await Topic.find({faculty: faculty})
+    const topic = await Topic.find({ faculty: faculty })
     const notExpiredTopic = topic.filter(topic => topic.expiredDate > Date.now())
     res.render('student/newArticle', {
         topics: notExpiredTopic
@@ -309,7 +309,7 @@ router.get('/newarticle', isStudent, async (req, res) => {
 
 //create new Article
 router.post('/newarticle', isStudent, upload.single('file'), async (req, res) => {
-    const topic = await Topic.findOne({_id: req.body.topic})
+    const topic = await Topic.findOne({ _id: req.body.topic })
     const deadline = new Date(topic.expiredDate);
     const faculty = topic.faculty
     //validation
@@ -342,78 +342,87 @@ router.post('/newarticle', isStudent, upload.single('file'), async (req, res) =>
         req.flash('errorMessage', 'File must be added')
         return res.redirect('back')
     }
+    if (!isTermAccepted) {
+        req.flash('errorMessage', 'You have to accept term')
+        res.redirect('back')
+    }
 
     try {
-        if (isTermAccepted) {
-            //new article
-            const article = new Article({
-                name: newName,
-                description: description,
-                author: newAuthor,
-                poster: req.session.userId,
-                topic: req.body.topic,
-                faculty: faculty,
-                fileName: file.filename
-            })
-            saveCover(article, cover)
-            //compare deadline
-            const dateNow = new Date();
-            // const deadline = topic.expiredDate
-            if (dateNow.getTime() <= deadline.getTime()) {
 
-                await article.save();
-                const transporter = nodemailer.createTransport({
-                    name: 'smtp.ethereal.email',
-                    host: 'smtp.ethereal.email',
-                    port: 587,
-                    auth: {
-                        user: process.env.GMAIL,
-                        pass: process.env.PASS
-                    }
-                });
+        //new article
+        const article = new Article({
+            name: newName,
+            description: description,
+            author: newAuthor,
+            poster: req.session.userId,
+            topic: req.body.topic,
+            faculty: faculty,
+            fileName: file.filename
+        })
+        saveCover(article, cover)
+        //compare deadline
+        const dateNow = new Date();
+        // const deadline = topic.expiredDate
+        if (dateNow.getTime() <= deadline.getTime()) {
 
-                //get student email
-                const Sprofile = await Profile.findOne({user: req.session.userId})
-                let studentEmail
-                if (Sprofile.email) {
-                    studentEmail = Sprofile.email
-                } else {
-                    studentEmail = 'anhlmgch190017@fpt.edu.vn'
-                }
+            await article.save();
+            const transporter = nodemailer.createTransport({
+                name: 'smtp.ethereal.email',
+                host: 'smtp.ethereal.email',
+                port: 587,
+                auth: {
+                    user: process.env.GMAIL,
+                    pass: process.env.PASS
+                },
+                sendMail: true
+            });
 
-                //get coordinator email
-                const coordinator = await User.find({role: 'coordinator'})
-                const coordinatorProfiles = []
-                for (var i = 0; i < coordinator.length; i++) {
-                    const Cprofile = await Profile.findOne({user: coordinator[i].id})
-                    if (Cprofile && Cprofile.email) {
-                        coordinatorProfiles.push(Cprofile)
-                    }
-                }
-                const msg = {
-                    from: 'Student <' + studentEmail + '>',
-                    to: coordinatorProfiles.map(c => c.email),
-                    subject: 'A pending article needs permission',
-                    text: 'There is a new article waiting for permission, please provide permission as soon as possible',
-                    html: '<body><h1>Test</h1><p>Testing email function</p></body>'
-                }
-
-                let info = await transporter.sendMail(msg)
-                console.log(info)
-                req.flash('errorMessage', 'Wait for permision')
-                res.redirect('/student/poster')
+            //get student email
+            const Sprofile = await Profile.findOne({ user: req.session.userId })
+            let studentEmail
+            if (Sprofile.email) {
+                studentEmail = Sprofile.email
             } else {
-                if (article.fileName != null) {
-                    removefile(article.fileName)
-                }
-                req.flash('errorMessage', 'This topic has met its deadline')
-                res.redirect('back')
+                studentEmail = 'anhlmgch190017@fpt.edu.vn'
             }
+
+            //get coordinator email
+            const coordinator = await User.find({ role: 'coordinator' })
+            const coordinatorProfiles = []
+            for (var i = 0; i < coordinator.length; i++) {
+                const Cprofile = await Profile.findOne({ user: coordinator[i].id })
+                if (Cprofile && Cprofile.email) {
+                    coordinatorProfiles.push(Cprofile)
+                }
+            }
+            const msg = {
+                from: 'Student <' + studentEmail + '>',
+                to: coordinatorProfiles.map(c => c.email),
+                subject: 'A pending article needs permission',
+                text: 'There is a new article waiting for permission, please provide permission as soon as possible',
+                html: '<body><h1>Test</h1><p>Testing email function</p></body>'
+            }
+
+            let info = await transporter.sendMail(msg, function(err, data){
+                if(err){
+                    console.log(err)
+                }else{
+                    console.log(data)
+                }
+            })
+            console.log(info)
+            req.flash('errorMessage', 'Wait for permision')
+            res.redirect('/student/poster')
         } else {
-            req.flash('errorMessage', 'You have to accept term')
+            if (article.fileName != null) {
+                removefile(article.fileName)
+            }
+            req.flash('errorMessage', 'This topic has met its deadline')
             res.redirect('back')
         }
+
     } catch (error) {
+        if (article.fileName != null) { removefile(article.fileName) }
         req.flash('errorMessage', 'Cant create this article');
         res.redirect('back');
     }
@@ -433,7 +442,7 @@ router.get('/article/download/:id', async (req, res) => {
 
 
 //get all article
-router.get('/article',isStudent, async (req, res) => {
+router.get('/article', isStudent, async (req, res) => {
     try {
         const page = parseInt(req.query.page)
         const limit = parseInt(req.query.limit)
@@ -441,7 +450,7 @@ router.get('/article',isStudent, async (req, res) => {
         const startIndex = (page - 1) * limit
         const endIndex = page * limit
 
-        let query = Article.find({status: 'accepted'})
+        let query = Article.find({ status: 'accepted' })
         if (req.query.name != null && req.query.name != '') {
             query = query.regex('name', new RegExp(req.query.name, 'i'))
         }
@@ -462,7 +471,7 @@ router.get('/article',isStudent, async (req, res) => {
             }
         }
 
-        const articles = await query.limit(limit).skip((page-1)* limit).exec()
+        const articles = await query.limit(limit).skip((page - 1) * limit).exec()
         results.results = articles.slice(startIndex, endIndex)
 
         console.log(results)
@@ -481,7 +490,7 @@ router.get('/article',isStudent, async (req, res) => {
 router.get('/article/:id', isStudent, async (req, res) => {
     try {
         const article = await Article.findById(req.params.id).populate("topic").exec()
-        res.render('student/showArticleIndex', {article: article})
+        res.render('student/showArticleIndex', { article: article })
     } catch (error) {
         console.log(error)
         res.redirect('/student')
@@ -492,7 +501,7 @@ router.get('/article/:id', isStudent, async (req, res) => {
 
 router.get('/profile/:id', isStudent, async (req, res) => {
     const user = await User.findById(req.session.userId)
-    const profile = await Profile.findOne({user: user._id})
+    const profile = await Profile.findOne({ user: user._id })
     res.render('student/showProfile', {
         profile: profile
     })
@@ -565,7 +574,7 @@ router.put('/profile/:id/edit', [isStudent, uploadAvatar.single('avatar')], asyn
 const changePassword = async (req, res) => {
     try {
         const user = await User.findById(req.session.userId)
-        const profile = await Profile.findOne({user: user.id})
+        const profile = await Profile.findOne({ user: user.id })
         res.render('student/changepassword', {
             user: user,
             profile: profile
@@ -635,8 +644,8 @@ router.get('/logout', Logout)
 
 router.get('/', isStudent, async (req, res) => {
     try {
-        const articles = await Article.find({status: 'accepted'})
-        const profile = await Profile.findOne({user: req.session.userId})
+        const articles = await Article.find({ status: 'accepted' })
+        const profile = await Profile.findOne({ user: req.session.userId })
         res.render('student/index', {
             articles: articles,
             profile: profile
