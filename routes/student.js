@@ -348,7 +348,6 @@ router.post('/newarticle', isStudent, upload.single('file'), async (req, res) =>
     }
 
     try {
-
         //new article
         const article = new Article({
             name: newName,
@@ -403,10 +402,10 @@ router.post('/newarticle', isStudent, upload.single('file'), async (req, res) =>
                 html: '<body><h1>Test</h1><p>Testing email function</p></body>'
             }
 
-            let info = await transporter.sendMail(msg, function(err, data){
-                if(err){
+            let info = await transporter.sendMail(msg, function (err, data) {
+                if (err) {
                     console.log(err)
-                }else{
+                } else {
                     console.log(data)
                 }
             })
@@ -523,7 +522,7 @@ router.put('/profile/:id/edit', [isStudent, uploadAvatar.single('avatar')], asyn
     const newName = req.body.fullname
     const newGender = req.body.gender
     const newDob = req.body.dob
-    const newIntro = req.body.introduction
+    const newIntro = req.body.intro
     const newEmail = req.body.email
     const avatar = req.file;
 
@@ -571,6 +570,7 @@ router.put('/profile/:id/edit', [isStudent, uploadAvatar.single('avatar')], asyn
     }
 })
 
+
 const changePassword = async (req, res) => {
     try {
         const user = await User.findById(req.session.userId)
@@ -610,6 +610,7 @@ router.get('/profile/:id/avatar', async (req, res) => {
 
     return res.status(404);
 });
+
 
 router.put('/profile/:id/changepassword', isStudent, async (req, res) => {
     const password = req.body.password

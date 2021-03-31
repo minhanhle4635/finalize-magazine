@@ -946,7 +946,8 @@ footer p {
 
 .r75 {
     float: right;
-    width: 75%;
+    width: 73%;
+    margin-left: 2%;
 }
 
 .r50 {
