@@ -16,8 +16,9 @@
         <h2>Your Article</h2>
 
         <div class="p-5 mt-5">
-            <div>
-                <div class="filter">
+            <div style="display: inline-flex;
+            width: 100%;">
+                <div class="filter" >
                     <a class="btn btn-search" href="/student/newarticle">New </a>
 
                     <label style="padding: 10px 2px 2px;margin-left: 40%;">
@@ -54,8 +55,8 @@
                     </form>
                     
                 </div>
-                <div class="search-std">
-                    <form action="/student/poster" method="GET">
+                <div class="search-std" >
+                    <form style="display: inline-flex;" action="/student/poster" method="GET">
                         <input class="search" value="<%= searchOptions.name %>" name="name" type="text"  placeholder="Search Article...">
                         <button class="btn btn-search" type="submit">Search</button>
                     </form>
