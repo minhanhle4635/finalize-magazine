@@ -1,6 +1,6 @@
-const mongoose = require('mongoose')
-
-const fileBasePath = 'uploads/file'
+const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate');
+const fileBasePath = 'uploads/file';
 
 const articleSchema = mongoose.Schema({
     name:{
@@ -63,6 +63,8 @@ articleSchema.virtual('coverImagePath').get(function(){
         return `data: ${this.coverImageType}; charset=utf-8;base64,${this.coverImage.toString('base64')}`
     }
 })
+
+articleSchema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model('Article', articleSchema)
 module.exports.fileBasePath = fileBasePath

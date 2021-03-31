@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { Logout } = require('../Login')
+const {Logout} = require('../Login')
 const Article = require('../models/Article')
 const Faculty = require('../models/Faculty')
 const Topic = require('../models/Topic')
@@ -44,7 +44,7 @@ const storage = multer.diskStorage({
     }
 })
 
-const upload = multer({ storage: storage })
+const upload = multer({storage: storage})
 
 const avatarStorage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -72,7 +72,7 @@ const avatarStorage = multer.diskStorage({
     }
 })
 
-const uploadAvatar = multer({ storage: avatarStorage })
+const uploadAvatar = multer({storage: avatarStorage})
 
 //get topic index page 
 router.get('/topic', isStudent, async (req, res) => {
@@ -112,7 +112,6 @@ router.get('/topic', isStudent, async (req, res) => {
     }
 })
 
-
 //show topic
 router.get('/topic/:id', isStudent, async (req, res) => {
     try {
@@ -129,7 +128,7 @@ router.get('/topic/:id', isStudent, async (req, res) => {
 
 //get page article index
 router.get('/poster', isStudent, async (req, res) => {
-    let query = Article.find({ poster: req.session.userId })
+    let query = Article.find({poster: req.session.userId})
     if (req.query.name != null && req.query.name != '') {
         query = query.regex('name', new RegExp(req.query.name, 'i'))
     }
@@ -151,7 +150,7 @@ router.post('/poster', isStudent, async (req, res) => {
     const status = req.body.status
     try {
         if (status === 'all') {
-            let query = Article.find({ poster: req.session.userId })
+            let query = Article.find({poster: req.session.userId})
             if (req.query.name != null && req.query.name != '') {
                 query = query.regex('name', new RegExp(req.query.name, 'i'))
             }
@@ -162,7 +161,7 @@ router.post('/poster', isStudent, async (req, res) => {
                 status: status
             })
         } else if (status === 'pending') {
-            let query = Article.find({ status: 'pending', poster: req.session.userId })
+            let query = Article.find({status: 'pending', poster: req.session.userId})
             if (req.query.name != null && req.query.name != '') {
                 query = query.regex('name', new RegExp(req.query.name, 'i'))
             }
@@ -173,7 +172,7 @@ router.post('/poster', isStudent, async (req, res) => {
                 status: status
             })
         } else if (status === 'accepted') {
-            let query = Article.find({ status: 'accepted', poster: req.session.userId })
+            let query = Article.find({status: 'accepted', poster: req.session.userId})
             if (req.query.name != null && req.query.name != '') {
                 query = query.regex('name', new RegExp(req.query.name, 'i'))
             }
@@ -184,7 +183,7 @@ router.post('/poster', isStudent, async (req, res) => {
                 status: status
             })
         } else if (status === 'rejected') {
-            let query = Article.find({ status: 'refused', poster: req.session.userId })
+            let query = Article.find({status: 'refused', poster: req.session.userId})
             if (req.query.name != null && req.query.name != '') {
                 query = query.regex('name', new RegExp(req.query.name, 'i'))
             }
@@ -204,7 +203,7 @@ router.post('/poster', isStudent, async (req, res) => {
 router.get('/poster/:id', isStudent, async (req, res) => {
     try {
         const article = await Article.findById(req.params.id).populate("topic").exec()
-        res.render('student/showArticle', { article: article })
+        res.render('student/showArticle', {article: article})
     } catch (error) {
         console.log(error)
         res.redirect('/user')
@@ -250,15 +249,15 @@ router.put('/poster/:id/edit', isStudent, upload.single('file'), async (req, res
                 }
                 article.filename = file.filename
             }
-            
+
             saveCover(article, req.body.cover)
 
-            if(article.status === 'refused'){
+            if (article.status === 'refused') {
                 article.status = 'pending'
             }
 
             await article.save()
-            req.flash('errorMessage','Updated Successfully')
+            req.flash('errorMessage', 'Updated Successfully')
             res.redirect(`/student/poster/${article._id}`)
         } else {
             req.flash('errorMessage', 'Cant edit this article because final deadline has expire')
@@ -297,12 +296,11 @@ router.delete('/poster/:id', isStudent, async (req, res) => {
 })
 
 
-
 // get page new Article
 router.get('/newarticle', isStudent, async (req, res) => {
     const user = await User.findById(req.session.userId)
     const faculty = await Faculty.findById(user.faculty)
-    const topic = await Topic.find({ faculty: faculty })
+    const topic = await Topic.find({faculty: faculty})
     const notExpiredTopic = topic.filter(topic => topic.expiredDate > Date.now())
     res.render('student/newArticle', {
         topics: notExpiredTopic
@@ -311,7 +309,7 @@ router.get('/newarticle', isStudent, async (req, res) => {
 
 //create new Article
 router.post('/newarticle', isStudent, upload.single('file'), async (req, res) => {
-    const topic = await Topic.findOne({ _id: req.body.topic })
+    const topic = await Topic.findOne({_id: req.body.topic})
     const deadline = new Date(topic.expiredDate);
     const faculty = topic.faculty
     //validation
@@ -323,7 +321,7 @@ router.post('/newarticle', isStudent, upload.single('file'), async (req, res) =>
 
     const cover = req.body.cover
 
-    if(!cover){
+    if (!cover) {
         req.flash('errorMessage', 'Cover must be added')
         return res.redirect('back')
     }
@@ -375,16 +373,19 @@ router.post('/newarticle', isStudent, upload.single('file'), async (req, res) =>
                 });
 
                 //get student email
-                const Sprofile = await Profile.findOne({ user: req.session.userId })
+                const Sprofile = await Profile.findOne({user: req.session.userId})
                 let studentEmail
-                if (Sprofile.email) { studentEmail = Sprofile.email }
-                else { studentEmail = 'anhlmgch190017@fpt.edu.vn' }
+                if (Sprofile.email) {
+                    studentEmail = Sprofile.email
+                } else {
+                    studentEmail = 'anhlmgch190017@fpt.edu.vn'
+                }
 
                 //get coordinator email
-                const coordinator = await User.find({ role: 'coordinator' })
+                const coordinator = await User.find({role: 'coordinator'})
                 const coordinatorProfiles = []
                 for (var i = 0; i < coordinator.length; i++) {
-                    const Cprofile = await Profile.findOne({ user: coordinator[i].id })
+                    const Cprofile = await Profile.findOne({user: coordinator[i].id})
                     if (Cprofile && Cprofile.email) {
                         coordinatorProfiles.push(Cprofile)
                     }
@@ -402,7 +403,9 @@ router.post('/newarticle', isStudent, upload.single('file'), async (req, res) =>
                 req.flash('errorMessage', 'Wait for permision')
                 res.redirect('/student/poster')
             } else {
-                if (article.fileName != null) { removefile(article.fileName) }
+                if (article.fileName != null) {
+                    removefile(article.fileName)
+                }
                 req.flash('errorMessage', 'This topic has met its deadline')
                 res.redirect('back')
             }
@@ -430,18 +433,46 @@ router.get('/article/download/:id', async (req, res) => {
 
 
 //get all article
-router.get('/article', async (req, res) => {
+router.get('/article',isStudent, async (req, res) => {
     try {
-        let query = Article.find({ status: 'accepted' })
+        const page = parseInt(req.query.page)
+        const limit = parseInt(req.query.limit)
+
+        const startIndex = (page - 1) * limit
+        const endIndex = page * limit
+
+        let query = Article.find({status: 'accepted'})
         if (req.query.name != null && req.query.name != '') {
             query = query.regex('name', new RegExp(req.query.name, 'i'))
         }
-        const article = await query.exec()
-        res.render('student/article', {
-            articles: article,
+
+        const results = {}
+
+        if (endIndex < await Article.countDocuments().exec()) {
+            results.next = {
+                page: page + 1,
+                limit: limit
+            }
+        }
+
+        if (startIndex > 0) {
+            results.previous = {
+                page: page - 1,
+                limit: limit
+            }
+        }
+
+        const articles = await query.limit(limit).skip((page-1)* limit).exec()
+        results.results = articles.slice(startIndex, endIndex)
+
+        console.log(results)
+        // console.log(articles)
+        return res.render('student/article', {
+            articles: articles,
             searchOptions: req.query
         })
     } catch (error) {
+        console.log(error)
         res.redirect('/student')
     }
 })
@@ -450,7 +481,7 @@ router.get('/article', async (req, res) => {
 router.get('/article/:id', isStudent, async (req, res) => {
     try {
         const article = await Article.findById(req.params.id).populate("topic").exec()
-        res.render('student/showArticleIndex', { article: article })
+        res.render('student/showArticleIndex', {article: article})
     } catch (error) {
         console.log(error)
         res.redirect('/student')
@@ -461,7 +492,7 @@ router.get('/article/:id', isStudent, async (req, res) => {
 
 router.get('/profile/:id', isStudent, async (req, res) => {
     const user = await User.findById(req.session.userId)
-    const profile = await Profile.findOne({ user: user._id })
+    const profile = await Profile.findOne({user: user._id})
     res.render('student/showProfile', {
         profile: profile
     })
@@ -523,16 +554,18 @@ router.put('/profile/:id/edit', [isStudent, uploadAvatar.single('avatar')], asyn
         return res.redirect(`/student/profile/${profile.id}`)
     } catch (error) {
         console.log(error)
-        if (profile.avatarImageName != null) { removeAvatar(profile.avatarImageName) }
+        if (profile.avatarImageName != null) {
+            removeAvatar(profile.avatarImageName)
+        }
         req.flash('errorMessage', 'Can not update this profile')
         return res.redirect('back')
     }
 })
 
-router.get('/profile/:id/changepassword', isStudent, async (req, res) => {
+const changePassword = async (req, res) => {
     try {
         const user = await User.findById(req.session.userId)
-        const profile = await Profile.findOne({ user: user.id })
+        const profile = await Profile.findOne({user: user.id})
         res.render('student/changepassword', {
             user: user,
             profile: profile
@@ -541,8 +574,9 @@ router.get('/profile/:id/changepassword', isStudent, async (req, res) => {
         console.log(e)
         return res.redirect(`/student/profile/${profile.id}`)
     }
+}
 
-})
+router.get('/profile/:id/changepassword', isStudent, changePassword)
 
 router.get('/profile/:id/avatar', async (req, res) => {
     const defaultPath = path.join(__dirname, '../public/uploads/avatar');
@@ -567,7 +601,6 @@ router.get('/profile/:id/avatar', async (req, res) => {
 
     return res.status(404);
 });
-
 
 router.put('/profile/:id/changepassword', isStudent, async (req, res) => {
     const password = req.body.password
@@ -602,8 +635,8 @@ router.get('/logout', Logout)
 
 router.get('/', isStudent, async (req, res) => {
     try {
-        const articles = await Article.find({ status: 'accepted' })
-        const profile = await Profile.findOne({ user: req.session.userId })
+        const articles = await Article.find({status: 'accepted'})
+        const profile = await Profile.findOne({user: req.session.userId})
         res.render('student/index', {
             articles: articles,
             profile: profile
@@ -650,7 +683,9 @@ function isStudent(req, res, next) {
     } else {
         if (req.session.isTemp === true && req.session.isStudent === true) {
             return res.render('student/temp')
-        } else { next() }
+        } else {
+            next()
+        }
     }
 }
 
