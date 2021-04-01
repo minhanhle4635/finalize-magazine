@@ -230,7 +230,7 @@ router.post('/user/new', isAdmin, async (req, res) => {
             })
             await newProfile.save()
 
-            res.redirect('/admin')
+            res.redirect('/admin/user')
         } else {
             req.flash('errorMessage', 'Username already used')
             req.redirect('back')
