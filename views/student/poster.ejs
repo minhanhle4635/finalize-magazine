@@ -21,13 +21,16 @@
         <h2>Your Article</h2>
 
         <div class="p-5 mt-5">
-            <div style="display: inline-flex;
-            width: 100%;">
-                <div class="filter" >
-                    <a class="btn btn-search" href="/student/newarticle">New </a>
+            <div style=" float: left; margin-bottom: 1%;">
+                <a class="btn btn-search" href="/student/newarticle">New </a>
 
-                    <label style="padding: 10px 2px 2px;margin-left: 40%;">
-                            <b> Status: </b>
+            </div>
+            <div style="display: inline-flex;
+            width: 100%; ">
+                <div class="filter">
+
+                    <label style="padding: 10px 2px 2px;">
+                            <b> Status Filter: </b>
                         </label>
                     <form style="display: inline-flex;" action="/student/poster" method="POST">
                         <select name="status">
@@ -61,9 +64,9 @@
 
                 </div>
 
-                <div class="search-std" >
+                <div>
                     <form style="display: inline-flex;" action="/student/poster" method="GET">
-                        <input class="search" value="<%= searchOptions.name %>" name="name" type="text"  placeholder="Search Article...">
+                        <input class="search" value="<%= searchOptions.name %>" name="name" type="text" placeholder="Search Article...">
 
                         <button class="btn btn-search" type="submit">Search</button>
                     </form>
@@ -77,7 +80,7 @@
                         <th class="table-id">Cover</th>
                         <th class="table-name">Name</th>
                         <th>Status</th>
-                        <th style="padding-left: 4%;">Create At</th>
+                        <th>Create At</th>
                         <th style="padding-left: 10%;">Option</th>
                     </tr>
                 </thead>
@@ -94,7 +97,7 @@
                             <td>
                                 <%= article.status %>
                             </td>
-                            <td style="padding-left: 4%;">
+                            <td>
                                 <%= article.createdAt.toISOString().split('T')[0] %>
                             </td>
                             <td class="p-2">

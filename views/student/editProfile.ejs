@@ -19,7 +19,7 @@
 <br></br>
 
 <section class="p-5">
-    <div style="overflow: auto;">
+    <div style="overflow: auto;" class="row">
         <h2>Edit Profile</h2>
         <form action="/student/profile/<%= profile.id %>/edit?_method=PUT" method="POST" enctype="multipart/form-data">
             <div class="l50">
@@ -32,8 +32,8 @@
                     <input type="text" name="email" value="<%= profile.email== null? '' : profile.email %>">
                 </div>
                 <div class="mgt1">
-                    <label class="fw-bold">Avatar: </label>
-                    <input type="file" name="avatar">
+                    <label class="fw-bold" for="intro">Introduction </label>
+                    <textarea name="intro"><%= profile.introduction %></textarea>
                 </div>
             </div>
             <div class="r50">
@@ -61,11 +61,12 @@
                     <label class="fw-bold" for="dob">Date of Birth</label>
                     <input style="margin-left: 15px; border-radius: 5px ; border : solid 0.5px gray" type="date" name="dob" value="<%= profile.dob.toISOString().split('T')[0] %>">
                 </div>
-                <div class="mgt1">
-                    <label class="fw-bold" for="intro">Introduction </label>
-                    <textarea name="intro"><%= profile.introduction %></textarea>
+
+                <div class="mgt5">
+                    <label class="fw-bold">Avatar: </label>
+                    <input type="file" name="avatar">
                 </div>
-                <div style="float: right; margin-top: 2%;">
+                <div style="float: right; margin-top: 10%;">
                     <button class="btn btn-ghost"><a href="/student/profile/<%= profile.id %>">Cancel</a></button>
                     <button class="btn btn-full" type="submit">Update</button>
                 </div>
