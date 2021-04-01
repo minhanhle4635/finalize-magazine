@@ -307,9 +307,8 @@ router.delete('/user/:id', isAdmin, async (req, res) => {
             req.flash('errorMessage', 'You can not delete yourself')
             res.redirect('back')
         } else {
-            user = await User.findById(req.params.id)
+            user = await User.findByIdAndRemove(req.params.id)
             // profile = await Profile.findOne({ user: user.id })
-            await user.remove()
             // await profile.remove()
         }
         res.redirect('/admin/user')
