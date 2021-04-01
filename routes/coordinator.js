@@ -46,10 +46,10 @@ router.get('/', isCoordinator, async (req, res) => {
     const user = await User.findById(req.session.userId).populate("faculty").exec()
     const article = await Article.find({ faculty: user.faculty, status: 'pending' }).limit(5)
     const profile = await Profile.findOne({user: req.session.userId})
-    const allArticle = await Article.find({}).countDocuments()
-    const totalPendingArticle = await Article.find({ status: 'pending', faculty: req.params.id }).countDocuments()
-    const totalRejectedArticle = await Article.find({ status: 'refused', faculty: req.params.id }).countDocuments()
-    const totalAcceptedArticle = await Article.find({ status: 'accepted', faculty: req.params.id }).countDocuments()
+    const allArticle = await Article.find({faculty: user.faculty}).countDocuments()
+    const totalPendingArticle = await Article.find({ status: 'pending', faculty: user.faculty }).countDocuments()
+    const totalRejectedArticle = await Article.find({ status: 'refused', faculty: user.faculty }).countDocuments()
+    const totalAcceptedArticle = await Article.find({ status: 'accepted', faculty: user.faculty }).countDocuments()
     res.render('coordinator/index', {
         user: user,
         profile: profile,
