@@ -1,9 +1,6 @@
 .text-white{
     color: white  !important;
 }
-.text-dark{
-    color: black;
-}
 .text-center {
   text-align: center !important;
 }
@@ -308,6 +305,9 @@ th {
   max-width: 100%;
   margin-bottom: 1rem;
   background-color: transparent;
+}
+.table th{
+  background-color: #0099b1;
 }
 .table th,
 .table td {
@@ -1171,6 +1171,7 @@ th {
   .text-dark {
     color: #343a40 !important;
   }
+  .text-white
   .bg-nav li{
     color: #343a40 !important;
 
@@ -1269,4 +1270,8 @@ width: 300px;
 }
 .float-left{
   float: left;
+}
+.sArt{
+  display: grid;
+  grid-template-columns: 30% 70%;
 }
