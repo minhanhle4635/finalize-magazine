@@ -17,36 +17,39 @@
     </div>
 </nav>
 <br></br>
-<section class="p-5">
-    <div style="overflow: auto;">
-        <h2>
-            <%= topic.name %>
-        </h2>
-        <div>
+<section>
+    <div class="p-5">
+        <div style="overflow: auto;">
+            <h2>
+                <%= topic.name %>
+            </h2>
+            <div>
 
-            <ul class="list-group">
-                <li class="list-group-item">
-                    <b>Expired Date:</b>
-                    <%= topic.expiredDate.toISOString().split('T')[0] %>
-                </li>
-                <li class="list-group-item">
-                    <b>Final Expired Date: </b>
-                    <%= topic.finalExpiredDate.toISOString().split('T')[0] %>
-                </li>
-                <li class="list-group-item li-area"><b>Description:</b>
-                    <%= topic.description %>
-                </li>
-            </ul>
-        </div>
-        <div class="d-e mgt1">
-            <button class="btn btn-ghost">
-                    <a  href="/student/topic">Back</a>
-                </button>
+                <div class="list-group">
+                    <div class="list-group-item">
+                        <b>Expired Date:</b>
+                        <%= topic.expiredDate.toISOString().split('T')[0] %>
+                    </div>
+                    <div class="list-group-item">
+                        <b>Final Expired Date: </b>
+                        <%= topic.finalExpiredDate.toISOString().split('T')[0] %>
+                    </div>
+                    <div class="list-group-item li-area"><b>Description:</b>
+                        <%= topic.description %>
+                    </div>
+                </div>
+            </div>
+            <div class="d-e mgt1">
+                <button class="btn btn-ghost">
+                        <a  href="/student/topic">Back</a>
+                    </button>
 
+            </div>
         </div>
-    </div>
 
 </section>
+</div>
+
 
 <footer id="footer">
     <div class="row">
