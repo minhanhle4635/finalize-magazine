@@ -308,8 +308,8 @@ router.delete('/user/:id', isAdmin, async (req, res) => {
             res.redirect('back')
         } else {
             user = await User.findById(req.params.id)
+            user.remove()
             // profile = await Profile.findOne({ user: user.id })
-            await user.remove()
             // await profile.remove()
         }
         res.redirect('/admin/user')
