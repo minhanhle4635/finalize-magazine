@@ -50,7 +50,10 @@
                     <%= article.description %>
                 </div>
                 <div class="mgt2 li-area"><b>File:</b>
-                    <%= article.fileName %>
+                    <% for(var i = 0; i < allFiles.length; i++) { %>
+                        <%= allFiles[i].filename %>
+                    <% } %> 
+                    
                 </div>
 
                 <div class="mgt2 li-area"><b>Comment from Coordinator:</b>

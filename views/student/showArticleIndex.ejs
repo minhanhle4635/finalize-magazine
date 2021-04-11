@@ -44,23 +44,16 @@
                     <%= article.description %>
                 </div>
                 <div class="mgt2 li-area"><b>File:</b>
-                    <%= article.fileName %>
+                    <% for (let index = 0; index < allFiles.length; index++) { %>
+                        <%= allFiles[index].filename %>  
+                    <% } %>
                 </div>
                 <div class="mgt2 li-area"><b>Comment from Coordinator:</b>
                     <%= article.comment %>
-
-
                 </div>
-
             </div>
-
         </div>
-
-
-
     </div>
-
-
 </section>
 
 

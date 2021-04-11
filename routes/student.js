@@ -15,6 +15,7 @@ const uploadAvatarPath = path.join('public', Profile.avatarBasePath)
 const fileMimeTypes = require('../helper/mime-file').documentMime
 const imageMimeTypes = require('../helper/mime-file').imageMimeTypes
 const fs = require('fs');
+const AdmZip = require('adm-zip')
 
 const bcrypt = require('bcrypt')
 
@@ -203,7 +204,15 @@ router.post('/poster', isStudent, async (req, res) => {
 router.get('/poster/:id', isStudent, async (req, res) => {
     try {
         const article = await Article.findById(req.params.id).populate("topic").exec()
-        res.render('student/showArticle', { article: article })
+        let allFiles = [];
+        files = article.fileName;
+        files.map(async (file) => {
+            allFiles.push(file)
+        })
+        return res.render('student/showArticle', {
+            article: article,
+            allFiles: allFiles
+        })
     } catch (error) {
         console.log(error)
         res.redirect('/user')
@@ -227,7 +236,7 @@ router.get('/poster/:id/edit', isStudent, async (req, res) => {
 })
 
 //edit article
-router.put('/poster/:id/edit', isStudent, upload.single('file'), async (req, res) => {
+router.put('/poster/:id/edit', isStudent, upload.array('files', 5), async (req, res) => {
     let article
     try {
         article = await Article.findById(req.params.id)
@@ -236,18 +245,26 @@ router.put('/poster/:id/edit', isStudent, upload.single('file'), async (req, res
         const dateNow = new Date()
         const FED = new Date(topic.finalExpiredDate)
 
-        const file = req.file
+        const files = req.files
+        let allFiles = [];
+
+        files.map(async (file) => {
+            allFiles.push(file)
+        })
 
         if (dateNow.getTime() <= FED.getTime()) {
             article.name = req.body.name
             article.author = req.body.author
             article.description = req.body.description
             article.topic = req.body.topic
-            if (file) {
+
+            if (files) {
                 if (article.fileName) {
-                    removefile(article.fileName)
+                    for (var i = 0; i < article.fileName.length; i++) {
+                        removefile(article.fileName[i].filename)
+                    }
                 }
-                article.filename = file.filename
+                article.filename = allFiles
             }
 
             saveCover(article, req.body.cover)
@@ -308,7 +325,7 @@ router.get('/newarticle', isStudent, async (req, res) => {
 })
 
 //create new Article
-router.post('/newarticle', isStudent, upload.single('file'), async (req, res) => {
+router.post('/newarticle', isStudent, upload.array('files', 5), async (req, res) => {
     const topic = await Topic.findOne({ _id: req.body.topic })
     const deadline = new Date(topic.expiredDate);
     const faculty = topic.faculty
@@ -317,7 +334,7 @@ router.post('/newarticle', isStudent, upload.single('file'), async (req, res) =>
     const newName = req.body.name
     let description = req.body.description
     const newAuthor = req.body.author
-    const file = req.file
+    const files = req.files
 
     const cover = req.body.cover
 
@@ -338,7 +355,7 @@ router.post('/newarticle', isStudent, upload.single('file'), async (req, res) =>
     if (!description) {
         description = 'This will be updated later'
     }
-    if (!file) {
+    if (!files) {
         req.flash('errorMessage', 'File must be added')
         return res.redirect('back')
     }
@@ -347,8 +364,12 @@ router.post('/newarticle', isStudent, upload.single('file'), async (req, res) =>
         res.redirect('back')
     }
 
+    let allFiles = [];
     try {
         //new article
+        files.map(async (file) => {
+            allFiles.push(file)
+        })
         const article = new Article({
             name: newName,
             description: description,
@@ -356,7 +377,7 @@ router.post('/newarticle', isStudent, upload.single('file'), async (req, res) =>
             poster: req.session.userId,
             topic: req.body.topic,
             faculty: faculty,
-            fileName: file.filename
+            fileName: allFiles
         })
         saveCover(article, cover)
         //compare deadline
@@ -421,7 +442,6 @@ router.post('/newarticle', isStudent, upload.single('file'), async (req, res) =>
         }
 
     } catch (error) {
-        if (article.fileName != null) { removefile(article.fileName) }
         req.flash('errorMessage', 'Cant create this article');
         res.redirect('back');
     }
@@ -431,8 +451,35 @@ router.post('/newarticle', isStudent, upload.single('file'), async (req, res) =>
 router.get('/article/download/:id', async (req, res) => {
     try {
         const article = await Article.findById(req.params.id)
-        const pathToFile = path.join(uploadPath, article.fileName);
-        res.download(pathToFile, article.fileName)
+        let allFiles = [];
+        article.fileName.map(async (file) => {
+            allFiles.push(file)
+        })
+        console.log(allFiles)
+        if (allFiles.length === 1) {
+            const pathToFile = path.join(uploadPath, allFiles[i].filename);
+            res.download(pathToFile, allFiles[i].filename)
+        }
+
+        if (allFiles.length > 1) {
+            const zip = new AdmZip();
+            allFiles.map(async (file) => {
+                const pathToFile = path.join(uploadPath, file.filename);
+                if (fs.existsSync(pathToFile)) {
+                    zip.addLocalFile(pathToFile);
+                };
+            });
+
+            const zipFilename = `${new Date().valueOf()}_All_Articles.zip`;
+            // write everything to disk
+            const pathTemp = path.join(uploadPath, zipFilename);
+            zip.writeZip(pathTemp, () => {
+                return res.download(pathTemp, zipFilename, () => {
+                    fs.unlinkSync(pathTemp)
+                });
+            });
+        }
+
     } catch (error) {
         console.log(error)
         res.redirect('/student/article')
@@ -489,7 +536,16 @@ router.get('/article', isStudent, async (req, res) => {
 router.get('/article/:id', isStudent, async (req, res) => {
     try {
         const article = await Article.findById(req.params.id).populate("topic").exec()
-        res.render('student/showArticleIndex', { article: article })
+
+        let allFiles = [];
+        const files = article.fileName;
+        files.map(async (file) => {
+            allFiles.push(file)
+        })
+        return res.render('student/showArticleIndex', {
+            article: article,
+            allFiles: allFiles
+        })
     } catch (error) {
         console.log(error)
         res.redirect('/student')
