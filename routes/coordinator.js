@@ -1,5 +1,5 @@
 const express = require('express')
-const { Logout } = require('../Login')
+const {Logout} = require('../Login')
 const Topic = require('../models/Topic')
 const router = express.Router()
 const User = require('../models/User')
@@ -39,17 +39,19 @@ const avatarStorage = multer.diskStorage({
     }
 })
 
-const uploadAvatar = multer({ storage: avatarStorage })
+const uploadAvatar = multer({storage: avatarStorage})
 
 
 router.get('/', isCoordinator, async (req, res) => {
     const user = await User.findById(req.session.userId).populate("faculty").exec()
-    const article = await Article.find({ faculty: user.faculty, status: 'pending' }).limit(5)
+    const article = await Article.find({faculty: user.faculty, status: 'pending'}).limit(5)
     const profile = await Profile.findOne({user: req.session.userId})
+
     const allArticle = await Article.find({faculty: user.faculty}).countDocuments()
     const totalPendingArticle = await Article.find({ status: 'pending', faculty: user.faculty }).countDocuments()
     const totalRejectedArticle = await Article.find({ status: 'refused', faculty: user.faculty }).countDocuments()
     const totalAcceptedArticle = await Article.find({ status: 'accepted', faculty: user.faculty }).countDocuments()
+    
     res.render('coordinator/index', {
         user: user,
         profile: profile,
@@ -64,18 +66,16 @@ router.get('/', isCoordinator, async (req, res) => {
 router.get('/topic', isCoordinator, async (req, res) => {
     const user = await User.findById(req.session.userId)
     let query = Topic.find({faculty: user.faculty})
-    if(req.query.name != null && req.query.name != ''){
+    if (req.query.name != null && req.query.name != '') {
         query = query.regex('name', new RegExp(req.query.name, 'i'))
     }
-
-    try{
-        
+    try {
         const topics = await query.exec()
-        return res.render('coordinator/topic',{
+        return res.render('coordinator/topic', {
             topics: topics,
             searchOptions: req.query
         })
-    }catch(e){
+    } catch (e) {
         console.log(e)
         return res.redirect('/coordinator/topic')
     }
@@ -88,7 +88,7 @@ router.get('/topic/new', isCoordinator, (req, res) => {
 router.post('/topic/new', isCoordinator, async (req, res) => {
     try {
         const user = await User.findById(req.session.userId)
-        const existedTopic = await Topic.findOne({ name: req.body.name })
+        const existedTopic = await Topic.findOne({name: req.body.name})
         const newTopic = new Topic({
             name: req.body.name,
             expiredDate: req.body.expiredDate,
@@ -138,18 +138,28 @@ router.put('/topic/:id/edit', isCoordinator, async (req, res) => {
     let topic
     try {
         topic = await Topic.findById(req.params.id)
-        topic.name = req.body.name
-        topic.expiredDate = req.body.expiredDate
-        topic.description = req.body.description
-        await topic.save()
-        res.redirect(`/coordinator/topic/${topic._id}`)
+        var newED = req.body.expiredDate;
+        var newFED = req.body.finalExpiredDate;
+
+        if(newED) {
+            topic.expiredDate = newED;
+        }
+
+        if(newFED) {
+            topic.finalExpiredDate = newFED;
+        }
+
+        topic.name = req.body.name;
+        topic.description = req.body.description;
+        await topic.save();
+        return res.redirect(`/coordinator/topic/${topic._id}`);
     } catch (error) {
         console.log(error)
         if (topic != null) {
-            req.flash('errorMessage', 'Cannot edit this topic')
-            res.redirect('back')
+            req.flash('errorMessage', 'Cannot edit this topic');
+            return res.redirect('back');
         } else {
-            res.redirect('/coordinator/topic')
+            return res.redirect('/coordinator/topic');
         }
     }
 })
@@ -203,13 +213,13 @@ router.post('/allArticle', isCoordinator, async (req, res) => {
             article.status = 'accepted'
             article.comment = req.body.comment
             await article.save()
-            req.flash('errorMessage','Updated Successfully')
+            req.flash('errorMessage', 'Updated Successfully')
             res.redirect('back')
         } else if (permission === 'refuse') {
             article.status = 'refused'
             article.comment = req.body.comment
             await article.save()
-            req.flash('errorMessage','Updated Successfully')
+            req.flash('errorMessage', 'Updated Successfully')
             res.redirect('back')
         }
     } catch (error) {
@@ -222,11 +232,11 @@ router.post('/allArticle', isCoordinator, async (req, res) => {
 //article permission
 router.get('/article', isCoordinator, async (req, res) => {
     const user = await User.findById(req.session.userId)
-    let query = Article.find({ faculty: user.faculty, status: 'pending' })
+    let query = Article.find({faculty: user.faculty, status: 'pending'})
     if (req.query.name != null && req.query.name != '') {
         query = query.regex('name', new RegExp(req.query.name, 'i'))
     }
-    try {  
+    try {
         const article = await query.exec()
 
         res.render('coordinator/article', {
@@ -248,17 +258,17 @@ router.post('/article', isCoordinator, async (req, res) => {
         const today = new Date()
         const expiredDate = new Date(article.createdAt.getTime() + 12096e5)
         // if (today.getTime() <= expiredDate.getTime()) {
-            if (permission === 'accept') {
-                article.status = 'accepted'
-                article.comment = req.body.comment
-                await article.save()
-                res.redirect('back')
-            } else if (permission === 'refuse') {
-                article.status = 'refused'
-                article.comment = req.body.comment
-                await article.save()
-                res.redirect('back')
-            }
+        if (permission === 'accept') {
+            article.status = 'accepted'
+            article.comment = req.body.comment
+            await article.save()
+            res.redirect('back')
+        } else if (permission === 'refuse') {
+            article.status = 'refused'
+            article.comment = req.body.comment
+            await article.save()
+            res.redirect('back')
+        }
         // } else {
         //     article.status = 'refused'
         //     await article.save()
@@ -272,7 +282,17 @@ router.post('/article', isCoordinator, async (req, res) => {
 router.get('/article/:id', isCoordinator, async (req, res) => {
     try {
         const article = await Article.findById(req.params.id).populate('topic').exec()
-        res.render('coordinator/showArticle', { article: article })
+        
+        let allFiles = [];
+        const files = article.fileName;
+        files.map(async (file)=>{
+            allFiles.push(file)
+        })
+
+        return res.render('coordinator/showArticle', {
+            article: article,
+            allFiles: allFiles
+        })
     } catch (error) {
         console.log(error)
         res.redirect('/coordinator')
@@ -294,7 +314,7 @@ router.post('/article/:id', isCoordinator, async (req, res) => {
 
 router.get('/profile/:id', isCoordinator, async (req, res) => {
     const user = await User.findById(req.session.userId)
-    const profile = await Profile.findOne({ user: user._id })
+    const profile = await Profile.findOne({user: user._id})
     res.render('coordinator/showProfile', {
         profile: profile
     })
@@ -355,7 +375,9 @@ router.put('/profile/:id/edit', [isCoordinator, uploadAvatar.single('avatar')], 
         return res.redirect(`/coordinator/profile/${profile.id}`)
     } catch (error) {
         console.log(error)
-        if (profile.avatarImageName != null) { removeAvatar(profile.avatarImageName) }
+        if (profile.avatarImageName != null) {
+            removeAvatar(profile.avatarImageName)
+        }
         req.flash('errorMessage', 'Can not update this profile')
         return res.redirect('back')
     }
@@ -364,7 +386,7 @@ router.put('/profile/:id/edit', [isCoordinator, uploadAvatar.single('avatar')], 
 router.get('/profile/:id/changepassword', isCoordinator, async (req, res) => {
     try {
         const user = await User.findById(req.session.userId)
-        const profile = await Profile.findOne({ user: user.id })
+        const profile = await Profile.findOne({user: user.id})
         res.render('coordinator/changepassword', {
             user: user,
             profile: profile
@@ -376,7 +398,7 @@ router.get('/profile/:id/changepassword', isCoordinator, async (req, res) => {
 
 })
 
-router.get('/profile/:id/avatar', isCoordinator,async (req, res) => {
+router.get('/profile/:id/avatar', isCoordinator, async (req, res) => {
     const defaultPath = path.join(__dirname, '../public/uploads/avatar');
     const profileId = req.params.id;
     if (!profileId) {

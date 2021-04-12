@@ -17,7 +17,7 @@
     </div>
 </nav>
 <br></br>
-
+<%- include('../partials/errorMessage.ejs') %>
 <section class="p-5">
 
     <div class="row">
@@ -53,30 +53,23 @@
                         <button class="btn btn-full" type="submit">Add New Article</button>
                     </div>
                 </div>
-                <div class="r50">
-                    <div>
-                        <label class="fw-bold" for="author">Author</label>
-                        <input type="text" name="author">
-                    </div>
-                    <div class="mgt5">
-                        <label class="fw-bold" for="file">File: </label>
-                        <input type="file" name="file" multiple>
-                    </div>
-
-
+            </div>
+            <div class="r50">
+                <div>
+                    <label class="fw-bold" for="author">Author</label>
+                    <input type="text" name="author">
+                </div>
+                <div class="mgt5">
+                    <label class="fw-bold" for="file">File: </label>
+                    <input type="file" name="files" multiple>
+                </div>
                     <div class="mgt1 ">
                         <label class="fw-bold">Cover: </label>
                         <input type="file" name="cover" class="filepond filepondcover">
                     </div>
                 </div>
             </form>
-
-
         </div>
-
-
-
-
 </section>
 
 <footer>

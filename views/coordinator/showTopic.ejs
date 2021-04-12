@@ -19,7 +19,7 @@
         </div>
     </nav>
 </section>
-
+<%- include('../partials/errorMessage.ejs') %>
 <div>
     <h1 class="text-danger text-center font-weight-bold">Topic name :</h1>
     <h2><%= topic.name %></h2>
@@ -27,7 +27,7 @@
 <section class="p-5">
     <div class="p-2">
         <ul class="list-group">
-            <li class="list-group-item">Expired Date: <%= topic.expiredDate %>
+            <li class="list-group-item">Expired Date: <%= topic.expiredDate == null ? '' : topic.expiredDate.toISOString().split('T')[0] %>
             </li>
             <li class="list-group-item">Final Expired Date: <%= topic.finalExpiredDate==null ? '': topic.finalExpiredDate.toISOString().split('T')[0] %></li>
             <li class="list-group-item">Description: <%= topic.description %>

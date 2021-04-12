@@ -33,7 +33,7 @@
                 </div>
                 <div class="col span-2-of-3">
                     <div>
-                        <%= article.createdAt %>
+                        <%= article.createdAt.toISOString().split('T')[0] %>
                     </div>
                 </div>
             </div>
@@ -55,7 +55,9 @@
                 </div>
                 <div class="col span-2-of-3">
                     <div>
-                        <%= article.fileName %>
+                        <% for( let index = 0; index < allFiles.length; index++ ) { %>
+                            <%= allFiles[index].filename %>
+                        <% } %>
                     </div>
                 </div>
             </div>

@@ -19,7 +19,7 @@
         </div>
     </nav>
 </section>
-
+<%- include('../partials/errorMessage.ejs') %>
 <div>
     <div class="p-5 text-primary">
         <h2>
@@ -28,29 +28,28 @@
     </div>
 
     <section class="p-5">
-        <div class="sArt">
-            <div>
-                <img width="100%" max-height="300px" src="<%= article.coverImagePath %>">
-            </div>
-            <div>
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        <b>Name of Topic:</b> <%= article.topic.name %>
-                    </li>
-                    <li class="list-group-item"><b>Author: </b>
-                        <%= article.author %>
-                    </li>
-                    <li class="list-group-item"><b>Created At: </b>
-                        <%= article.createdAt.toISOString().split('T')[0] %>
-                    </li>
-                    <li class="list-group-item"><b>Description: </b>
-                        <%= article.description %>
-                    </li>
-                    <li class="list-group-item"><b>File: </b>
-                        <%= article.fileName %>
-                    </li>
-                </ul>
-            </div>
+        <div>
+            <ul class="list-group">
+                <li class="list-group-item"><img width="10%" height="150" src="<%= article.coverImagePath %>">
+                </li>
+                <li class="list-group-item">
+                    Name of Topic: <%= article.topic.name %>
+                </li>
+                <li class="list-group-item"><b>Author: </b>
+                    <%= article.author %>
+                </li>
+                <li class="list-group-item"><b>Created At: </b>
+                    <%= article.createdAt.toISOString().split('T')[0] %>
+                </li>
+                <li class="list-group-item"><b>Description: </b>
+                    <%= article.description %>
+                </li>
+                <li class="list-group-item"><b>File: </b>
+                    <% for( let index = 0; index < allFiles.length; index++ ) { %>
+                        <%= allFiles[index].filename %> 
+                    <% } %>
+                </li>
+            </ul>
         </div>
     </section>
     <footer>

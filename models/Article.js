@@ -24,7 +24,7 @@ const articleSchema = mongoose.Schema({
         required: true
     },
     fileName: {
-        type: String,
+        type: [],
         required: true
     },
     author: {

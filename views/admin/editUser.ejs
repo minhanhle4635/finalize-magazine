@@ -9,7 +9,7 @@
         </ul>
     </div>
 </nav>
-
+<%- include('../partials/errorMessage.ejs') %>
 <div class="row">
     <form action="/admin/user/<%= user._id %>/edit?_method=PUT" method="POST" class="signup-form">
         <div class="log-border">
