@@ -36,12 +36,14 @@
     </form>
 </section>
 
-<div><a href="/coordinator/topic/new">New Topic</a></div>
 
-<div class="p-5 mt-5">
-    <table class="table">
+<div class="p-5 mt-5 mb-5">
+    <table class="table border">
+        
         <thead>
-            <tr>
+            <tr><button class="btn btn-warning"><a href="/coordinator/topic/new" class="text-white">New Topic</a></button></tr>
+
+            <tr class="text-center text-white">
                 <th class="table-name">Name</th>
                 <th class="table-date">Expired Date</th>
                 <th class="table-number">Final Expired Date</th>
@@ -49,7 +51,7 @@
         </thead>
         <% topics.forEach(topic=>{ %>
         <tbody>
-            <tr>
+            <tr class="text-center">
                 <td><a href="/coordinator/topic/<%= topic.id %>">
                     <%= topic.name %>
                 </a></td>

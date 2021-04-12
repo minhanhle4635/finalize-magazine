@@ -31,10 +31,20 @@
                 <div class="mgt1">
                     <label class="fw-bold" for="topic">Topic</label>
                     <select name="topic">
+
                         <% topics.forEach(topic=> { %>
                             <option label="<%= topic.name %>" value="<%= topic._id %>">
                                 <% }) %>
                     </select>
+                    </div>
+                    <div class="mgt1">
+                        <label class="fw-bold" for="description">Description</label>
+                        <textarea name="description"><%= article.description %></textarea>
+                    </div>
+                    <div style=" margin-top: 2%;">
+                        <button class="btn btn-ghost"><a  href="/student/poster">Cancel</a></button>
+                        <button class="btn btn-full" type="submit">Submit</button>
+                    </div>
                 </div>
                 <div class="mgt1">
                     <label class="fw-bold" for="description">Description</label>
@@ -55,14 +65,17 @@
                     <input type="file" name="files" multiple>
                 </div>
 
-                <div class="mgt1">
-                    <label class="fw-bold" for="cover">Cover</label>
-                    <input type="file" name="cover" class="filepond filepondcover">
+
+                    <div class="mgt1">
+                        <label class="fw-bold" for="cover">Cover</label>
+                        <input type="file" name="cover" class="filepond filepondcover">
+                    </div>
                 </div>
-            </div>
 
 
-        </form>
+            </form>
+        </div>
+
     </div>
 
 </section>

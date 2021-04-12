@@ -38,7 +38,7 @@
                             <th class="table-id">Cover</th>
                             <th class="table-name">Name</th>
                             <th>Author</th>
-                            <th class="p-2">Option</th>
+                            <th class="">Option</th>
                         </tr>
                     </thead>
                     <% articles.forEach(article=>{ %>
@@ -49,9 +49,9 @@
                                     <%= article.name %>
                                 </td>
                                 <td>
-                                    <%= article.status %>
+                                    <%= article.author%>
                                 </td>
-                                <td class="p-2">
+                                <td class="">
                                     <div style="display: inline-flex;">
                                         <button class="btn btn-ghost"><a href="/student/article/<%= article._id %>">View</a></button>
 
