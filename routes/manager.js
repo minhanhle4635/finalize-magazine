@@ -43,7 +43,7 @@ router.get('/faculty/:id', isManager, async (req, res) => {
     }
 })
 
-router.get('/faculty/downloadAll/:id',isManager ,async (req, res) => {
+router.get('/faculty/downloadAll/:id', isManager, async (req, res) => {
     const faculty = await Faculty.findOne({ _id: req.params.id })
     const articles = await Article.find({ faculty: faculty._id })
     if (!articles || articles.length === 0) {
@@ -88,7 +88,7 @@ router.get('/faculty/downloadAll/:id',isManager ,async (req, res) => {
     }
 })
 
-router.get('/topic/:id', isManager,async (req, res) => {
+router.get('/topic/:id', isManager, async (req, res) => {
     const topic = await Topic.findById(req.params.id)
     const articles = await Article.find({ topic: topic.id })
     res.render('manager/showTopic', {
@@ -102,7 +102,7 @@ router.get('/article/:id', isManager, async (req, res) => {
 
     let allFiles = [];
     const files = article.fileName;
-    files.map(async(file)=>{
+    files.map(async (file) => {
         allFiles.push(file)
     })
 
