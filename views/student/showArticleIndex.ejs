@@ -13,81 +13,85 @@
 </nav>
 <br></br>
 <%- include('../partials/errorMessage.ejs') %>
-<section class="p-5">
-    <h2>
-        <%= article.name %>
-    </h2>
-    <div class="row" style="overflow: auto; ">
-        <div class="l25 ">
-            <div style=" overflow: hidden;">
-                <img width="300" height="400" class="img-center" src="<%= article.coverImagePath %>">
+    <section class="p-5">
+        <h2>
+            <%= article.name %>
+        </h2>
+        <div class="row" style="overflow: auto; ">
+            <div class="l25 ">
+                <div style=" overflow: hidden;">
+                    <img width="300" height="400" class="img-center" src="<%= article.coverImagePath %>">
+                </div>
+                <div style=" text-align: center; margin-top: 5%;">
+                    <button class="btn btn-ghost"><a  href="/student/article">Back</a></button>
+                    <form style="display: inline-block;" action="/student/article/download/<%= article._id %>" method="GET">
+
+                        <!-- <input type="submit" value="Download"> -->
+                        <button class="btn btn-full mgl5">Download</button>
+                    </form>
+                </div>
+
             </div>
-            <div style=" text-align: center; margin-top: 5%;">
-                <button class="btn btn-ghost"><a  href="/student/article">Back</a></button>
-                <form style="display: inline-block;" action="/student/article/download/<%= article._id %>" method="GET">
+            <div class="r75 ">
+                <div class="list-group ">
+                    <div class=" li-area"><b>Author:</b>
+                        <%= article.author %>
+                    </div>
+                    <div class="mgt2 li-area"><b>Created At:</b>
+                        <%= article.createdAt.toISOString().split('T')[0] %>
+                    </div>
+                    <div class="mgt2 li-area"><b>Description:</b>
+                        <%= article.description %>
+                    </div>
+                    <div class="mgt2 li-area"><b>File:</b>
+                        <% for (let index = 0; index < allFiles.length; index++) { %>
+                            <div>
+                                <%= allFiles[index].filename %> <br/>
 
-                    <!-- <input type="submit" value="Download"> -->
-                    <button class="btn btn-full mgl5">Download</button>
-                </form>
-            </div>
+                            </div>
+                            <% } %>
+                    </div>
+                    <div class="mgt2 li-area"><b>Comment from Coordinator:</b>
+                        <%= article.comment %>
+                    </div>
 
-        </div>
-        <div class="r75 ">
-            <div class="list-group ">
-                <div class=" li-area"><b>Author:</b>
-                    <%= article.author %>
-                </div>
-                <div class="mgt2 li-area"><b>Created At:</b>
-                    <%= article.createdAt.toISOString().split('T')[0] %>
-                </div>
-                <div class="mgt2 li-area"><b>Description:</b>
-                    <%= article.description %>
-                </div>
-                <div class="mgt2 li-area"><b>File:</b>
-                    <% for (let index = 0; index < allFiles.length; index++) { %>
-                        <%= allFiles[index].filename %>  
-                    <% } %>
-                </div>
-                <div class="mgt2 li-area"><b>Comment from Coordinator:</b>
-                    <%= article.comment %>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
 
-<footer>
-    <div class="row">
-        <div class="col span-1-of-2">
-            <ul class="nav-footer">
-                <li> <a href="#">about us</a> </li>
-                <li> <a href="#">blog</a> </li>
-                <li> <a href="#">Press</a> </li>
-                <li> <a href="#">IOS app</a> </li>
-                <li> <a href="#">ANDROID app</a> </li>
-            </ul>
+    <footer>
+        <div class="row">
+            <div class="col span-1-of-2">
+                <ul class="nav-footer">
+                    <li> <a href="#">about us</a> </li>
+                    <li> <a href="#">blog</a> </li>
+                    <li> <a href="#">Press</a> </li>
+                    <li> <a href="#">IOS app</a> </li>
+                    <li> <a href="#">ANDROID app</a> </li>
+                </ul>
+            </div>
+            <div class="col span-1-of-2">
+                <ul class="social-link-footer">
+                    <li>
+                        <a href="#"> <i class="ion-logo-facebook"></i> </a>
+                    </li>
+                    <li>
+                        <a href="#"> <i class="ion-logo-twitter"></i> </a>
+                    </li>
+                    <li>
+                        <a href="#"> <i class="ion-logo-googleplus"></i> </a>
+                    </li>
+                    <li>
+                        <a href="#"> <i class="ion-logo-instagram"></i> </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="col span-1-of-2">
-            <ul class="social-link-footer">
-                <li>
-                    <a href="#"> <i class="ion-logo-facebook"></i> </a>
-                </li>
-                <li>
-                    <a href="#"> <i class="ion-logo-twitter"></i> </a>
-                </li>
-                <li>
-                    <a href="#"> <i class="ion-logo-googleplus"></i> </a>
-                </li>
-                <li>
-                    <a href="#"> <i class="ion-logo-instagram"></i> </a>
-                </li>
-            </ul>
+        <div class="row">
+            <p>
+                Copyrighted &copy; 2020 by Unipara all rights reversed
+            </p>
         </div>
-    </div>
-    <div class="row">
-        <p>
-            Copyrighted &copy; 2020 by Unipara all rights reversed
-        </p>
-    </div>
-</footer>
+    </footer>

@@ -17,11 +17,10 @@
     </div>
 </nav>
 <br></br>
-<%- include('../partials/errorMessage.ejs') %>
-<section class="p-5">
+<section>
 
     <div class="row">
-        <div style="overflow: auto;">
+        <div style="overflow: auto;" class="row">
             <h2>Create new Article</h2>
             <form action="/student/newarticle" method="POST" enctype="multipart/form-data">
                 <div class="l50">
@@ -53,17 +52,17 @@
                         <button class="btn btn-full" type="submit">Add New Article</button>
                     </div>
                 </div>
-            </div>
-            <div class="r50">
-                <div>
-                    <label class="fw-bold" for="author">Author</label>
-                    <input type="text" name="author">
-                </div>
-                <div class="mgt5">
-                    <label class="fw-bold" for="file">File: </label>
-                    <input type="file" name="files" multiple>
-                </div>
-                    <div class="mgt1 ">
+
+                <div class="r50">
+                    <div>
+                        <label class="fw-bold" for="author">Author</label>
+                        <input type="text" name="author">
+                    </div>
+                    <div class="mgt5">
+                        <label class="fw-bold" for="file">File: </label>
+                        <input type="file" name="files" multiple>
+                    </div>
+                    <div class="mgt4 ">
                         <label class="fw-bold">Cover: </label>
                         <input type="file" name="cover" class="filepond filepondcover">
                     </div>
