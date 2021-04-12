@@ -99,8 +99,16 @@ router.get('/topic/:id', isManager,async (req, res) => {
 
 router.get('/article/:id', isManager, async (req, res) => {
     const article = await Article.findById(req.params.id)
-    res.render('manager/showArticle', {
-        article: article
+
+    let allFiles = [];
+    const files = article.fileName;
+    files.map(async(file)=>{
+        allFiles.push(file)
+    })
+
+    return res.render('manager/showArticle', {
+        article: article,
+        allFiles: allFiles
     })
 })
 

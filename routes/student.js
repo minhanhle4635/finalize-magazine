@@ -457,8 +457,8 @@ router.get('/article/download/:id', async (req, res) => {
         })
         console.log(allFiles)
         if (allFiles.length === 1) {
-            const pathToFile = path.join(uploadPath, allFiles[i].filename);
-            res.download(pathToFile, allFiles[i].filename)
+            const pathToFile = path.join(uploadPath, allFiles[0].filename);
+            res.download(pathToFile, allFiles[0].filename)
         }
 
         if (allFiles.length > 1) {

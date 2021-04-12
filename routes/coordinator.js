@@ -280,7 +280,17 @@ router.post('/article', isCoordinator, async (req, res) => {
 router.get('/article/:id', isCoordinator, async (req, res) => {
     try {
         const article = await Article.findById(req.params.id).populate('topic').exec()
-        res.render('coordinator/showArticle', {article: article})
+        
+        let allFiles = [];
+        const files = article.fileName;
+        files.map(async (file)=>{
+            allFiles.push(file)
+        })
+
+        return res.render('coordinator/showArticle', {
+            article: article,
+            allFiles: allFiles
+        })
     } catch (error) {
         console.log(error)
         res.redirect('/coordinator')
