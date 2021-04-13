@@ -18,9 +18,21 @@ router.get("/", isManager, async (req, res) => {
   }
   try {
     const faculty = await query.exec();
+    const articles = await Article.find({}).countDocuments();
+    const acceptedArticles = await Article.find({status: 'accepted'}).countDocuments();
+    const rejectedArticles = await Article.find({status: 'refused'}).countDocuments();
+    const pendingArticles = await Article.find({status: 'pending'}).countDocuments();
+    const allFaculties = await Faculty.find({}).countDocuments();
+    const allTopics = await Topic.find({}).countDocuments();
     res.render("manager/index", {
       faculty: faculty,
       searchOptions: req.query,
+      allArticles: articles,
+      acceptedArticles: acceptedArticles,
+      rejectedArticles: rejectedArticles,
+      pendingArticles: pendingArticles,
+      allFaculties: allFaculties,
+      allTopics: allTopics
     });
   } catch (err) {
     console.log(err);

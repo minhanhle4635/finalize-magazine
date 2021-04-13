@@ -9,6 +9,46 @@
     </div>
 </nav>
 
+<section>
+    <form class="p-5 ">
+        <h2>Job status</h2>
+        <table class="table p-5 border">
+            <thead class="strong">
+                <tr>
+                    <td>Total Faculties:</td>
+                    <td>Total Topics:</td>
+                    <td>Total Articles: </td>
+                    <td>Pending Articles:</td>
+                    <td>Rejected Articles:</td>
+                    <td>Accepted Articles:</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <%= allFaculties %> 
+                    </td>
+                    <td>
+                        <%= allTopics %> 
+                    </td>
+                    <td>
+                        <%= allArticles %>
+                    </td>
+                    <td>
+                        <%= pendingArticles %>
+                    </td>
+                    <td>
+                        <%= rejectedArticles %>
+                    </td>
+                    <td>
+                        <%= acceptedArticles %>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</section>
+
 <section class="centered-search">
     <h3>Search Faculty</h3>
     <form action="/manager" method="GET">
