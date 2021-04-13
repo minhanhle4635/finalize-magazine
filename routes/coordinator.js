@@ -10,7 +10,8 @@ const multer = require('multer')
 const fs = require('fs')
 const path = require('path')
 const uploadAvatarPath = path.join('public', Profile.avatarBasePath)
-
+const AdmZip = require('adm-zip')
+const uploadPath = path.join('public', Article.fileBasePath)
 const imageMimeTypes = require('../helper/mime-file').imageMimeTypes
 
 const avatarStorage = multer.diskStorage({
@@ -307,6 +308,46 @@ router.post('/article/:id', isCoordinator, async (req, res) => {
         console.log(error)
         req.flash('errorMessage', 'Cannot add comment to this article')
         res.redirect('back')
+    }
+})
+
+//download article
+router.get('/article/download/:id', async (req, res) => {
+    try {
+        const article = await Article.findById(req.params.id)
+        let allFiles = [];
+        article.fileName.map(async (file) => {
+            allFiles.push(file)
+        })
+        console.log(allFiles)
+
+        if (allFiles.length === 1) {
+            const pathToFile = path.join(uploadPath, allFiles[0].filename);
+            res.download(pathToFile, allFiles[0].filename)
+        }
+
+        if (allFiles.length > 1) {
+            const zip = new AdmZip();
+            allFiles.map(async (file) => {
+                const pathToFile = path.join(uploadPath, file.filename);
+                if (fs.existsSync(pathToFile)) {
+                    zip.addLocalFile(pathToFile);
+                };
+            });
+
+            const zipFilename = `${new Date().valueOf()}_All_Articles.zip`;
+            // write everything to disk
+            const pathTemp = path.join(uploadPath, zipFilename);
+            zip.writeZip(pathTemp, () => {
+                return res.download(pathTemp, zipFilename, () => {
+                    fs.unlinkSync(pathTemp)
+                });
+            });
+        }
+
+    } catch (error) {
+        console.log(error)
+        res.redirect('/coordinator/article')
     }
 })
 

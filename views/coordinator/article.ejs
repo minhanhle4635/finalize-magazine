@@ -42,8 +42,8 @@
                         <th class="table-id">Cover</th>
                         <th></th>
                         <th class="table-name">Name</th>
-
                         <th>Comment</th>
+                        <th>Options</th>
                     </tr>
                 </thead>
                 <tr>
@@ -63,6 +63,13 @@
                                     class="btn btn-danger">Refuse</button>
                             </p>
 
+                        </form>
+                    </td>
+                    <td>
+                        <form style="display: inline-block;" action="/coordinator/article/download/<%= article._id %>" method="GET">
+
+                            <!-- <input type="submit" value="Download"> -->
+                            <button class="btn btn-full mgl5" type="submit">Download</button>
                         </form>
                     </td>
                 </tr>
