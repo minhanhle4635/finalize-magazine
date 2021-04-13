@@ -487,7 +487,7 @@ router.get('/article/download/:id', async (req, res) => {
 })
 
 
-//get all article
+//get all article pagination
 router.get('/article', isStudent, async (req, res) => {
     try {
         const page = parseInt(req.query.page)

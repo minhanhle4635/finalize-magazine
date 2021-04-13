@@ -12,7 +12,7 @@ router.get('/',async (req,res)=>{
     const user = await User.findById(req.session.userId)
     const faculty = await Faculty.findById(user.faculty)
     const topic = await Topic.find({faculty: faculty.id})
-    const articles = await Article.find({faculty: faculty.id})
+    const articles = await Article.find({faculty: faculty.id,status: 'accepted'})
     console.log(topic)
     res.render('guest/index',{
         faculty: faculty, 
